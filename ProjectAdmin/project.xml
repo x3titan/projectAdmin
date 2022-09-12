@@ -195,7 +195,7 @@
   </projectItems>
   <dbConnections count="1">
     <connection name="PJ">
-      <connectionString>DSN=ProjectAdmin;UID=sa;PWD=POI!@#zxc;</connectionString>
+      <connectionString>DSN=ProjectAdmin;UID=saa;PWD=1qazxsw2#EDC;</connectionString>
     </connection>
   </dbConnections>
 </EBProj>

@@ -5,7 +5,7 @@
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>816</height>
+      <height>785</height>
       <left>0</left>
       <onControlLoad>var isIOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 if (!isIOS) {
@@ -45,56 +45,61 @@ setTimeout(function() {
 </onControlLoad>
       <pageHead><![CDATA[<meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">]]></pageHead>
       <top>0</top>
-      <width>556</width>
+      <width>1145</width>
     </control>
     <control type="LayoutY" pathname="/divRoot/layouty1">
-      <dockX>fill</dockX>
-      <dockY>fill</dockY>
+      <backgroundColor>FAFAFA</backgroundColor>
+      <dockX>center</dockX>
+      <dockY>center</dockY>
       <fieldCount>2</fieldCount>
-      <height>816</height>
-      <heightRatio>1</heightRatio>
-      <left>0</left>
-      <sizeRatio>1.46762589928058</sizeRatio>
-      <top>0</top>
-      <width>556</width>
-      <widthRatio>1</widthRatio>
+      <height>605</height>
+      <heightRatio>0.770700636942675</heightRatio>
+      <left>372</left>
+      <leftRatio>0.324890829694323</leftRatio>
+      <sizeRatio>1.5125</sizeRatio>
+      <top>90</top>
+      <topRatio>0.114649681528662</topRatio>
+      <width>400</width>
+      <widthRatio>0.349344978165939</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/layouty1/layoutyitem1">
       <backgroundColor>BFCEDF</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>4</heavy>
-      <height>31</height>
-      <heightRatio>0.0379901960784314</heightRatio>
+      <height>23</height>
+      <heightRatio>0.0380165289256198</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0557553956834532</sizeRatio>
+      <sizeRatio>0.0575</sizeRatio>
       <top>0</top>
-      <width>556</width>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/layouty1/layoutyitem2">
-      <backgroundColor>FFFFFF</backgroundColor>
+      <backgroundColor>FAFAFA</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>785</height>
-      <heightRatio>0.962009803921569</heightRatio>
+      <height>582</height>
+      <heightRatio>0.96198347107438</heightRatio>
       <left>0</left>
-      <sizeRatio>1.41187050359712</sizeRatio>
-      <top>31</top>
-      <topRatio>0.0379901960784314</topRatio>
-      <width>556</width>
+      <sizeRatio>1.455</sizeRatio>
+      <top>23</top>
+      <topRatio>0.0380165289256198</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel3">
       <backgroundImg>CPY0004.jpg</backgroundImg>
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>489</height>
+      <height>363</height>
       <heightRatio>0.622929936305732</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.879496402877698</sizeRatio>
       <top>0</top>
-      <width>556</width>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel3/panel4">
@@ -103,31 +108,32 @@ setTimeout(function() {
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>4</height>
-      <heightRatio>0.0081799591002045</heightRatio>
+      <heightRatio>0.0110192837465565</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0359712230215827</leftRatio>
+      <leftRatio>0.05</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.00775193798449612</sizeRatio>
-      <top>485</top>
-      <topRatio>0.991820040899795</topRatio>
-      <width>516</width>
-      <widthRatio>0.928057553956835</widthRatio>
+      <sizeRatio>0.0111111111111111</sizeRatio>
+      <top>359</top>
+      <topRatio>0.988980716253444</topRatio>
+      <width>360</width>
+      <widthRatio>0.9</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel5">
       <dockX>fill</dockX>
-      <dockY>ratio</dockY>
       <fontColor>929093</fontColor>
       <fontFamily>黑体</fontFamily>
-      <fontSizeAuto>15</fontSizeAuto>
-      <height>60</height>
-      <heightRatio>0.0764331210191083</heightRatio>
+      <fontSize>25</fontSize>
+      <height>44</height>
+      <heightRatio>0.0756013745704467</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.107913669064748</sizeRatio>
+      <sizeRatio>0.11</sizeRatio>
       <text>团队合作从这里开始</text>
-      <top>519</top>
-      <topRatio>0.661146496815287</topRatio>
-      <width>556</width>
+      <top>385</top>
+      <topRatio>0.661512027491409</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel7">
@@ -135,15 +141,16 @@ setTimeout(function() {
       <dockY>ratio</dockY>
       <fontColor>929093</fontColor>
       <fontFamily>黑体</fontFamily>
-      <fontSizeAuto>30</fontSizeAuto>
-      <height>60</height>
-      <heightRatio>0.0764331210191083</heightRatio>
+      <fontSize>14</fontSize>
+      <height>44</height>
+      <heightRatio>0.076271186440678</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.107913669064748</sizeRatio>
+      <sizeRatio>0.122448979591837</sizeRatio>
       <text>欢迎使用团队任务管理系统</text>
-      <top>574</top>
-      <topRatio>0.731210191082803</topRatio>
-      <width>556</width>
+      <top>426</top>
+      <topRatio>0.731638418079096</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel12">
@@ -151,43 +158,42 @@ setTimeout(function() {
       <dockY>ratio</dockY>
       <fontColor>929093</fontColor>
       <fontFamily>黑体</fontFamily>
-      <fontSizeAuto>30</fontSizeAuto>
-      <height>60</height>
-      <heightRatio>0.0764331210191083</heightRatio>
+      <height>44</height>
+      <heightRatio>0.076271186440678</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.107913669064748</sizeRatio>
+      <sizeRatio>0.122448979591837</sizeRatio>
       <text>系统登录中，请稍候...</text>
-      <top>720</top>
-      <topRatio>0.917197452229299</topRatio>
-      <width>556</width>
+      <top>534</top>
+      <topRatio>0.916666666666667</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9">
-      <backgroundColor>FFFFFF</backgroundColor>
+      <backgroundColor>FAFAFA</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>785</height>
+      <height>582</height>
       <heightRatio>1</heightRatio>
       <layerName>登录选择页面</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>1.41187050359712</sizeRatio>
+      <sizeRatio>1.455</sizeRatio>
       <top>0</top>
-      <topRatio>0.00127388535031847</topRatio>
-      <width>556</width>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel6">
       <backgroundImg>CPY0004.jpg</backgroundImg>
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>489</height>
+      <height>363</height>
       <heightRatio>0.622929936305732</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.881081081081081</sizeRatio>
       <top>0</top>
-      <width>556</width>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel6/panel1">
@@ -196,62 +202,65 @@ setTimeout(function() {
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>4</height>
-      <heightRatio>0.0081799591002045</heightRatio>
+      <heightRatio>0.0110192837465565</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0359712230215827</leftRatio>
+      <leftRatio>0.05</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.00775193798449612</sizeRatio>
-      <top>485</top>
-      <topRatio>0.991820040899795</topRatio>
-      <width>516</width>
-      <widthRatio>0.928057553956835</widthRatio>
+      <sizeRatio>0.0111111111111111</sizeRatio>
+      <top>359</top>
+      <topRatio>0.988980716253444</topRatio>
+      <width>360</width>
+      <widthRatio>0.9</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel8">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fontColor>929093</fontColor>
       <fontFamily>黑体</fontFamily>
-      <fontSizeAuto>15</fontSizeAuto>
-      <height>60</height>
-      <heightRatio>0.0764331210191083</heightRatio>
+      <fontSize>25</fontSize>
+      <height>44</height>
+      <heightRatio>0.0756013745704467</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <leftRatio>0.0018018018018018</leftRatio>
-      <sizeRatio>0.108108108108108</sizeRatio>
+      <sizeRatio>0.11</sizeRatio>
       <text>团队合作从这里开始</text>
-      <top>519</top>
-      <topRatio>0.661146496815287</topRatio>
-      <width>556</width>
+      <top>385</top>
+      <topRatio>0.661512027491409</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel10">
       <backgroundImg>login@2x.png</backgroundImg>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>48</height>
+      <height>36</height>
       <heightRatio>0.0611464968152866</heightRatio>
-      <left>41</left>
+      <layerVisible>false</layerVisible>
+      <left>30</left>
       <leftRatio>0.0738738738738739</leftRatio>
       <onClick>window.location.href = ee.getUrl("/login/loginCon");</onClick>
       <sizeRatio>0.231884057971014</sizeRatio>
-      <top>682</top>
+      <top>506</top>
       <topRatio>0.868789808917197</topRatio>
-      <width>207</width>
+      <width>149</width>
       <widthRatio>0.372972972972973</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel11">
       <backgroundImg>reg@2x.png</backgroundImg>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>48</height>
+      <height>36</height>
       <heightRatio>0.0611464968152866</heightRatio>
-      <left>313</left>
+      <layerVisible>false</layerVisible>
+      <left>225</left>
       <leftRatio>0.562162162162162</leftRatio>
       <onClick>window.location.href = ee.getUrl("/login/regMain");</onClick>
       <sizeRatio>0.231884057971014</sizeRatio>
-      <top>682</top>
+      <top>506</top>
       <topRatio>0.868789808917197</topRatio>
-      <width>207</width>
+      <width>149</width>
       <widthRatio>0.372972972972973</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel9/panel2">
@@ -259,16 +268,16 @@ setTimeout(function() {
       <dockY>ratio</dockY>
       <fontColor>929093</fontColor>
       <fontFamily>黑体</fontFamily>
-      <fontSizeAuto>30</fontSizeAuto>
-      <height>60</height>
-      <heightRatio>0.0764331210191083</heightRatio>
+      <fontSize>14</fontSize>
+      <height>44</height>
+      <heightRatio>0.0756013745704467</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
-      <leftRatio>0.0018018018018018</leftRatio>
-      <sizeRatio>0.108108108108108</sizeRatio>
+      <sizeRatio>0.11</sizeRatio>
       <text>欢迎使用团队任务管理系统</text>
-      <top>574</top>
-      <topRatio>0.731210191082803</topRatio>
-      <width>556</width>
+      <top>426</top>
+      <topRatio>0.731958762886598</topRatio>
+      <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
   </controls>
@@ -320,4 +329,5 @@ setTimeout("window.location.href = ee.getUrl(\"/main\");",2000);
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
+  <g5Items count="0" />
 </page>
