@@ -1,5 +1,5 @@
 <page>
-  <controls count="24">
+  <controls count="39">
     <control type="DivRoot" pathname="/divRoot">
       <backgroundColor>ffffff</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
@@ -243,7 +243,7 @@ setTimeout(function() {
       <layerVisible>false</layerVisible>
       <left>30</left>
       <leftRatio>0.0738738738738739</leftRatio>
-      <onClick>window.location.href = ee.getUrl("/login/loginCon");</onClick>
+      <onClick>g5.changePage("p3");</onClick>
       <sizeRatio>0.231884057971014</sizeRatio>
       <top>506</top>
       <topRatio>0.868789808917197</topRatio>
@@ -294,6 +294,13 @@ setTimeout(function() {
       <layerName>登录</layerName>
       <left>0</left>
       <leftRatio>0.0025</leftRatio>
+      <onCreate><![CDATA[sender.checkValid = function() {
+    var valid = true;
+    if (ee.getEditText(sender.login.c_userName).length<3) valid = false;
+    if (ee.getEditText(sender.login.c_password).length<3) valid = false;
+    sender.c_btnLogin.setEnabled(valid);
+}
+]]></onCreate>
       <sizeRatio>1.455</sizeRatio>
       <top>0</top>
       <width>400</width>
@@ -331,73 +338,620 @@ setTimeout(function() {
       <widthRatio>0.9</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17">
+      <aniAlpha>whiteAlpha:白色淡出</aniAlpha>
+      <aniPos>topFlyIn:顶部飞入</aniPos>
       <dockX>fill</dockX>
-      <dockY>ratio</dockY>
-      <fontColor>929093</fontColor>
-      <fontFamily>黑体</fontFamily>
-      <fontSize>25</fontSize>
-      <height>44</height>
-      <heightRatio>0.0756013745704467</heightRatio>
+      <ee_LocalName>login</ee_LocalName>
+      <fontColor>FFFFFF</fontColor>
+      <fontSizeAuto>20</fontSizeAuto>
+      <height>125</height>
+      <heightRatio>0.214776632302405</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.11</sizeRatio>
-      <text>团队合作从这里开始</text>
-      <top>385</top>
-      <topRatio>0.661512027491409</topRatio>
+      <sizeRatio>0.3125</sizeRatio>
+      <top>364</top>
+      <topRatio>0.625429553264605</topRatio>
       <width>400</width>
       <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel20">
+      <backgroundColor>00C0C0</backgroundColor>
+      <fontColor>5F5F5F</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>50</left>
+      <leftRatio>0.125</leftRatio>
+      <sizeRatio>0.473684210526316</sizeRatio>
+      <text>手机号
+或姓名</text>
+      <top>19</top>
+      <topRatio>0.152</topRatio>
+      <width>76</width>
+      <widthRatio>0.19</widthRatio>
+    </control>
+    <control type="Edit" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/edit1">
+      <backgroundSkin>empty</backgroundSkin>
+      <ee_LocalName>c_userName</ee_LocalName>
+      <fontColor>C7C7C7</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <hAlign>left</hAlign>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <inputFont>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</inputFont>
+      <inputFontSize>14</inputFontSize>
+      <layerVisible>false</layerVisible>
+      <left>134</left>
+      <leftRatio>0.335</leftRatio>
+      <onChange>sender.parentNode.parentNode.parentNode.checkValid();</onChange>
+      <sizeRatio>0.164383561643836</sizeRatio>
+      <text>请输入手机号或者姓名</text>
+      <top>19</top>
+      <topRatio>0.152</topRatio>
+      <width>219</width>
+      <widthRatio>0.5475</widthRatio>
+    </control>
+    <control type="Edit" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/edit2">
+      <backgroundSkin>empty</backgroundSkin>
+      <ee_LocalName>c_password</ee_LocalName>
+      <fontColor>C7C7C7</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <hAlign>left</hAlign>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <inputFont>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</inputFont>
+      <inputFontSize>14</inputFontSize>
+      <inputPassword>true</inputPassword>
+      <layerVisible>false</layerVisible>
+      <left>134</left>
+      <leftRatio>0.335</leftRatio>
+      <onChange>sender.parentNode.parentNode.parentNode.checkValid();</onChange>
+      <sizeRatio>0.203389830508475</sizeRatio>
+      <text>请输入密码</text>
+      <top>76</top>
+      <topRatio>0.608</topRatio>
+      <width>177</width>
+      <widthRatio>0.4425</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel21">
+      <backgroundColor>00C0C0</backgroundColor>
+      <fontColor>5F5F5F</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>50</left>
+      <leftRatio>0.125</leftRatio>
+      <sizeRatio>0.610169491525424</sizeRatio>
+      <text>密码</text>
+      <top>75</top>
+      <topRatio>0.6</topRatio>
+      <width>59</width>
+      <widthRatio>0.1475</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel22">
+      <aniDelay>300</aniDelay>
+      <aniPos>bottomBonus:底部落入</aniPos>
+      <backgroundColor>FFFFFF</backgroundColor>
+      <cursor>pointer</cursor>
+      <fontColor>47A9F9</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <hAlign>right</hAlign>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>300</left>
+      <leftRatio>0.75</leftRatio>
+      <onClick>window.location.href = ee.getUrl("/login/resetPassword1");
+ </onClick>
+      <sizeRatio>0.418604651162791</sizeRatio>
+      <text>忘记密码？</text>
+      <top>75</top>
+      <topRatio>0.6</topRatio>
+      <width>86</width>
+      <widthRatio>0.215</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel23">
+      <backgroundImg>mobile@2x.png</backgroundImg>
+      <backgroundImgMode>fill</backgroundImgMode>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>24</left>
+      <leftRatio>0.06</leftRatio>
+      <sizeRatio>1.16129032258065</sizeRatio>
+      <top>19</top>
+      <topRatio>0.152</topRatio>
+      <width>31</width>
+      <widthRatio>0.0775</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel24">
+      <backgroundImg>password@2x.png</backgroundImg>
+      <backgroundImgMode>fill</backgroundImgMode>
+      <height>36</height>
+      <heightRatio>0.288</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>25</left>
+      <leftRatio>0.0625</leftRatio>
+      <sizeRatio>1.16129032258065</sizeRatio>
+      <top>75</top>
+      <topRatio>0.6</topRatio>
+      <width>31</width>
+      <widthRatio>0.0775</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel25">
+      <alpha>0.5</alpha>
+      <backgroundColor>C0C0C0</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <height>1</height>
+      <heightRatio>0.008</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>18</left>
+      <leftRatio>0.045</leftRatio>
+      <outerLeft>20</outerLeft>
+      <outerRight>20</outerRight>
+      <sizeRatio>0.00274725274725275</sizeRatio>
+      <top>116</top>
+      <topRatio>0.928</topRatio>
+      <width>364</width>
+      <widthRatio>0.91</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel17/panel26">
+      <alpha>0.5</alpha>
+      <backgroundColor>C0C0C0</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <height>1</height>
+      <heightRatio>0.0087719298245614</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>18</left>
+      <leftRatio>0.045</leftRatio>
+      <outerLeft>20</outerLeft>
+      <outerRight>20</outerRight>
+      <sizeRatio>0.00274725274725275</sizeRatio>
+      <top>57</top>
+      <topRatio>0.5</topRatio>
+      <width>364</width>
+      <widthRatio>0.91</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel251">
+      <backgroundColor>8ED0F9</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <cursor>pointer</cursor>
+      <ee_LocalName>c_btnLogin</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontColor>FFFFFF</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>12</fontSize>
+      <height>39</height>
+      <heightRatio>0.0670103092783505</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>43</left>
+      <leftRatio>0.1075</leftRatio>
+      <onClick>if (!sender.v_enabled) return;
+login.userName = ee.getEditText(g5.pages.p3.login.c_userName);
+login.password = ee.getEditText(g5.pages.p3.login.c_password);
+login();</onClick>
+      <onCreate>g5.initButtonV3(sender,[
+    new g5.BStyle("#1da1f2","#1a91da","#1781c2","","","","","","",""),
+    new g5.BStyle("#8ed0f9","#8ed0f9","#8ed0f9","","","","","","","")
+]);
+sender.style.borderRadius = parseInt(eb.getDivRect(sender).h/2) + "px";
+
+sender.v_enabled = true;
+sender.setEnabled = function(enabled) {
+    this.v_enabled = enabled;
+    this.init(enabled?0:1);
+}
+sender.setEnabled(false);
+
+
+
+
+
+
+</onCreate>
+      <sizeRatio>0.268965517241379</sizeRatio>
+      <text>登 录</text>
+      <top>511</top>
+      <topRatio>0.878006872852234</topRatio>
+      <width>145</width>
+      <widthRatio>0.3625</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel18">
-      <backgroundImg>login@2x.png</backgroundImg>
-      <dockX>ratio</dockX>
-      <dockY>ratio</dockY>
-      <height>36</height>
-      <heightRatio>0.0611464968152866</heightRatio>
+      <backgroundColor>E0E0E0</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <cursor>pointer</cursor>
+      <ee_LocalName>c_btnCancel</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontColor>1DA1F2</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>12</fontSize>
+      <height>39</height>
+      <heightRatio>0.0670103092783505</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>30</left>
-      <leftRatio>0.0738738738738739</leftRatio>
-      <onClick>window.location.href = ee.getUrl("/login/loginCon");</onClick>
-      <sizeRatio>0.231884057971014</sizeRatio>
-      <top>506</top>
-      <topRatio>0.868789808917197</topRatio>
-      <width>149</width>
-      <widthRatio>0.372972972972973</widthRatio>
+      <left>218</left>
+      <leftRatio>0.545</leftRatio>
+      <onClick>g5.changePage("p2");</onClick>
+      <onCreate>g5.initButtonV3(sender,[
+    new g5.BStyle("","#e8f5fe","#d2ecfc","","","","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
+]);
+sender.style.borderRadius = parseInt(eb.getDivRect(sender).h/2) + "px";
+
+
+
+
+
+
+</onCreate>
+      <sizeRatio>0.268965517241379</sizeRatio>
+      <text>取 消</text>
+      <top>511</top>
+      <topRatio>0.878006872852234</topRatio>
+      <width>145</width>
+      <widthRatio>0.3625</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel19">
-      <backgroundImg>reg@2x.png</backgroundImg>
-      <dockX>ratio</dockX>
-      <dockY>ratio</dockY>
-      <height>36</height>
-      <heightRatio>0.0611464968152866</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>225</left>
-      <leftRatio>0.562162162162162</leftRatio>
-      <onClick>window.location.href = ee.getUrl("/login/regMain");</onClick>
-      <sizeRatio>0.231884057971014</sizeRatio>
-      <top>506</top>
-      <topRatio>0.868789808917197</topRatio>
-      <width>149</width>
-      <widthRatio>0.372972972972973</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/layouty1/layoutyitem2/panel14/panel20">
+    <control type="Panel" pathname="/divRoot/panel19">
+      <backgroundColor>00C0C0</backgroundColor>
+      <cursor>move</cursor>
       <dockX>fill</dockX>
-      <dockY>ratio</dockY>
-      <fontColor>929093</fontColor>
-      <fontFamily>黑体</fontFamily>
-      <fontSize>14</fontSize>
-      <height>44</height>
-      <heightRatio>0.0756013745704467</heightRatio>
+      <dockY>fill</dockY>
+      <ee_LocalName>popBlack</ee_LocalName>
+      <height>778</height>
+      <heightRatio>1</heightRatio>
+      <layerName>主界面弹窗黑色</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.11</sizeRatio>
-      <text>欢迎使用团队任务管理系统</text>
-      <top>426</top>
-      <topRatio>0.731958762886598</topRatio>
-      <width>400</width>
+      <onClick>if (!ee.isInternalNode(sender, event.target)) {
+    return;
+}
+if (sender.a3.style.visibility != "hidden") return;
+if (sender.a7.style.visibility != "hidden") return;
+sender.close();
+</onClick>
+      <onCreate><![CDATA[sender.style.position = "fixed";
+sender.style.backgroundColor = "#00000080";
+sender.style.zIndex=100;
+sender.v_canScroll = false;
+
+sender.addEventListener("mousewheel", function(e) {
+    if (!sender.v_canScroll) {
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
+        e.returnValue = false;
+        return false;
+    }
+    sender.v_canScroll = false;
+});
+
+sender.close = function() {
+    for (var i=0; i<sender.eeChildren.length; i++) {
+        if (sender.eeChildren[i].style.visibility != "hidden") {
+            if (sender.eeChildren[i].close) {
+                sender.eeChildren[i].close();
+                ee.setVisible(this, false);
+            } else {
+                ee.showAni(sender.eeChildren[i], 1);
+            }
+        }
+    }
+}
+
+if ("ontouchstart" in window) {
+    if (g5.isIos) {
+        //1.touch down drag page bug
+        //2.touch down context menu
+        //eb.addEvent(sender, "touchstart", function (event) {
+        //    event.preventDefault();
+        //    window.event? window.event.cancelBubble = true : event.stopPropagation();
+        //    return false;
+        //}, false);
+        eb.addEvent(sender, "touchend", function (event) {
+            event.preventDefault();
+            window.event? window.event.cancelBubble = true : event.stopPropagation();
+            return false;
+        }, false);
+        eb.addEvent(sender, "touchmove", function (event) {
+            event.preventDefault();
+            window.event? window.event.cancelBubble = true : event.stopPropagation();
+            return false;
+        }, false);
+    }
+}
+]]></onCreate>
+      <sizeRatio>0.68788682581786</sizeRatio>
+      <top>0</top>
+      <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27">
+      <ani2Alpha>disappear:渐变消失</ani2Alpha>
+      <ani2Size>pointDisappear:收缩消失成点</ani2Size>
+      <aniAlpha>appear:渐变出现</aniAlpha>
+      <backgroundColor>FFFFFF</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <dockX>center</dockX>
+      <dockY>center</dockY>
+      <ee_LocalName>a7</ee_LocalName>
+      <height>211</height>
+      <heightRatio>0.27120822622108</heightRatio>
+      <layerName>通用提示窗口</layerName>
+      <layerVisible>false</layerVisible>
+      <left>386</left>
+      <onAni2End>ee.setVisible(sender.parentNode, false);
+</onAni2End>
+      <onClick>        window.event? window.event.cancelBubble = true : event.stopPropagation();
+</onClick>
+      <onCreate>//samples
+/*
+popBlack.a7.show(
+        "提示", "修改您的用户信息完成",
+        [new g5.BStyle("#1da1f2","#1a91da","#1781c2","确定","确定","确定","#ffffff","#ffffff","#ffffff","")],
+        //[new g5.BStyle("","#e8f5fe","#d2ecfc","确定","确定","确定","#1da1f2","#1da1f2","#1da1f2","#1da1f2")],
+        function() {}
+    );
+*/
+
+//public
+sender.style.boxSizing="border-box";
+sender.style.borderWidth = "1px";
+sender.style.borderColor = "#a0a0a0";
+sender.style.borderStyle = "solid";
+sender.style.borderRadius = "10px";
+sender.style.boxShadow = "5px 5px 15px #808080";
+//sender.className = "elementToFadeInAndOut";
+   
+   
+//implementation
+sender.show = function(title,text,bStyle,onComplete) {
+    ee.setText(this.c_title,title);
+    ee.setText(this.c_text,text);
+    this.c_btnOk.v_style = bStyle;
+    this.c_btnOk.init(0);
+    this.onComplete = onComplete;
+    ee.setVisible(this.parentNode, true);
+    ee.setVisible(this, true);
+    document.addEventListener("keydown", this.onKeyDown);
+}
+
+sender.close = function() {
+    ee.setVisible(this, false);
+    ee.setVisible(this.parentNode, false);
+    document.removeEventListener("keydown", this.onKeyDown);
+}
+
+sender.onKeyDown = function(event) {
+    event = event || window.event;
+    if (event.keyCode == 13) {
+        sender.close();
+        sender.onComplete();        
+    }
+}
+
+
+if ("ontouchstart" in window) {
+    sender.addEventListener("touchstart", function(event) {
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+    sender.addEventListener("touchend", function(event) {
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+    sender.addEventListener("touchmove", function(event) {
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+}</onCreate>
+      <sizeRatio>0.587743732590529</sizeRatio>
+      <top>283</top>
+      <width>359</width>
+      <widthRatio>0.317418213969938</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27/panel28">
+      <ee_LocalName>c_text</ee_LocalName>
+      <fontColor>657786</fontColor>
+      <fontFamily>微软雅黑</fontFamily>
+      <fontSize>12</fontSize>
+      <height>78</height>
+      <heightRatio>0.369668246445498</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>26</left>
+      <leftRatio>0.0724233983286908</leftRatio>
+      <sizeRatio>0.252427184466019</sizeRatio>
+      <text>此操作不可撤消，并且将从你的个人资料、关注你的任何账号的时间线以及 GET搜索结果中移除。</text>
+      <top>54</top>
+      <topRatio>0.255924170616114</topRatio>
+      <width>309</width>
+      <widthRatio>0.860724233983287</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27/panel29">
+      <dockX>center</dockX>
+      <ee_LocalName>c_title</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontColor>202326</fontColor>
+      <fontFamily>微软雅黑</fontFamily>
+      <fontSize>14</fontSize>
+      <height>39</height>
+      <heightRatio>0.184834123222749</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>25</left>
+      <leftRatio>0.0696378830083565</leftRatio>
+      <sizeRatio>0.12621359223301</sizeRatio>
+      <text>删除发言</text>
+      <top>18</top>
+      <topRatio>0.0853080568720379</topRatio>
+      <width>309</width>
+      <widthRatio>0.860724233983287</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27/panel30">
+      <backgroundColor>00C0C0</backgroundColor>
+      <cursor>move</cursor>
+      <dockX>fill</dockX>
+      <dockY>top</dockY>
+      <height>65</height>
+      <heightRatio>0.308056872037915</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onCreate><![CDATA[sender.v_down = false;
+sender.style.backgroundColor = "rgba(255,255,255,0.01)";
+if ("ontouchstart" in window) {
+    sender.addEventListener("touchstart", function(event) {
+        var sender = event.target;
+        sender.v_down = true;
+        sender.v_x = event.changedTouches[0].screenX;
+        sender.v_y = event.changedTouches[0].screenY;
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+    sender.addEventListener("touchend", function(event) {
+        var sender = event.target;
+        sender.v_down = false;
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+    sender.addEventListener("touchmove", function(event) {
+        var sender = event.target;
+        if (sender.v_down) {
+            var dx = event.changedTouches[0].screenX - sender.v_x;
+            var dy = event.changedTouches[0].screenY - sender.v_y;
+            var rect = eb.getDivRect(sender.parentNode);
+            var rectP = eb.getDivRect(sender.parentNode.parentNode);
+            if (rect.x+dx<0) dx = null;
+            if (rect.x+dx+rect.w>=rectP.w) dx = null;
+            if (dx!=null) {
+                sender.v_x = event.changedTouches[0].screenX;
+                dx = rect.x+dx;
+            }
+            if (rect.y+dy<0) dy = null;
+            if (rect.y+dy+rect.h>=rectP.h) dy = null;
+            if (dy!=null) {
+                sender.v_y = event.changedTouches[0].screenY ;
+                dy = rect.y+dy;
+            }
+            ee.setRect(sender.parentNode, dx, dy, null, null);
+        }
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    });
+} else {
+    sender.onpointerdown = function(event) {
+        var sender = event.target;
+        sender.v_down = true;
+        sender.v_x = event.clientX;
+        sender.v_y = event.clientY;
+        sender.setPointerCapture(event.pointerId);
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    }
+    sender.onpointerup = function(event) {
+        var sender = event.target;
+        sender.v_down = false;
+        sender.releasePointerCapture(event.pointerId);
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    }
+    sender.onpointermove = function(event) {
+        var sender = event.target;
+        if (sender.v_down) {
+            var dx = event.clientX - sender.v_x;
+            var dy = event.clientY - sender.v_y;
+            var rect = eb.getDivRect(sender.parentNode);
+            var rectP = eb.getDivRect(sender.parentNode.parentNode);
+            if (rect.x+dx<0) dx = null;
+            if (rect.x+dx+rect.w>=rectP.w) dx = null;
+            if (dx!=null) {
+                sender.v_x = event.clientX;
+                dx = rect.x+dx;
+            }
+            if (rect.y+dy<0) dy = null;
+            if (rect.y+dy+rect.h>=rectP.h) dy = null;
+            if (dy!=null) {
+                sender.v_y = event.clientY;
+                dy = rect.y+dy;
+            }
+            ee.setRect(sender.parentNode, dx, dy, null, null);
+        }
+        window.event? window.event.cancelBubble = true : event.stopPropagation();
+        event.returnValue = false;
+        return false;
+    }
+}
+
+
+
+
+]]></onCreate>
+      <sizeRatio>0.181058495821727</sizeRatio>
+      <top>0</top>
+      <width>359</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27/panel31">
+      <backgroundColor>8ED0F9</backgroundColor>
+      <cursor>pointer</cursor>
+      <dockX>center</dockX>
+      <ee_LocalName>c_btnOk</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontColor>1DA1F2</fontColor>
+      <fontFamily>微软雅黑</fontFamily>
+      <fontSize>12</fontSize>
+      <height>40</height>
+      <heightRatio>0.18957345971564</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>116</left>
+      <leftRatio>0.323119777158774</leftRatio>
+      <onClick>sender.parentNode.close();
+sender.parentNode.onComplete();</onClick>
+      <onCreate>g5.initButtonV3(sender,[
+    new g5.BStyle("","#e8f5fe","#d2ecfc","","","","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
+]);
+sender.style.borderRadius = parseInt(eb.getDivRectSetting(sender).h/2) + "px";
+
+</onCreate>
+      <sizeRatio>0.317460317460317</sizeRatio>
+      <text>确认</text>
+      <top>142</top>
+      <topRatio>0.672985781990521</topRatio>
+      <width>126</width>
+      <widthRatio>0.350974930362117</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel19/panel27/panel32">
+      <cursor>pointer</cursor>
+      <dockX>right</dockX>
+      <dockY>top</dockY>
+      <height>36</height>
+      <heightRatio>0.170616113744076</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>305</left>
+      <leftRatio>0.84958217270195</leftRatio>
+      <onClick>sender.parentNode.close();</onClick>
+      <onCreate><![CDATA[ee.setText(sender,
+    "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:5px 8px 8px 5px;fill:rgba(80,80,80,1);vertical-align:middle;\">" + g5.icon.close + "</svg>"
+);
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <outerRight>18</outerRight>
+      <outerTop>15</outerTop>
+      <sizeRatio>1</sizeRatio>
+      <top>15</top>
+      <topRatio>0.0710900473933649</topRatio>
+      <width>36</width>
+      <widthRatio>0.100278551532033</widthRatio>
+    </control>
   </controls>
-  <taskSet count="1">
+  <taskSet count="2">
     <taskSetItem name="loginToken">
       <script1>g5.token = eb.getCookie("paToken"); 
 if (eb.isEmpty(g5.token)) { 
@@ -443,11 +997,61 @@ setTimeout("window.location.href = ee.getUrl(\"/main\");",2000);
 
 </script3>
     </taskSetItem>
+    <taskSetItem name="login">
+      <script1>//userName,password
+eio.appendString8(login.userName);
+eio.appendString8(login.password);
+
+</script1>
+      <script2>var username = eio.readString8();
+var password = eio.readString8();
+var passwordMd5 = es.getMd5(password);
+var sql,sqlResult;  
+
+sql = "exec login '" + db.encode(username) + "'," +
+    "'" + passwordMd5 + "'";
+sqlResult = db.executeQuery("PJ", sql);   
+if (sqlResult == null) {
+    eio.appendString8("F");
+    eio.appendString8("系统繁忙请稍后再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getInt32(sqlResult, "errorCode")!=0) {    
+    eio.appendString8("F");
+    eio.appendString8(db.getString(sqlResult, "errorString"));
+    es.logCommon("ProjectAdmin: 用户手工登录失败,username=" + username + ",password=" + password);
+    return;
+}   
+eio.appendString8("T");
+eio.appendString8(db.getString(sqlResult, "errorString"));//errorCode=0时 返回的是token的值
+
+es.logCommon("ProjectAdmin: 用户手工登录：" + username);
+</script2>
+      <script3>var resultCode=eio.readString8();     
+if (resultCode=="F") {  
+    g5.alert1("警告", "登录失败：" + eio.readString8());
+    return;
+}  
+eb.setCookie("paToken", eio.readString8()); 
+
+//获取令牌
+loginToken();
+
+
+
+</script3>
+    </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="5">
+  <g5Items count="8">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
+      <functionParam />
+      <functionCode />
+    </item>
+    <item name="root" type="10">
+      <varValue>ee.getControl("divRoot");</varValue>
       <functionParam />
       <functionCode />
     </item>
@@ -585,6 +1189,37 @@ if (page) {
     ee.setVisible(page, true);
 }
 </functionCode>
+    </item>
+    <item name="alert1" type="20">
+      <varValue />
+      <functionParam>title,text</functionParam>
+      <functionCode>g5.root.popBlack.a7.show(
+    title, text,
+    [new g5.BStyle("#1da1f2","#1a91da","#1781c2","确定","确定","确定","#ffffff","#ffffff","#ffffff","")],
+    function() {}
+);</functionCode>
+    </item>
+    <item name="icon" type="10">
+      <varValue><![CDATA[{
+heart1: "<g><path d=\"M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12zM7.354 4.225c-2.08 0-3.903 1.988-3.903 4.255 0 5.74 7.034 11.596 8.55 11.658 1.518-.062 8.55-5.917 8.55-11.658 0-2.267-1.823-4.255-3.903-4.255-2.528 0-3.94 2.936-3.952 2.965-.23.562-1.156.562-1.387 0-.014-.03-1.425-2.965-3.954-2.965z\"></path></g>",
+heart2: "<g><path d=\"M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z\"></path></g>",
+unlike: "<g><path d=\"M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z\"></path></g>",
+forward: "<g><path d=\"M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z\"></path></g>",
+trash: "<g><path d=\"M20.746 5.236h-3.75V4.25c0-1.24-1.01-2.25-2.25-2.25h-5.5c-1.24 0-2.25 1.01-2.25 2.25v.986h-3.75c-.414 0-.75.336-.75.75s.336.75.75.75h.368l1.583 13.262c.216 1.193 1.31 2.027 2.658 2.027h8.282c1.35 0 2.442-.834 2.664-2.072l1.577-13.217h.368c.414 0 .75-.336.75-.75s-.335-.75-.75-.75zM8.496 4.25c0-.413.337-.75.75-.75h5.5c.413 0 .75.337.75.75v.986h-7V4.25zm8.822 15.48c-.1.55-.664.795-1.18.795H7.854c-.517 0-1.083-.246-1.175-.75L5.126 6.735h13.74L17.32 19.732z\"></path><path d=\"M10 17.75c.414 0 .75-.336.75-.75v-7c0-.414-.336-.75-.75-.75s-.75.336-.75.75v7c0 .414.336.75.75.75zm4 0c.414 0 .75-.336.75-.75v-7c0-.414-.336-.75-.75-.75s-.75.336-.75.75v7c0 .414.336.75.75.75z\"></path></g>",
+pin: "<g><path d=\"M20.472 14.738c-.388-1.808-2.24-3.517-3.908-4.246l-.474-4.307 1.344-2.016c.258-.387.28-.88.062-1.286-.218-.406-.64-.66-1.102-.66H7.54c-.46 0-.884.254-1.1.66-.22.407-.197.9.06 1.284l1.35 2.025-.42 4.3c-1.667.732-3.515 2.44-3.896 4.222-.066.267-.043.672.222 1.01.14.178.46.474 1.06.474h3.858l2.638 6.1c.12.273.39.45.688.45s.57-.177.688-.45l2.638-6.1h3.86c.6 0 .92-.297 1.058-.474.265-.34.288-.745.228-.988zM12 20.11l-1.692-3.912h3.384L12 20.11zm-6.896-5.413c.456-1.166 1.904-2.506 3.265-2.96l.46-.153.566-5.777-1.39-2.082h7.922l-1.39 2.08.637 5.78.456.153c1.355.45 2.796 1.78 3.264 2.96H5.104z\"></path></g>",
+bookMark: "<g><path d=\"M23.074 3.35H20.65V.927c0-.414-.337-.75-.75-.75s-.75.336-.75.75V3.35h-2.426c-.414 0-.75.337-.75.75s.336.75.75.75h2.425v2.426c0 .414.335.75.75.75s.75-.336.75-.75V4.85h2.424c.414 0 .75-.335.75-.75s-.336-.75-.75-.75zM19.9 10.744c-.415 0-.75.336-.75.75v9.782l-6.71-4.883c-.13-.095-.285-.143-.44-.143s-.31.048-.44.144l-6.71 4.883V5.6c0-.412.337-.75.75-.75h6.902c.414 0 .75-.335.75-.75s-.336-.75-.75-.75h-6.9c-1.242 0-2.25 1.01-2.25 2.25v17.15c0 .282.157.54.41.668.25.13.553.104.78-.062L12 17.928l7.458 5.43c.13.094.286.143.44.143.117 0 .234-.026.34-.08.252-.13.41-.387.41-.67V11.495c0-.414-.335-.75-.75-.75z\"></path></g>",
+back: "<g><path d=\"M20 11H7.414l4.293-4.293c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0l-6 6c-.39.39-.39 1.023 0 1.414l6 6c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L7.414 13H20c.553 0 1-.447 1-1s-.447-1-1-1z\"></path></g>",
+youtube: "<g><path d=\"M1995 3219 c-231 -3 -472 -9 -535 -13 -203 -13 -428 -36 -501 -51 -151 -32 -305 -145 -372 -272 -77 -149 -110 -450 -110 -1028 0 -559 32 -879 101 -1025 60 -125 232 -254 379 -285 219 -46 663 -65 1483 -65 995 0 1443 26 1609 93 184 74 290 205 331 408 83 407 82 1318 -1 1733 -27 134 -65 213 -139 290 -68 71 -145 117 -235 139 -240 60 -1028 90 -2010 76z m618 -1084 c251 -154 456 -282 456 -285 0 -4 -774 -483 -946 -586 l-43 -25 0 611 0 611 39 -23 c21 -13 244 -149 494 -303z\"/></g>",
+dot3: "<g><circle cx='5' cy='12' r='2'></circle><circle cx='12' cy='12' r='2'></circle><circle cx='19' cy='12' r='2'></circle></g>",
+mute: "<g><path d=\"M1.75 22.354c-.192 0-.384-.073-.53-.22-.293-.293-.293-.768 0-1.06L20.395 1.898c.293-.294.768-.294 1.06 0s.294.767 0 1.06L2.28 22.135c-.146.146-.338.22-.53.22zm1.716-5.577c-.134 0-.27-.036-.392-.11-.67-.413-1.07-1.13-1.07-1.917v-5.5c0-1.24 1.01-2.25 2.25-2.25H6.74l7.047-5.588c.225-.18.533-.215.792-.087.258.125.423.387.423.675v3.28c0 .415-.336.75-.75.75s-.75-.335-.75-.75V3.553L7.47 8.338c-.134.104-.298.162-.467.162h-2.75c-.413 0-.75.337-.75.75v5.5c0 .263.134.5.356.64.353.216.462.678.245 1.03-.14.23-.387.357-.64.357zm10.787 5.973c-.166 0-.33-.055-.466-.162l-4.795-3.803c-.325-.258-.38-.73-.122-1.054.258-.322.73-.38 1.054-.12l3.58 2.838v-7.013c0-.414.335-.75.75-.75s.75.336.75.75V22c0 .288-.166.55-.425.675-.104.05-.216.075-.327.075z\"></path></g>",
+homePage: "<g><path d=\"M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z\"></path></g>",
+menu: "<g><path d=\"M19.98 1.775H4.02c-1.24 0-2.25 1.01-2.25 2.25v15.95c0 1.24 1.01 2.25 2.25 2.25h15.96c1.24 0 2.25-1.01 2.25-2.25V4.025c0-1.24-1.01-2.25-2.25-2.25zm.75 18.2c0 .42-.34.75-.75.75H4.02c-.41 0-.75-.33-.75-.75v-9.48h17.46v9.48zm0-10.23H3.27v-5.72c0-.42.34-.75.75-.75h15.96c.41 0 .75.33.75.75v5.72z\"></path><path d=\"M8.96 6.515v.09c0 .95-.78 1.72-1.73 1.72h-.08c-.95 0-1.73-.77-1.73-1.72v-.09c0-.95.78-1.73 1.73-1.73h.08c.95 0 1.73.78 1.73 1.73zm9.54.04c0 .42-.34.75-.75.75h-6.39c-.41 0-.75-.33-.75-.75 0-.41.34-.75.75-.75h6.39c.41 0 .75.34.75.75zm-9.54 7.17v.09c0 .95-.78 1.73-1.73 1.73h-.08c-.95 0-1.73-.78-1.73-1.73v-.09c0-.95.78-1.72 1.73-1.72h.08c.95 0 1.73.77 1.73 1.72zm9.54.05c0 .41-.34.75-.75.75h-6.39c-.41 0-.75-.34-.75-.75 0-.42.34-.75.75-.75h6.39c.41 0 .75.33.75.75zm0 3.6c0 .42-.34.75-.75.75h-6.39c-.41 0-.75-.33-.75-.75 0-.41.34-.75.75-.75h6.39c.41 0 .75.34.75.75z\"></path></g>",
+speaker: "<g transform='translate(0.000000,300.000000) scale(0.100000,-0.12000)' stroke='none'> <path d='M1954 2476 c-37 -16 -64 -51 -64 -84 0 -51 27 -78 124 -126 222 -108 379 -295 448 -533 20 -67 23 -100 22 -238 0 -152 -2 -165 -32 -255 -78 -235 -230 -404 -463 -514 -76 -36 -99 -61 -99 -107 0 -50 49 -99 101 -99 11 0 49 14 86 30 211 96 412 295 509 505 66 144 86 233 91 410 6 184 -11 292 -66 430 -96 239 -288 445 -513 549 -96 45 -107 47 -144 32z'/> <path d='M1185 2215 l-260 -153 0 -562 0 -562 260 -154 c143 -84 270 -154 283 -154 33 0 76 25 98 57 18 27 19 61 22 797 2 752 2 770 -18 810 -21 45 -64 76 -102 75 -12 0 -140 -70 -283 -154z'/> <path d='M1812 2036 c-38 -18 -56 -57 -48 -105 7 -46 27 -65 96 -90 80 -29 151 -95 192 -179 30 -60 33 -75 33 -157 0 -82 -3 -97 -32 -156 -40 -81 -103 -141 -188 -180 -73 -33 -105 -68 -105 -115 0 -39 39 -90 75 -96 33 -7 127 26 190 66 76 49 122 93 164 155 157 235 130 520 -69 722 -111 113 -235 167 -308 135z'/> <path d='M384 1951 c-66 -40 -64 -27 -64 -444 0 -407 2 -420 53 -449 15 -9 85 -15 215 -18 l192 -5 0 468 0 467 -182 0 c-163 0 -187 -2 -214 -19z'/> </g>",
+close: "<g><path d=\"M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z\"></path></g>",
+end:""
+}]]></varValue>
+      <functionParam />
+      <functionCode />
     </item>
   </g5Items>
 </page>
