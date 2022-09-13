@@ -5214,7 +5214,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <widthRatio>0.893013100436681</widthRatio>
     </control>
   </controls>
-  <taskSet count="15">
+  <taskSet count="16">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -5727,6 +5727,56 @@ ee.setTableData(ee.getControl("tablebody3"), g5.teamList, 0, 100);
 getTeam.dataset = g5.teamList;
 if (getTeam.onComplete) getTeam.onComplete(getTeam.dataset);</script3>
     </taskSetItem>
+    <taskSetItem name="getTeamV2">
+      <script1>//获取项目组列表
+//pageIndex,onComplete()
+eio.appendString8(eb.getCookie("paToken"));</script1>
+      <script2><![CDATA[var sql,sqlResult;
+var token = eio.readString8();
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+//获取项目组列表
+var top = (pageIndex+1)*pageSize;
+sql = 
+    "SELECT dbo.teamInfo.id, dbo.teamInfo.displayName " +
+    "  FROM dbo.teamInfo INNER JOIN " +
+    "  dbo.teamUser ON dbo.teamInfo.id = dbo.teamUser.teamId "+
+    "  where dbo.teamUser.userId = " + userId +
+    "  order by dbo.teamInfo.displayName";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");
+eio.appendDataSet(sqlResult,
+    "uId,uStatus,uRegDatetime,uLastAccessTime,uUserName,uMobile,uNickName,uNote,uPhoto,uTitleBg,uHomePage,uFollowCount,uFansCount,uIsFollow,uIsBlock1,uIsBlock2,uEmail,uIsHide",
+    pageIndex*pageSize, pageSize);
+]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    return;
+}
+g5.teamList = eio.readDataSet();
+ee.setTableData(ee.getControl("tablebody3"), g5.teamList, 0, 100);
+
+
+getTeam.dataset = g5.teamList;
+if (getTeam.onComplete) getTeam.onComplete(getTeam.dataset);</script3>
+    </taskSetItem>
     <taskSetItem name="teamNew">
       <script1><![CDATA[//创建新的项目组
 g5.teamNameNew = ee.getEditText(ee.getControl("edit6"));
@@ -5938,7 +5988,7 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="8">
+  <g5Items count="12">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -5970,6 +6020,105 @@ end:""
       <varValue>ee.getControl("divRoot");</varValue>
       <functionParam />
       <functionCode />
+    </item>
+    <item name="TeamInfo" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode>var uSize = new g5.UserInfo();
+uSize = uSize.size;
+this.size = 6 + uSize + uSize;
+this.loadFromDataset = function(ds, x, idx) {
+    this.id = ds.getData(x,idx); x++;
+    this.status = ds.getData(x,idx); x++;
+    this.regDatetimeUTC = ds.getData(x,idx);
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.lastAccessTimeUTC = ds.getData(x,idx); x++;
+    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
+    this.title = ds.getData(x,idx); x++;
+    this.note = ds.getData(x,idx); x++;
+    this.creator = new g5.UserInfo();
+    this.creator.loadFromDataset(ds, x, idx); x += this.creator.size;
+    this.owner = new g5.UserInfo();
+    this.owner.loadFromDataset(ds, x, idx); x += this.owner.size;
+}
+this.setDataset = function(ds, x, idx) {
+    ds.setData(x,idx,this.id); x++;
+    ds.setData(x,idx,this.status); x++;
+    ds.setData(x,idx,this.regDatetimeUTC); x++;
+    ds.setData(x,idx,this.lastAccessTimeUTC); x++;
+    ds.setData(x,idx,this.title); x++;
+    ds.setData(x,idx,this.note); x++;
+    this.creator.setDataset(ds, x, idx); x += this.creator.size;
+    this.owner.setDataset(ds, x, idx); x += this.owner.size;
+}
+this.clone = function() {
+    var r = new g5.TeamInfo();
+    r.id = this.id;
+    r.status = this.status;
+    r.regDatetime = this.regDatetime;
+    r.regDatetimeUTC = this.regDatetimeUTC;
+    r.lastAccessTime = this.lastAccessTime;
+    r.lastAccessTimeUTC = this.lastAccessTimeUTC;
+    r.title = this.title;
+    r.note = this.note;
+    r.creator = this.creator.clone();
+    r.owner = this.owner.clone();
+    return r;
+}
+
+</functionCode>
+    </item>
+    <item name="UserInfo" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode>this.size = 11;
+this.loadFromDataset = function(ds, x, idx) {
+    this.id = ds.getData(x,idx); x++;
+    this.status = ds.getData(x,idx); x++;
+    this.regDatetimeUTC = ds.getData(x,idx);
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.lastAccessTimeUTC = ds.getData(x,idx); x++;
+    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
+    this.userName = ds.getData(x,idx); x++;
+    this.mobile = ds.getData(x,idx); x++;
+    this.nickName = ds.getData(x,idx); x++; 
+    this.note = ds.getData(x,idx); x++;
+    this.photo = ds.getData(x,idx); x++;
+    this.titleBg = ds.getData(x,idx); x++;
+    this.email = ds.getData(x,idx); x++;
+}
+this.setDataset = function(ds, x, idx) {
+    ds.setData(x,idx,this.id); x++;
+    ds.setData(x,idx,this.status); x++;
+    ds.setData(x,idx,this.regDatetimeUTC); x++;
+    ds.setData(x,idx,this.lastAccessTimeUTC); x++;
+    ds.setData(x,idx,this.userName); x++;
+    ds.setData(x,idx,this.mobile); x++;
+    ds.setData(x,idx,this.nickName); x++; 
+    ds.setData(x,idx,this.note); x++;
+    ds.setData(x,idx,this.photo); x++;
+    ds.setData(x,idx,this.titleBg); x++;
+    ds.setData(x6,idx,this.email); x++;
+}
+this.clone = function() {
+    var r = new g5.UserInfo();
+    r.id = this.id;
+    r.status = this.status;
+    r.regDatetime = this.regDatetime;
+    r.regDatetimeUTC = this.regDatetimeUTC;
+    r.lastAccessTime = this.lastAccessTime;
+    r.lastAccessTimeUTC = this.lastAccessTimeUTC;
+    r.userName = this.userName;
+    r.mobile = this.mobile;
+    r.nickName = this.nickName;
+    r.note = this.note;
+    r.photo = this.photo;
+    r.titleBg = this.titleBg;
+    r.email = this.email;
+    return r;
+}
+
+</functionCode>
     </item>
     <item name="BStyle" type="20">
       <varValue />
@@ -6098,6 +6247,254 @@ if (g5.currentPage) {
     [new g5.BStyle("#1da1f2","#1a91da","#1781c2","确定","确定","确定","#ffffff","#ffffff","#ffffff","")],
     function() {}
 );</functionCode>
+    </item>
+    <item name="renderTeam" type="20">
+      <varValue />
+      <functionParam>root</functionParam>
+      <functionCode><![CDATA[while (root.v_mode.length<5) root.v_mode += " ";
+var w = eb.getDivRect(root).w;
+var c,cy=10;
+
+root.v_userBar = true;
+root.style.boxSizing="border-box";
+root.style.borderWidth = "1px";
+root.style.borderColor = "rgb(230,236,240)";
+root.style.borderStyle = "solid";
+root.style.borderTop = "";
+root.style.borderLeft = "";
+root.style.borderRight = "";
+if (root.v_userInfo.status == "DISABLED") {
+} else if (root.v_userInfo.status == "Del") {
+} else {
+    root.style.cursor = "pointer";
+    ee.setOnClick(root,function(sender,event) {
+        g5.p2.p2.show(root.v_userInfo);
+    });
+    ee.setOnMouseEnter(root, function(sender,e){
+        sender.style.backgroundColor = "rgb(245,248,250)";
+    });
+    ee.setOnMouseLeave(root, function(sender,e){
+        sender.style.backgroundColor = "#ffffff";
+    });
+}
+
+//user photo
+c = createPanel(root, root.id+"panel13", "", 15,cy,50,50);
+c.style.borderRadius = "50%";
+c.v_timer = null;
+root.c_photo = c;
+c.style.cursor="pointer";
+root.setUserPhoto = function(photo) {
+    if ((root.v_userInfo.status == "DISABLED") || (root.v_userInfo.status == "Del") || (photo == "")) {
+        ee.setImage(root.c_photo,"/faith/main/user.png","trim","","")
+    } else {
+        ee.setImage(root.c_photo,"url:" + g5.imgUrl + photo,"trim","","")
+    }
+}
+root.setUserPhoto(root.v_userInfo.photo);
+ee.setOnClick(c,function(sender,event) {
+    if (root.v_userInfo.status == "DISABLED") {
+        g5.p2.p2.show(root.v_userInfo);
+        //g5.alert1("提示", "该用户处于禁封状态，目前无法查看该用户的信息");
+    } else if (root.v_userInfo.status == "Del") {
+        g5.p2.p2.show(root.v_userInfo);
+        //g5.alert1("提示", "该用户已销号，目前无法查看该用户的信息");
+    } else {
+        ee.getControl("panel280").show(root.c_photo, root.v_userInfo);
+    }
+    window.event? window.event.cancelBubble = true : event.stopPropagation();
+});
+g5.initImgButtonV1(c,"100%","80%","70%");
+
+
+//user nick name
+c = createPanel(root, root.id+"p16n", "", 77, cy+4, w-190, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "12pt";
+c.style.color = "#14171a";
+c.style.fontWeight = "bold";
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.style.cursor="pointer";
+c.innerHTML = root.v_userInfo.nickName;
+if (root.v_userInfo.status == "DISABLED") {
+} else if (root.v_userInfo.status == "Del") {
+} else {
+    c.style.cursor="pointer";
+    ee.setOnMouseEnter(c,function(sender,e){
+        sender.style.textDecoration="underline";
+    });
+    ee.setOnMouseLeave(c,function(sender,e){
+        sender.style.textDecoration="";
+    });
+}
+
+//username
+c = createPanel(root, root.id+"p16u", "", 77, cy+4, w-190, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "12pt";
+c.style.color = "#6e7f8d";
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.style.cursor="pointer";
+c.innerHTML = "@"+root.v_userInfo.userName;
+
+//note
+if (root.v_userInfo.note!="") {
+    c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
+    addText(c, root.v_userInfo.note, "left", "top", "微软雅黑", 12, "14171a", "normal");
+    eb.processDock();
+    var rect = eb.getDivRect(c.label);
+    ee.setRect(c, null, null, null, rect.h);
+    cy += rect.h;
+} else {
+    cy += 7;
+}
+
+//button
+c = null;
+if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
+} else if (root.v_userInfo.status == "DISABLED") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "封号", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_userInfo.status == "FREEZE") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "冻结", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_userInfo.status == "Del") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "已销号", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_mode.charAt(0)=="x") {
+    c = createPanel(root, root.id+"button11", "", 505, 12, 80, 40);
+    addText(c, "已屏蔽", "center", "middle", "微软雅黑", 12, "ffffff", "bold");
+    c.style.borderRadius = "20px";
+    root.v_isBlock = false;
+    root.c_button11 = c;
+    g5.initButtonV3(c,[
+        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","已屏蔽","已屏蔽","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("#ffffff","#f3e3eb","#f1cddb","屏蔽","屏蔽","屏蔽","#e0245e","#1da1f2","#1da1f2","#e0245e")
+    ]);
+    root.changeButton = function() {
+        this.v_isBlock = !this.v_isBlock;    
+        this.c_button11.init(this.v_isBlock?0:1);
+    }
+    ee.setOnClick(c, function(sender, event) {
+        if (sender.parentNode.v_isBlock) {
+            blockUser.userId = sender.parentNode.v_userInfo.id;
+            blockUser.isBlock = 0;
+            blockUser();    
+        } else {
+            blockUser.userId = sender.parentNode.v_userInfo.id;
+            blockUser.isBlock = 1;
+            blockUser();    
+        }
+        sender.parentNode.changeButton();
+        window.event? window.event.cancelBubble = true : event.stopPropagation();    
+    });
+    eb.initMouseEvent(c);
+    root.changeButton();    
+} else {
+    c = createPanel(root, root.id+"button01", "", w-128-15, 14, 128, 28);
+    c.v_right = w-15;
+    root.button1 = c;
+    c.style.cursor="pointer";
+    addText(c, "...", "center", "top", "微软雅黑", 11, "1DA1F2", "bold");
+    g5.initButtonV3(c,[
+        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","取消屏蔽","取消屏蔽","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("","#e8f5fe","#d2ecfc","关注","关注","关注","#1da1f2","#1da1f2","#1da1f2","#1da1f2"),
+        new g5.BStyle("#1da1f2","#ca2055","#b31d4b","正在关注","取消关注","取消关注","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("","#e8f5fe","#d2ecfc","编辑个人资料","编辑个人资料","编辑个人资料","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
+    ]);
+    c.style.borderRadius = parseInt(eb.getDivRectSetting(c).h/2) + "px";
+    c.refreshStatus = function(index) {
+        this.init(index);
+        var w = 100;
+        if (index == 0) {
+            w = 90;
+        } else if (index == 1) {
+            w = 55;
+        } else if (index == 2) {
+            w = 90;
+        } else if (index == 3) {
+            w = 120;
+        }
+        ee.setRect(this, this.v_right-w,null,w,null);
+    }
+    root.refreshButton = function() {
+        if (root.v_userInfo.isFollow) {
+            root.button1.refreshStatus(2);
+        } else {
+            root.button1.refreshStatus(1);
+        }
+        if (root.v_userInfo.userName == g5.myUserInfo.userName) {
+            root.button1.refreshStatus(3);
+        }
+        if (root.v_userInfo.isBlock1) {
+            root.button1.refreshStatus(0);
+        }
+    }
+    root.refreshButton();
+    ee.setOnClick(c, function(sender, event) {
+        if (sender.v_index==0) {
+            g5.setBlock1(root.v_userInfo,null);
+        } else if (sender.v_index==1) {
+            //follow
+            g5.setFollow(root.v_userInfo, function(v_userInfo) {
+                sender.refreshStatus(2);
+                root.v_userInfo = v_userInfo.clone();
+            });
+        } else if (sender.v_index==2) {
+            //unfollow
+            g5.setFollow(root.v_userInfo, function(v_userInfo) {
+                sender.refreshStatus(1);
+                root.v_userInfo = v_userInfo.clone();
+            });
+        } else if (sender.v_index==3) {
+            //编辑个人资料
+            g5.p2.p17.show();
+        }
+        window.event? window.event.cancelBubble = true : event.stopPropagation();    
+    });
+}
+if (c) root.c_button = c;
+
+cy+=10;
+eb.setDivRect(root,null,null,null,cy);
+return root; 
+
+
+
+
+]]></functionCode>
+    </item>
+    <item name="getUtcTime" type="20">
+      <varValue />
+      <functionParam>dbTime,returnString</functionParam>
+      <functionCode><![CDATA[//04 19 2020 10:35 UTC
+//yyyy-mm-dd hh:nn:ss
+//0123456789012345678
+if (dbTime.length!=19) return new Date();
+
+var r = new Date(Date.UTC(
+    parseInt(dbTime.substr(0,4)),
+    parseInt(dbTime.substr(5,2)) - 1,
+    parseInt(dbTime.substr(8,2)),
+    parseInt(dbTime.substr(11,2)),
+    parseInt(dbTime.substr(14,2)),
+    parseInt(dbTime.substr(17,2))
+));
+
+if (returnString) {
+    return ((r.getYear()<1000)?(r.getYear()+1900):r.getYear()) + "-" +
+        ((r.getMonth()+1)<10?"0":"") + (r.getMonth()+1) + "-" +
+        (r.getDate()<10?"0":"") + r.getDate() + " " +
+        (r.getHours()<10?"0":"") + r.getHours() + ":" +
+        (r.getMinutes()<10?"0":"") + r.getMinutes() + ":" +
+        (r.getSeconds()<10?"0":"") + r.getSeconds();
+} else {
+    return r;
+}]]></functionCode>
     </item>
   </g5Items>
 </page>
