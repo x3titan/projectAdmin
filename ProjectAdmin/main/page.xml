@@ -1,7 +1,7 @@
 <page>
-  <controls count="280">
+  <controls count="284">
     <control type="DivRoot" pathname="/divRoot">
-      <backgroundColor>ffffff</backgroundColor>
+      <backgroundColor>FFFFFF</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
@@ -32,9 +32,11 @@ setTimeout(function(){
 g5.history = false;
 getUserInfo();
 
-ee.showAni(ee.getControl("panel65"));
-g5.teamId = -1;
-getTeam();  
+//ee.showAni(ee.getControl("panel65"));
+//g5.teamId = -1;
+//getTeam();  
+eb.processDock();
+g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
 
 ee.getControl("edit7")._input.style.overflow = "auto";
 
@@ -90,6 +92,8 @@ wx.onMenuShareAppMessage({
       <width>1131</width>
     </control>
     <control type="Panel" pathname="/divRoot/panel114">
+      <backgroundColor>FFFFFF</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
       <dockX>center</dockX>
       <ee_LocalName>mainDiv</ee_LocalName>
       <fontSizeAuto>35</fontSizeAuto>
@@ -144,10 +148,9 @@ sender.changePage = function(page) {
       <ee_LocalName>p1</ee_LocalName>
       <height>586</height>
       <heightRatio>0.894656488549618</heightRatio>
-      <layerName>项目列表</layerName>
+      <layerName>项目组列表</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <leftRatio>0.0025</leftRatio>
       <onCreate><![CDATA[sender.v_fitInner = true;
 sender.v_lastScrollTop = 0;
 sender.v_items = new Array();
@@ -163,6 +166,7 @@ sender.onActive = function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
     ee.tiledResizeV(this, 2);
+    if (this.v_items.length<=0) this.loadFromDB();
 }
 
 sender.onDeactive = function() {
@@ -213,41 +217,152 @@ sender.refresh = function() {
     if (this.v_userInfo.id == g5.myUserInfo.id) this.v_needRefresh = true;
 }
 
-sender.refreshCount = function() {
-    if (!this.v_userInfo) return;
-    if (this.v_userInfo.followCount<=0) {
-        ee.setText(this.c_title, 
-            "<div style='display:inline'>" + this.v_userInfo.nickName+"<font color=#a0a0a0>@"+this.v_userInfo.userName+"</font></div><font>关注的用户</font>");
-    } else {
-        ee.setText(this.c_title, 
-            "<div style='display:inline'>" + this.v_userInfo.nickName+"<font color=#a0a0a0>@"+this.v_userInfo.userName+"</font></div><font>关注的用户("+this.v_userInfo.followCount+"人)</font>");
-    }
-    var c = this.c_title;
-    var root = {};
-    c.label.rows[0].cells[0].style.whiteSpace = "nowrap";
-    root.v_timeLabel = c.label.rows[0].cells[0].childNodes[1]; 
-    root.c_username = c.label.rows[0].cells[0].childNodes[0]; 
-    var r1 = eb.getDivRect(c.label.rows[0].cells[0]);
-    var r2 = eb.getDivRectSetting(c);
-    var r3 = eb.getDivRect(root.v_timeLabel);
-    if (r1.w>r2.w) {
-        root.c_username.style.width = (r2.w - r3.w - 20) + "px";
-        root.c_username.style.display = "inline-block";
-        root.c_username.style.overflow = "hidden";
-        root.c_username.style.verticalAlign = "text-top";
-        root.c_username.style.textOverflow = "ellipsis";
-    }
-}
-
-sender.refreshMyInfo = function() {
-    if (g5.currentPageIndex!=15) {
-        this.refresh();
+sender.show = function(v_userInfo) {
+    if (this.v_needRefresh) {
+        this.v_needRefresh = false;
+    } else if (this.v_userInfo.id == v_userInfo.id) {
+        g5.changeP2(15);
+        ee.tiledResizeV(this, 2);
+        document.documentElement.scrollTop = this.v_lastScrollTop;
         return;
     }
-    if (!this.v_userInfo) return;
-    if (this.v_userInfo.id != g5.myUserInfo.id) return;
-    this.v_userInfo = g5.myUserInfo.clone();
+    this.v_userInfo = v_userInfo.clone();
     this.refreshCount();
+    document.documentElement.scrollTop = 0;
+    this.v_pageIndex = 0;
+    for (var i=0; i<sender.v_items.length; i++) ee.removeControl(sender.v_items[i]);
+    sender.v_items = new Array();
+    g5.changeP2(-1);
+    g5.changeP2(15);
+    this.loadFromDB();               
+}
+
+sender.loadFromDB = function() {
+    getTeamV2.pageIndex = sender.v_pageIndex;
+    getTeamV2.onComplete = function(dataset) {
+        var root = sender;
+        var cy = 0;
+        var itemWidth = eb.getDivRect(root).w;
+        var itemCount = 0;
+        for (var i=0; i<dataset.rowCount; i++) {
+            itemCount++;
+            var item = createPanel(root, "p1list_" + dataset.getData(0,i), "", 0, cy, itemWidth, 5);
+            sender.loadRecord(item, dataset, i);
+            item.v_mode = "";
+            g5.renderTeam(item);
+            cy += eb.getDivRect(item).h;
+            sender.v_items.push(item);
+        }
+        eb.processDock();
+        var rect = eb.getDivRectSetting(g5.root.mainDiv.p2);
+        ee.tiledV(sender, 0, rect.h, 500); 
+        
+        if (itemCount<=0) {
+            sender.v_status = "noResult";
+            var item = createPanel(sender, "p2p16end", "", 0, cy, itemWidth, 60);
+            addText(item, "没有更多了", "center", "center", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "a0a0a0" ,"bold");
+            sender.v_items.push(item);
+        } else {
+            sender.v_status = "normal";
+        }
+        
+        if (sender.v_items.length>0) {
+            var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
+            ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
+        }
+        ee.tiledResizeV(sender, 3);
+    }
+    getTeamV2();
+}
+
+sender.loadRecord = function(panel, dataset, index) {
+    panel.v_teamInfo = new g5.TeamInfo();
+    panel.v_teamInfo.loadFromDataset(dataset,0,index);
+}
+
+sender.loadMore = function() {
+    if (this.v_status == "noResult") return;
+    this.v_pageIndex++;
+    this.loadFromDB();
+}
+]]></onCreate>
+      <sizeRatio>1.465</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel131">
+      <dockX>fill</dockX>
+      <ee_LocalName>p2</ee_LocalName>
+      <height>586</height>
+      <heightRatio>0.894656488549618</heightRatio>
+      <layerName>任务列表</layerName>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onCreate><![CDATA[sender.v_fitInner = true;
+sender.v_lastScrollTop = 0;
+sender.v_items = new Array();
+sender.c_title = g5.root.mainDiv.p2.p2.c_title;
+sender.v_needRefresh = false;
+sender.v_status = "";
+
+sender.v_pageIndex = 0;
+
+sender.onActive = function() {
+    g5.root.mainDiv.p2.changePage(g5.root.mainDiv.p2.p1);
+    setTimeout(function() {
+        document.documentElement.scrollTop = sender.v_lastScrollTop;
+    }, 1); 
+    ee.tiledResizeV(this, 2);
+    if (this.v_items.length<=0) this.loadFromDB();
+}
+
+sender.onDeactive = function() {
+    this.v_lastScrollTop = document.documentElement.scrollTop;
+    g5.root.mainDiv.p2.changePage(null);
+}
+
+
+
+
+
+
+
+sender.activePage = function() {
+    g5.pushHistory2("/" + escape(this.v_userInfo.userName) + "/following");
+    g5.pageMode = 0;
+    g5.refreshMain(true);
+    ee.setVisible(g5.p4, true);
+    g5.p4.changePage("a10");
+    ee.setVisible(this, true)
+}
+
+sender.close = function() {
+    this.v_lastScrollTop = document.documentElement.scrollTop;
+    ee.setVisible(g5.p4, false);
+    ee.setVisible(this, false)
+}
+
+sender.showByUserName = function(userName) {
+    if (userName == this.v_userInfo.userName) {
+        g5.changeP2(15);
+        setTimeout(function() {
+            document.documentElement.scrollTop = sender.v_lastScrollTop;
+        }, 1); 
+        ee.tiledResizeV(this, 2);
+        return;
+    }
+    if (getOtherUserInfo2.busy) false;
+    getOtherUserInfo2.keyType = "userName";
+    getOtherUserInfo2.userKey = userName;
+    getOtherUserInfo2.onComplete = function(v_userInfo) {
+        sender.show(v_userInfo);
+    }
+    getOtherUserInfo2();
+}
+
+sender.refresh = function() {
+    if (this.v_userInfo.id == g5.myUserInfo.id) this.v_needRefresh = true;
 }
 
 sender.show = function(v_userInfo) {
@@ -271,33 +386,29 @@ sender.show = function(v_userInfo) {
 }
 
 sender.loadFromDB = function() {
-    if (showFollowList.busy) return;
-    showFollowList.userId = this.v_userInfo.id;
-    showFollowList.pageIndex = sender.v_pageIndex;
-    showFollowList.onComplete = function(dataset) {
-        g5.loading.close();
+    getTeamV2.pageIndex = sender.v_pageIndex;
+    getTeamV2.onComplete = function(dataset) {
         var root = sender;
         var cy = 0;
         var itemWidth = eb.getDivRect(root).w;
         var itemCount = 0;
         for (var i=0; i<dataset.rowCount; i++) {
-            if (showFollowList.userId == dataset.getData(0,i)) continue;
             itemCount++;
-            var item = createPanel(root, "flwl_" + dataset.getData(0,i), "", 0, cy, itemWidth, 5);
+            var item = createPanel(root, "p1list_" + dataset.getData(0,i), "", 0, cy, itemWidth, 5);
             sender.loadRecord(item, dataset, i);
             item.v_mode = "";
-            g5.renderUserBar(item);
+            g5.renderTask(item);
             cy += eb.getDivRect(item).h;
             sender.v_items.push(item);
         }
         eb.processDock();
-        var rect = eb.getDivRectSetting(g5.p4);
+        var rect = eb.getDivRectSetting(g5.root.mainDiv.p2);
         ee.tiledV(sender, 0, rect.h, 500); 
         
         if (itemCount<=0) {
             sender.v_status = "noResult";
             var item = createPanel(sender, "p2p16end", "", 0, cy, itemWidth, 60);
-            addText(item, "没有更多了", "center", "center", "微软雅黑", 12, "a0a0a0" ,"bold");
+            addText(item, "没有更多了", "center", "center", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "a0a0a0" ,"bold");
             sender.v_items.push(item);
         } else {
             sender.v_status = "normal";
@@ -307,20 +418,18 @@ sender.loadFromDB = function() {
             var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
             ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
         }
-        ee.tiledResizeV(sender, 2);
+        ee.tiledResizeV(sender, 3);
     }
-    g5.loading.show();
-    showFollowList();
+    getTeamV2();
 }
 
 sender.loadRecord = function(panel, dataset, index) {
-    panel.v_userInfo = new g5.UserInfo();
-    panel.v_userInfo.loadFromDataset(dataset,0,index);
+    panel.v_teamInfo = new g5.TeamInfo();
+    panel.v_teamInfo.loadFromDataset(dataset,0,index);
 }
 
 sender.loadMore = function() {
     if (this.v_status == "noResult") return;
-    if (showFollowList.busy) return;
     this.v_pageIndex++;
     this.loadFromDB();
 }
@@ -331,14 +440,17 @@ sender.loadMore = function() {
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel125">
-      <dockX>fill</dockX>
+      <backgroundColor>FFFFFF</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
       <ee_LocalName>p2</ee_LocalName>
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>题头</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <onCreate>sender.currentPage = null;
+      <onCreate>sender.style.position="fixed";
+
+sender.currentPage = null;
 sender.changePage = function(page) {
     if (this.currentPage == page) return;
     if (this.currentPage) {
@@ -355,6 +467,10 @@ sender.changePage = function(page) {
         }
         ee.setVisible(this.currentPage, true);
         ee.setVisible(sender, true);
+        ee.tiledResizeV(sender,1);
+        var r = eb.getDivRectSetting(g5.root.mainDiv);
+        ee.setRect(this, r.x, 0, null, null);
+        console.log(r.x);
     } else {
         ee.setVisible(sender, false);
     }
@@ -371,7 +487,7 @@ sender.changePage = function(page) {
       <ee_LocalName>p1</ee_LocalName>
       <height>53</height>
       <heightRatio>0.0809160305343511</heightRatio>
-      <layerName>项目列表</layerName>
+      <layerName>项目组列表</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
@@ -389,19 +505,19 @@ sender.style.borderRight = "";</onCreate>
     <control type="Panel" pathname="/divRoot/panel114/panel125/panel128/panel129">
       <cursor>pointer</cursor>
       <dockY>fill</dockY>
+      <ee_LocalName>c_title</ee_LocalName>
       <fontBold>true</fontBold>
-      <fontFamily>微软雅黑</fontFamily>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
       <fontSize>14</fontSize>
       <hAlign>left</hAlign>
       <height>53</height>
       <heightRatio>1</heightRatio>
-      <layerName>c_title</layerName>
       <layerVisible>false</layerVisible>
       <left>51</left>
       <leftRatio>0.1275</leftRatio>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
       <sizeRatio>0.257281553398058</sizeRatio>
-      <text>项目列表</text>
+      <text>项目组列表</text>
       <top>0</top>
       <width>206</width>
       <widthRatio>0.515</widthRatio>
@@ -413,7 +529,7 @@ sender.style.borderRight = "";</onCreate>
       <heightRatio>0.622641509433962</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0354609929078014</leftRatio>
+      <leftRatio>0.05</leftRatio>
       <onClick>history.go(-1);
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
@@ -428,7 +544,72 @@ g5.initButtonV3(sender,[
       <top>10</top>
       <topRatio>0.188679245283019</topRatio>
       <width>33</width>
-      <widthRatio>0.0585106382978723</widthRatio>
+      <widthRatio>0.0825</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132">
+      <backgroundColor>FFC080</backgroundColor>
+      <dockX>fill</dockX>
+      <ee_LocalName>p2</ee_LocalName>
+      <height>53</height>
+      <heightRatio>0.0809160305343511</heightRatio>
+      <layerName>任务列表</layerName>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onCreate>sender.style.boxSizing="border-box";
+sender.style.borderWidth = "1px";
+sender.style.borderColor = "rgb(230,236,240)";
+sender.style.borderStyle = "solid";
+sender.style.borderTop = "";
+sender.style.borderLeft = "";
+sender.style.borderRight = "";</onCreate>
+      <sizeRatio>0.1325</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132/panel133">
+      <cursor>pointer</cursor>
+      <dockY>fill</dockY>
+      <ee_LocalName>c_title</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>14</fontSize>
+      <hAlign>left</hAlign>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>51</left>
+      <leftRatio>0.1275</leftRatio>
+      <onClick>g5.mainDiv.scrollTop = 0;</onClick>
+      <sizeRatio>0.257281553398058</sizeRatio>
+      <text>任务列表</text>
+      <top>0</top>
+      <width>206</width>
+      <widthRatio>0.515</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132/panel134">
+      <cursor>pointer</cursor>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.05</leftRatio>
+      <onClick>history.go(-1);
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <sizeRatio>1</sizeRatio>
+      <text><![CDATA[<]]></text>
+      <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel127">
       <dockX>fill</dockX>
@@ -464,7 +645,7 @@ sender.onDective = function() {
       <heightRatio>1</heightRatio>
       <layerName>项目组</layerName>
       <left>0</left>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -487,10 +668,10 @@ sender.onDective = function() {
       <backgroundColor>f0f0f0</backgroundColor>
       <backgroundImg>CPY0002.jpg</backgroundImg>
       <height>629</height>
-      <heightRatio>0.90974212034384</heightRatio>
+      <heightRatio>0.908959537572254</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.554585152838428</sizeRatio>
+      <sizeRatio>0.556145004420866</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -502,23 +683,23 @@ sender.onDective = function() {
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0174672489082969</leftRatio>
+      <leftRatio>0.017683465959328</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.574660633484163</sizeRatio>
+      <sizeRatio>0.57653528872594</sizeRatio>
       <top>0</top>
       <width>1091</width>
-      <widthRatio>0.965065502183406</widthRatio>
+      <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tabletitle3">
       <columnCount>1</columnCount>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
       <height>4</height>
-      <heightRatio>0.0062992125984252</heightRatio>
+      <heightRatio>0.00635930047694754</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody3</tableBody>
       <top>0</top>
       <width>1091</width>
@@ -530,7 +711,7 @@ sender.onDective = function() {
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
       <width>1091</width>
       <widthRatio>1</widthRatio>
@@ -539,13 +720,13 @@ sender.onDective = function() {
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
       <height>625</height>
-      <heightRatio>0.993700787401575</heightRatio>
+      <heightRatio>0.993640699523052</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.5710407239819</sizeRatio>
+      <sizeRatio>0.572868927589368</sizeRatio>
       <tableTitle>tabletitle3</tableTitle>
       <top>4</top>
-      <topRatio>0.0062992125984252</topRatio>
+      <topRatio>0.00635930047694754</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -554,7 +735,7 @@ sender.onDective = function() {
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -565,7 +746,7 @@ ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
       <onUpdate>ee.setText(sender, text);</onUpdate>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>0</top>
       <width>1091</width>
@@ -577,12 +758,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -591,7 +772,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -601,7 +782,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>62</top>
       <width>1091</width>
@@ -613,12 +794,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -627,7 +808,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -637,7 +818,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>125</top>
       <width>1091</width>
@@ -649,12 +830,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -663,7 +844,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -673,7 +854,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>187</top>
       <width>1091</width>
@@ -685,12 +866,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -699,7 +880,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -709,7 +890,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>250</top>
       <width>1091</width>
@@ -721,12 +902,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -735,7 +916,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -745,7 +926,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>312</top>
       <width>1091</width>
@@ -757,12 +938,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -771,7 +952,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -781,7 +962,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>375</top>
       <width>1091</width>
@@ -793,12 +974,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -807,7 +988,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -817,7 +998,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>437</top>
       <width>1091</width>
@@ -829,12 +1010,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -843,7 +1024,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -853,7 +1034,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>500</top>
       <width>1091</width>
@@ -865,12 +1046,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -879,7 +1060,7 @@ taskRefresh();
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>g5.teamId = parseInt(g5.teamList.getData(1, sender.rowIndex));
@@ -889,7 +1070,7 @@ ee.clearTableData(ee.getControl("tablebody1"));
 ee.setText(ee.getControl("layoutyitem2"), "　　" + g5.teamName);
 taskRefresh();
 </onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>562</top>
       <width>1091</width>
@@ -901,12 +1082,12 @@ taskRefresh();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0158730158730159</heightRatio>
+      <heightRatio>0.0161290322580645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.000904977375565611</sizeRatio>
+      <sizeRatio>0.000916590284142988</sizeRatio>
       <top>61</top>
-      <topRatio>0.984126984126984</topRatio>
+      <topRatio>0.983870967741936</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -914,12 +1095,12 @@ taskRefresh();
       <backgroundColor>d0d0d0</backgroundColor>
       <heavy>10</heavy>
       <height>63</height>
-      <heightRatio>0.0902578796561605</heightRatio>
+      <heightRatio>0.0910404624277457</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0550218340611354</sizeRatio>
+      <sizeRatio>0.0557029177718833</sizeRatio>
       <top>629</top>
-      <topRatio>0.90974212034384</topRatio>
+      <topRatio>0.908959537572254</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -932,7 +1113,7 @@ taskRefresh();
       <heightRatio>0.0317460317460317</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00174672489082969</sizeRatio>
+      <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -995,10 +1176,10 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>47</heavy>
       <height>27</height>
-      <heightRatio>0.32183908045977</heightRatio>
+      <heightRatio>0.313953488372093</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0244541484716157</sizeRatio>
+      <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -1012,13 +1193,13 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <fontSizeAuto>15</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>59</height>
-      <heightRatio>0.67816091954023</heightRatio>
+      <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.051528384279476</sizeRatio>
+      <sizeRatio>0.0521662245800177</sizeRatio>
       <text>　我的项目组</text>
       <top>27</top>
-      <topRatio>0.32183908045977</topRatio>
+      <topRatio>0.313953488372093</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1037,7 +1218,7 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -1083,12 +1264,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>904</left>
-      <leftRatio>0.949222797927461</leftRatio>
+      <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507772020725389</widthRatio>
+      <widthRatio>0.0514165792235047</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68/panel71/panel72/panel73">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -1205,7 +1386,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <layerName>任务</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -1228,10 +1409,10 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>47</heavy>
       <height>27</height>
-      <heightRatio>0.32183908045977</heightRatio>
+      <heightRatio>0.313953488372093</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0244541484716157</sizeRatio>
+      <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -1245,13 +1426,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontSizeAuto>18</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>59</height>
-      <heightRatio>0.67816091954023</heightRatio>
+      <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.051528384279476</sizeRatio>
+      <sizeRatio>0.0521662245800177</sizeRatio>
       <text>　　任务管理系统</text>
       <top>27</top>
-      <topRatio>0.32183908045977</topRatio>
+      <topRatio>0.313953488372093</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1331,10 +1512,10 @@ ee.showAni(ee.getControl("panel20"));
     <control type="LayoutYItem" pathname="/divRoot/panel66/layouty3/layoutyitem6">
       <backgroundColor>f0f0f0</backgroundColor>
       <height>630</height>
-      <heightRatio>0.908440629470672</heightRatio>
+      <heightRatio>0.909090909090909</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.554585152838428</sizeRatio>
+      <sizeRatio>0.557029177718833</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -1361,10 +1542,10 @@ ee.showAni(ee.getControl("panel20"));
       <dockX>fill</dockX>
       <dockY>fill</dockY>
       <height>4</height>
-      <heightRatio>0.00701754385964912</heightRatio>
+      <heightRatio>0.00707964601769911</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody1</tableBody>
       <top>0</top>
       <width>1091</width>
@@ -1376,10 +1557,10 @@ ee.showAni(ee.getControl("panel20"));
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00470588235294118</sizeRatio>
+      <sizeRatio>0.00476758045292014</sizeRatio>
       <top>0</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tabletitle1/tabletitleitem2">
       <backgroundColor>d0d0d0</backgroundColor>
@@ -1388,23 +1569,23 @@ ee.showAni(ee.getControl("panel20"));
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
-      <sizeRatio>0.0156862745098039</sizeRatio>
+      <leftRatio>0.769019248395967</leftRatio>
+      <sizeRatio>0.0158730158730159</sizeRatio>
       <top>0</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
       <height>561</height>
-      <heightRatio>0.992982456140351</heightRatio>
+      <heightRatio>0.992920353982301</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.512217194570136</sizeRatio>
+      <sizeRatio>0.514207149404216</sizeRatio>
       <tableTitle>tabletitle1</tableTitle>
       <top>4</top>
-      <topRatio>0.00701754385964912</topRatio>
+      <topRatio>0.00707964601769911</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1413,7 +1594,7 @@ ee.showAni(ee.getControl("panel20"));
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1430,11 +1611,11 @@ if (unreadCount > 0) {
     text += "<b><font color='#d00000'>(" + unreadCount + "未读)</font></b>";
 }   
 ee.setText(sender, text);]]></onUpdate>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>0</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem1/panel12">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1442,12 +1623,12 @@ ee.setText(sender, text);]]></onUpdate>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1455,10 +1636,10 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1490,11 +1671,11 @@ if (time.length>0) {
     text = time + "</br>" + text;
 }
 ee.setText(sender, text);]]></onUpdate>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>0</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem2/panel13">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1502,12 +1683,12 @@ ee.setText(sender, text);]]></onUpdate>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1516,7 +1697,7 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1525,11 +1706,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>56</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp37/temp26">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1537,12 +1718,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1550,10 +1731,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1561,11 +1742,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>56</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp38/temp28">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1573,12 +1754,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1587,7 +1768,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1596,11 +1777,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>112</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp39/temp30">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1608,12 +1789,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1621,10 +1802,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1632,11 +1813,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>112</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp40/temp32">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1644,12 +1825,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1658,7 +1839,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1667,11 +1848,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>168</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp41/temp34">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1679,12 +1860,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1692,10 +1873,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1703,11 +1884,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>168</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp42/temp36">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1715,12 +1896,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1729,7 +1910,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>57</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1738,11 +1919,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>224</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp43/temp56">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1750,12 +1931,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1763,10 +1944,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>57</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1774,11 +1955,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>224</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp44/temp58">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1786,12 +1967,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1800,7 +1981,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1809,11 +1990,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>281</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp45/temp60">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1821,12 +2002,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1834,10 +2015,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1845,11 +2026,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>281</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp46/temp61">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1857,12 +2038,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1871,7 +2052,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1880,11 +2061,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>337</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp47/temp62">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1892,12 +2073,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1905,10 +2086,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1916,11 +2097,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>337</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp48/temp63">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1928,12 +2109,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1942,7 +2123,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -1951,11 +2132,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>393</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp49/temp64">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1963,12 +2144,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -1976,10 +2157,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -1987,11 +2168,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>393</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp50/temp65">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -1999,12 +2180,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2013,7 +2194,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -2022,11 +2203,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>449</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp51/temp66">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -2034,12 +2215,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2047,10 +2228,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -2058,11 +2239,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>449</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp52/temp67">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -2070,12 +2251,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2084,7 +2265,7 @@ taskDetail();
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>ee.showAni(ee.getControl("panel16"));
@@ -2093,11 +2274,11 @@ g5.unreadCount =
     parseInt(g5.task1.getData(3, sender.rowIndex)) - 
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();</onClick>
-      <sizeRatio>0.0670588235294118</sizeRatio>
+      <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>505</top>
       <width>839</width>
-      <widthRatio>0.769230769230769</widthRatio>
+      <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp53/temp68">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -2105,12 +2286,12 @@ taskDetail();</onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00117647058823529</sizeRatio>
+      <sizeRatio>0.00119189511323004</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>839</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2118,10 +2299,10 @@ taskDetail();</onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>56</height>
-      <heightRatio>0.100706713780919</heightRatio>
+      <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>839</left>
-      <leftRatio>0.769230769230769</leftRatio>
+      <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
 g5.unreadCount =                  c
@@ -2129,11 +2310,11 @@ g5.unreadCount =                  c
     parseInt(g5.task1.getData(4, sender.rowIndex));
 taskDetail();
 </onClick>
-      <sizeRatio>0.223529411764706</sizeRatio>
+      <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>505</top>
       <width>252</width>
-      <widthRatio>0.230769230769231</widthRatio>
+      <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp54/temp69">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -2141,12 +2322,12 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>1</height>
-      <heightRatio>0.0175438596491228</heightRatio>
+      <heightRatio>0.0178571428571429</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00392156862745098</sizeRatio>
+      <sizeRatio>0.00396825396825397</sizeRatio>
       <top>55</top>
-      <topRatio>0.982456140350877</topRatio>
+      <topRatio>0.982142857142857</topRatio>
       <width>252</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2171,14 +2352,14 @@ taskDetail();
       <heightRatio>0.0645161290322581</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0174672489082969</leftRatio>
+      <leftRatio>0.017683465959328</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <top>58</top>
       <topRatio>0.935483870967742</topRatio>
       <width>1091</width>
-      <widthRatio>0.965065502183406</widthRatio>
+      <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel8/panel10">
       <dockX>ratio</dockX>
@@ -2219,12 +2400,12 @@ taskDetail();
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>10</heavy>
       <height>63</height>
-      <heightRatio>0.0915593705293276</heightRatio>
+      <heightRatio>0.0909090909090909</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0558951965065502</sizeRatio>
+      <sizeRatio>0.0557029177718833</sizeRatio>
       <top>630</top>
-      <topRatio>0.908440629470672</topRatio>
+      <topRatio>0.909090909090909</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -2234,10 +2415,10 @@ taskDetail();
       <dockX>fill</dockX>
       <dockY>top</dockY>
       <height>2</height>
-      <heightRatio>0.03125</heightRatio>
+      <heightRatio>0.0317460317460317</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00174672489082969</sizeRatio>
+      <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -2346,7 +2527,7 @@ taskRefresh();</onClick>
       <onClick>ee.showAni(ee.getControl("panel20"), 1);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -2718,7 +2899,7 @@ window.location.href = ee.getUrl("/login");
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -2764,12 +2945,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>904</left>
-      <leftRatio>0.949222797927461</leftRatio>
+      <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507772020725389</widthRatio>
+      <widthRatio>0.0514165792235047</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15/panel21/panel24/panel25">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -2888,7 +3069,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <layerName>任务详细</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -2911,10 +3092,10 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>14</heavy>
       <height>28</height>
-      <heightRatio>0.121739130434783</heightRatio>
+      <heightRatio>0.12280701754386</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0244541484716157</sizeRatio>
+      <sizeRatio>0.0247568523430592</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -2926,12 +3107,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>15</fontSizeAuto>
       <height>200</height>
-      <heightRatio>0.878260869565217</heightRatio>
+      <heightRatio>0.87719298245614</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.176419213973799</sizeRatio>
+      <sizeRatio>0.17683465959328</sizeRatio>
       <top>28</top>
-      <topRatio>0.121739130434783</topRatio>
+      <topRatio>0.12280701754386</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -3003,21 +3184,21 @@ taskRefresh();</onClick>
       <fontSizeAuto>30</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>158</height>
-      <heightRatio>0.888888888888889</heightRatio>
+      <heightRatio>0.887640449438202</heightRatio>
       <layerVisible>false</layerVisible>
       <left>10</left>
-      <leftRatio>0.0111607142857143</leftRatio>
+      <leftRatio>0.0112994350282486</leftRatio>
       <outerBottom>10</outerBottom>
       <outerLeft>10</outerLeft>
       <outerRight>10</outerRight>
       <outerTop>10</outerTop>
-      <sizeRatio>0.182648401826484</sizeRatio>
+      <sizeRatio>0.182658959537572</sizeRatio>
       <text>创建人：谭江天,13311112222
 内容。。。</text>
       <top>10</top>
-      <topRatio>0.0555555555555556</topRatio>
+      <topRatio>0.0561797752808989</topRatio>
       <width>865</width>
-      <widthRatio>0.977678571428571</widthRatio>
+      <widthRatio>0.977401129943503</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel97">
       <backgroundImgMode>fill</backgroundImgMode>
@@ -3082,10 +3263,10 @@ ee.showAni(ee.getControl("panel117"));
     <control type="LayoutYItem" pathname="/divRoot/panel16/layouty5/layoutyitem10">
       <backgroundColor>f0f0f0</backgroundColor>
       <height>501</height>
-      <heightRatio>0.908273381294964</heightRatio>
+      <heightRatio>0.909255898366606</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.441048034934498</sizeRatio>
+      <sizeRatio>0.442970822281167</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -3112,10 +3293,10 @@ ee.showAni(ee.getControl("panel117"));
       <dockX>fill</dockX>
       <dockY>fill</dockY>
       <height>4</height>
-      <heightRatio>0.00883002207505519</heightRatio>
+      <heightRatio>0.0089086859688196</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody2</tableBody>
       <top>0</top>
       <width>1091</width>
@@ -3127,10 +3308,10 @@ ee.showAni(ee.getControl("panel117"));
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.005249343832021</sizeRatio>
+      <sizeRatio>0.00531914893617021</sizeRatio>
       <top>0</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tabletitle2/tabletitleitem4">
       <backgroundColor>d0d0d0</backgroundColor>
@@ -3139,24 +3320,24 @@ ee.showAni(ee.getControl("panel117"));
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.0116618075801749</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.0117994100294985</sizeRatio>
       <top>0</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
       <height>445</height>
-      <heightRatio>0.991169977924945</heightRatio>
+      <heightRatio>0.99109131403118</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <rowCount>7</rowCount>
-      <sizeRatio>0.406334841628959</sizeRatio>
+      <sizeRatio>0.40788267644363</sizeRatio>
       <tableTitle>tabletitle2</tableTitle>
       <top>4</top>
-      <topRatio>0.00883002207505519</topRatio>
+      <topRatio>0.0089086859688196</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -3165,18 +3346,18 @@ ee.showAni(ee.getControl("panel117"));
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onUpdate><![CDATA[if (g5.unreadCount > sender.rowIndex) {
     text = "<font color='#E00000'><b>新></b></font>" + text;
 }
 ee.setText(sender, text);]]></onUpdate>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>0</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem3/panel27">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3187,7 +3368,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3197,15 +3378,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>0</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem4/panel28">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3216,7 +3397,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3227,14 +3408,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>64</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp19/temp1">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3245,7 +3426,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3255,15 +3436,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>64</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp21/temp2">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3274,7 +3455,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3285,14 +3466,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>127</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp23/temp3">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3303,7 +3484,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3313,15 +3494,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>127</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp25/temp4">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3332,7 +3513,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3343,14 +3524,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>191</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp27/temp5">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3361,7 +3542,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3371,15 +3552,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>191</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp29/temp6">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3390,7 +3571,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3401,14 +3582,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>254</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp31/temp7">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3419,7 +3600,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3429,15 +3610,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>254</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp33/temp8">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3448,7 +3629,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3459,14 +3640,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>318</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp35/temp9">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3477,7 +3658,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3487,15 +3668,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>63</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>318</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp55/temp10">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3506,7 +3687,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3517,14 +3698,14 @@ ee.setText(sender, text);]]></onUpdate>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.083989501312336</sizeRatio>
+      <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>381</top>
       <width>752</width>
-      <widthRatio>0.689592760180995</widthRatio>
+      <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp57/temp11">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3535,7 +3716,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00131233595800525</sizeRatio>
+      <sizeRatio>0.00132978723404255</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>752</width>
@@ -3545,15 +3726,15 @@ ee.setText(sender, text);]]></onUpdate>
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <height>64</height>
-      <heightRatio>0.142538975501114</heightRatio>
+      <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>752</left>
-      <leftRatio>0.689592760180995</leftRatio>
-      <sizeRatio>0.186588921282799</sizeRatio>
+      <leftRatio>0.689275893675527</leftRatio>
+      <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>381</top>
       <width>339</width>
-      <widthRatio>0.310407239819005</widthRatio>
+      <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp59/temp12">
       <backgroundColor>E0E0E0</backgroundColor>
@@ -3564,7 +3745,7 @@ ee.setText(sender, text);]]></onUpdate>
       <heightRatio>0.015625</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00291545189504373</sizeRatio>
+      <sizeRatio>0.00294985250737463</sizeRatio>
       <top>63</top>
       <topRatio>0.984375</topRatio>
       <width>339</width>
@@ -3588,17 +3769,17 @@ ee.setText(sender, text);]]></onUpdate>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>4</height>
-      <heightRatio>0.08</heightRatio>
+      <heightRatio>0.0816326530612245</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0174672489082969</leftRatio>
+      <leftRatio>0.017683465959328</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <top>45</top>
-      <topRatio>0.92</topRatio>
+      <topRatio>0.918367346938776</topRatio>
       <width>1091</width>
-      <widthRatio>0.965065502183406</widthRatio>
+      <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel29/panel31">
       <dockX>ratio</dockX>
@@ -3639,12 +3820,12 @@ ee.setText(sender, text);]]></onUpdate>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>10</heavy>
       <height>50</height>
-      <heightRatio>0.091726618705036</heightRatio>
+      <heightRatio>0.0907441016333938</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0445414847161572</sizeRatio>
+      <sizeRatio>0.0442086648983201</sizeRatio>
       <top>501</top>
-      <topRatio>0.908273381294964</topRatio>
+      <topRatio>0.909255898366606</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -3654,10 +3835,10 @@ ee.setText(sender, text);]]></onUpdate>
       <dockX>fill</dockX>
       <dockY>top</dockY>
       <height>2</height>
-      <heightRatio>0.0392156862745098</heightRatio>
+      <heightRatio>0.04</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00174672489082969</sizeRatio>
+      <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -3760,7 +3941,7 @@ taskClose();</onClick>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -3806,12 +3987,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>904</left>
-      <leftRatio>0.949222797927461</leftRatio>
+      <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507772020725389</widthRatio>
+      <widthRatio>0.0514165792235047</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35/panel36/panel37/panel38">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -3931,7 +4112,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -3977,12 +4158,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>905</left>
-      <leftRatio>0.949275362318841</leftRatio>
+      <leftRatio>0.948637316561845</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507246376811594</widthRatio>
+      <widthRatio>0.0513626834381551</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46/panel47/panel48/panel49">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -4119,7 +4300,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -4165,12 +4346,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>904</left>
-      <leftRatio>0.949222797927461</leftRatio>
+      <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507772020725389</widthRatio>
+      <widthRatio>0.0514165792235047</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel56/panel57/panel58">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -4299,7 +4480,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <layerName><![CDATA[任务->主菜单->项目组成员列表]]></layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -4321,10 +4502,10 @@ ee.setVisible(ee.getControl("panel1"), false);
     <control type="LayoutYItem" pathname="/divRoot/panel81/layouty8/layoutyitem18">
       <backgroundColor>f0f0f0</backgroundColor>
       <height>629</height>
-      <heightRatio>0.90974212034384</heightRatio>
+      <heightRatio>0.908959537572254</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.554585152838428</sizeRatio>
+      <sizeRatio>0.556145004420866</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -4336,23 +4517,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0174672489082969</leftRatio>
+      <leftRatio>0.017683465959328</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.574660633484163</sizeRatio>
+      <sizeRatio>0.57653528872594</sizeRatio>
       <top>0</top>
       <width>1091</width>
-      <widthRatio>0.965065502183406</widthRatio>
+      <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tabletitle4">
       <columnCount>1</columnCount>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
       <height>4</height>
-      <heightRatio>0.0062992125984252</heightRatio>
+      <heightRatio>0.00635930047694754</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody4</tableBody>
       <top>0</top>
       <width>1091</width>
@@ -4364,7 +4545,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
       <width>1091</width>
       <widthRatio>1</widthRatio>
@@ -4373,13 +4554,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
       <height>625</height>
-      <heightRatio>0.993700787401575</heightRatio>
+      <heightRatio>0.993640699523052</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.5710407239819</sizeRatio>
+      <sizeRatio>0.572868927589368</sizeRatio>
       <tableTitle>tabletitle4</tableTitle>
       <top>4</top>
-      <topRatio>0.0062992125984252</topRatio>
+      <topRatio>0.00635930047694754</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4388,7 +4569,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4398,7 +4579,7 @@ sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <onUpdate>ee.setText(sender, text);</onUpdate>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>0</top>
       <width>1091</width>
@@ -4410,12 +4591,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4424,7 +4605,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4433,7 +4614,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>62</top>
       <width>1091</width>
@@ -4445,12 +4626,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4459,7 +4640,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4468,7 +4649,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>125</top>
       <width>1091</width>
@@ -4480,12 +4661,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4494,7 +4675,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4503,7 +4684,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>187</top>
       <width>1091</width>
@@ -4515,12 +4696,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4529,7 +4710,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4538,7 +4719,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>250</top>
       <width>1091</width>
@@ -4550,12 +4731,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4564,7 +4745,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4573,7 +4754,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>312</top>
       <width>1091</width>
@@ -4585,12 +4766,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4599,7 +4780,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4608,7 +4789,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>375</top>
       <width>1091</width>
@@ -4620,12 +4801,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4634,7 +4815,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4643,7 +4824,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>437</top>
       <width>1091</width>
@@ -4655,12 +4836,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4669,7 +4850,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>62</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4678,7 +4859,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>500</top>
       <width>1091</width>
@@ -4690,12 +4871,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4704,7 +4885,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>63</height>
-      <heightRatio>0.0998415213946117</heightRatio>
+      <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick><![CDATA[for (var i=0; i<sender.parentNode.eeChildren.length; i++) {
@@ -4713,7 +4894,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
 sender.style.backgroundColor = "#d0e0f0";
 g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
-      <sizeRatio>0.0570135746606335</sizeRatio>
+      <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>562</top>
       <width>1091</width>
@@ -4725,12 +4906,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <dockX>fill</dockX>
       <dockY>bottom</dockY>
       <height>2</height>
-      <heightRatio>0.0317460317460317</heightRatio>
+      <heightRatio>0.032258064516129</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00180995475113122</sizeRatio>
+      <sizeRatio>0.00183318056828598</sizeRatio>
       <top>60</top>
-      <topRatio>0.968253968253968</topRatio>
+      <topRatio>0.967741935483871</topRatio>
       <width>1091</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4738,12 +4919,12 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <backgroundColor>d0d0d0</backgroundColor>
       <heavy>10</heavy>
       <height>63</height>
-      <heightRatio>0.0902578796561605</heightRatio>
+      <heightRatio>0.0910404624277457</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0550218340611354</sizeRatio>
+      <sizeRatio>0.0557029177718833</sizeRatio>
       <top>629</top>
-      <topRatio>0.90974212034384</topRatio>
+      <topRatio>0.908959537572254</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4756,13 +4937,13 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <heightRatio>0.0634920634920635</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0174672489082969</leftRatio>
+      <leftRatio>0.017683465959328</leftRatio>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
-      <sizeRatio>0.00361990950226244</sizeRatio>
+      <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
       <width>1091</width>
-      <widthRatio>0.965065502183406</widthRatio>
+      <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem19/panel85">
       <dockX>ratio</dockX>
@@ -4824,10 +5005,10 @@ teamGiveAdmin();]]></onClick>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>47</heavy>
       <height>27</height>
-      <heightRatio>0.32183908045977</heightRatio>
+      <heightRatio>0.313953488372093</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0244541484716157</sizeRatio>
+      <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -4840,13 +5021,13 @@ teamGiveAdmin();]]></onClick>
       <fontSizeAuto>15</fontSizeAuto>
       <hAlign>left</hAlign>
       <height>59</height>
-      <heightRatio>0.67816091954023</heightRatio>
+      <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.051528384279476</sizeRatio>
+      <sizeRatio>0.0521662245800177</sizeRatio>
       <text>　项目组成员</text>
       <top>27</top>
-      <topRatio>0.32183908045977</topRatio>
+      <topRatio>0.313953488372093</topRatio>
       <width>1131</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -4888,7 +5069,7 @@ teamGiveAdmin();]]></onClick>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -4934,12 +5115,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>904</left>
-      <leftRatio>0.949222797927461</leftRatio>
+      <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507772020725389</widthRatio>
+      <widthRatio>0.0514165792235047</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90/panel91/panel92/panel93">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -5056,7 +5237,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
-      <sizeRatio>0.685589519650655</sizeRatio>
+      <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
       <width>1131</width>
       <widthRatio>1</widthRatio>
@@ -5102,12 +5283,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>905</left>
-      <leftRatio>0.949275362318841</leftRatio>
+      <leftRatio>0.948637316561845</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
       <top>0</top>
       <width>49</width>
-      <widthRatio>0.0507246376811594</widthRatio>
+      <widthRatio>0.0513626834381551</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118/panel119/panel120/panel121">
       <backgroundImg>btnClose.png</backgroundImg>
@@ -5214,7 +5395,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <widthRatio>0.893013100436681</widthRatio>
     </control>
   </controls>
-  <taskSet count="16">
+  <taskSet count="17">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -5380,6 +5561,80 @@ eio.appendDataSet(sqlResult,"taskName,time,id,chatCount,readCount",0,1000);]]></
 }
 g5.task1 = eio.readDataSet();
 ee.setTableData(ee.getControl("tablebody1"), g5.task1, 0, 100);</script3>
+    </taskSetItem>
+    <taskSetItem name="taskRefreshV2">
+      <script1>//teamId,isHis(T/F),onComplete()
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(taskRefreshV2.teamId + "");
+eio.appendString8(taskRefreshV2.isHis);</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var history = eio.readInt32();
+var teamId = eio.readInt32();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+if (history == 1) {
+    sql = "select taskName, convert(varchar(100), closeDatetime, 23) " +
+        "+ ',' + cast(datediff(hour, regDatetime, closeDatetime) as varchar(10)) as [time], id, 1 as chatCount, 1 as readCount " +
+        "from taskInfo where status = 'CLS' and teamId = " + teamId + " order by closeDatetime desc ";
+} else {
+//    sql = "select taskName, datediff(hour, regDatetime, getdate()) as [time], id " +
+//        "from taskInfo where status = 'NEW' and teamId = " + teamId + " order by regDatetime desc ";
+    sql = 
+        "SELECT TOP (100) PERCENT dbo.taskInfo.taskName, DATEDIFF(hour, " +  
+        "      dbo.taskInfo.regDatetime, GETDATE()) AS time, dbo.taskInfo.id, " +  
+        "      COUNT(dbo.taskChat.id) AS chatCount, ISNULL(t1.readCount, - 1) AS readCount " + 
+        "FROM (SELECT id, regDatetime, userId, type, taskId, readCount " + 
+        "        FROM dbo.unread " + 
+        "        WHERE (userId = " + userId + ")) AS t1 RIGHT OUTER JOIN " + 
+        "      dbo.taskInfo ON t1.taskId = dbo.taskInfo.id LEFT OUTER JOIN " + 
+        "      dbo.taskChat ON dbo.taskInfo.id = dbo.taskChat.taskId " + 
+        "WHERE (dbo.taskInfo.status = 'NEW') AND (dbo.taskInfo.teamId = " + teamId + ") " + 
+        "GROUP BY dbo.taskInfo.taskName, dbo.taskInfo.regDatetime, dbo.taskInfo.id, " +  
+        "      t1.readCount " + 
+        "ORDER BY time ";
+}
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    return;
+}
+eio.appendString8("T");
+eio.appendDataSet(sqlResult,"taskName,time,id,chatCount,readCount",0,1000);]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    return;
+}
+taskRefreshV2.dataset = eio.readDataSet();
+if (taskRefreshV2.onComplete) taskRefreshV2.onComplete(taskRefreshV2.dataset);</script3>
     </taskSetItem>
     <taskSetItem name="taskDetail">
       <script1>eio.appendString8(eb.getCookie("paToken"));
@@ -5730,9 +5985,13 @@ if (getTeam.onComplete) getTeam.onComplete(getTeam.dataset);</script3>
     <taskSetItem name="getTeamV2">
       <script1>//获取项目组列表
 //pageIndex,onComplete()
-eio.appendString8(eb.getCookie("paToken"));</script1>
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(getTeamV2.pageIndex+"");</script1>
       <script2><![CDATA[var sql,sqlResult;
 var token = eio.readString8();
+var pageIndex = parseInt(eio.readString8());
+var pageSize = 10;
+
 sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
 sqlResult = db.executeQuery("PJ", sql);
 if (sqlResult == null) {
@@ -5750,12 +6009,11 @@ var userId = db.getString(sqlResult, "id");
 
 //获取项目组列表
 var top = (pageIndex+1)*pageSize;
-sql = 
-    "SELECT dbo.teamInfo.id, dbo.teamInfo.displayName " +
-    "  FROM dbo.teamInfo INNER JOIN " +
-    "  dbo.teamUser ON dbo.teamInfo.id = dbo.teamUser.teamId "+
-    "  where dbo.teamUser.userId = " + userId +
-    "  order by dbo.teamInfo.displayName";
+sql =
+    "exec VP_TeamInfo " +
+    userId +
+    "," + top +
+    ";";
 sqlResult = db.executeQuery("PJ", sql);
 if (sqlResult == null) {
     eio.appendString8("F");
@@ -5764,18 +6022,16 @@ if (sqlResult == null) {
 }
 eio.appendString8("T");
 eio.appendDataSet(sqlResult,
-    "uId,uStatus,uRegDatetime,uLastAccessTime,uUserName,uMobile,uNickName,uNote,uPhoto,uTitleBg,uHomePage,uFollowCount,uFansCount,uIsFollow,uIsBlock1,uIsBlock2,uEmail,uIsHide",
+    "id,status,regDatetime,lastAccessTime,displayName,note," +
+    "ctrId,ctrEnabled,ctrRegDatetime,ctrLastAccessTime,ctrIdName,ctrMobile,ctrNickName,ctrNote,ctrPhoto,ctrTitleBg,ctrEmail," +
+    "ownId,ownEnabled,ownRegDatetime,ownLastAccessTime,ownIdName,ownMobile,ownNickName,ownNote,ownPhoto,ownTitleBg,ownEmail",
     pageIndex*pageSize, pageSize);
 ]]></script2>
       <script3>if (eio.readString8()!="T") {
     return;
 }
-g5.teamList = eio.readDataSet();
-ee.setTableData(ee.getControl("tablebody3"), g5.teamList, 0, 100);
-
-
-getTeam.dataset = g5.teamList;
-if (getTeam.onComplete) getTeam.onComplete(getTeam.dataset);</script3>
+getTeamV2.dataset = eio.readDataSet();
+if (getTeamV2.onComplete) getTeamV2.onComplete(getTeamV2.dataset);</script3>
     </taskSetItem>
     <taskSetItem name="teamNew">
       <script1><![CDATA[//创建新的项目组
@@ -6030,7 +6286,7 @@ this.size = 6 + uSize + uSize;
 this.loadFromDataset = function(ds, x, idx) {
     this.id = ds.getData(x,idx); x++;
     this.status = ds.getData(x,idx); x++;
-    this.regDatetimeUTC = ds.getData(x,idx);
+    this.regDatetimeUTC = ds.getData(x,idx); x++;
     this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
     this.lastAccessTimeUTC = ds.getData(x,idx); x++;
     this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
@@ -6251,11 +6507,9 @@ if (g5.currentPage) {
     <item name="renderTeam" type="20">
       <varValue />
       <functionParam>root</functionParam>
-      <functionCode><![CDATA[while (root.v_mode.length<5) root.v_mode += " ";
-var w = eb.getDivRect(root).w;
+      <functionCode><![CDATA[var w = eb.getDivRect(root).w;
 var c,cy=10;
 
-root.v_userBar = true;
 root.style.boxSizing="border-box";
 root.style.borderWidth = "1px";
 root.style.borderColor = "rgb(230,236,240)";
@@ -6263,74 +6517,18 @@ root.style.borderStyle = "solid";
 root.style.borderTop = "";
 root.style.borderLeft = "";
 root.style.borderRight = "";
-if (root.v_userInfo.status == "DISABLED") {
-} else if (root.v_userInfo.status == "Del") {
-} else {
-    root.style.cursor = "pointer";
-    ee.setOnClick(root,function(sender,event) {
-        g5.p2.p2.show(root.v_userInfo);
-    });
-    ee.setOnMouseEnter(root, function(sender,e){
-        sender.style.backgroundColor = "rgb(245,248,250)";
-    });
-    ee.setOnMouseLeave(root, function(sender,e){
-        sender.style.backgroundColor = "#ffffff";
-    });
-}
-
-//user photo
-c = createPanel(root, root.id+"panel13", "", 15,cy,50,50);
-c.style.borderRadius = "50%";
-c.v_timer = null;
-root.c_photo = c;
-c.style.cursor="pointer";
-root.setUserPhoto = function(photo) {
-    if ((root.v_userInfo.status == "DISABLED") || (root.v_userInfo.status == "Del") || (photo == "")) {
-        ee.setImage(root.c_photo,"/faith/main/user.png","trim","","")
-    } else {
-        ee.setImage(root.c_photo,"url:" + g5.imgUrl + photo,"trim","","")
-    }
-}
-root.setUserPhoto(root.v_userInfo.photo);
-ee.setOnClick(c,function(sender,event) {
-    if (root.v_userInfo.status == "DISABLED") {
-        g5.p2.p2.show(root.v_userInfo);
-        //g5.alert1("提示", "该用户处于禁封状态，目前无法查看该用户的信息");
-    } else if (root.v_userInfo.status == "Del") {
-        g5.p2.p2.show(root.v_userInfo);
-        //g5.alert1("提示", "该用户已销号，目前无法查看该用户的信息");
-    } else {
-        ee.getControl("panel280").show(root.c_photo, root.v_userInfo);
-    }
-    window.event? window.event.cancelBubble = true : event.stopPropagation();
+root.style.cursor = "pointer";
+ee.setOnClick(root,function(sender,event) {
+    //g5.p2.p2.show(root.v_userInfo);
 });
-g5.initImgButtonV1(c,"100%","80%","70%");
+ee.setOnMouseEnter(root, function(sender,e){
+    sender.style.backgroundColor = "rgb(245,248,250)";
+});
+ee.setOnMouseLeave(root, function(sender,e){
+    sender.style.backgroundColor = "#ffffff";
+});
 
-
-//user nick name
-c = createPanel(root, root.id+"p16n", "", 77, cy+4, w-190, 22); cy+=22;
-c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
-c.style.fontSize = "12pt";
-c.style.color = "#14171a";
-c.style.fontWeight = "bold";
-c.style.textOverflow = "ellipsis";
-c.style.inlineBlock = "max-width";
-c.style.whiteSpace = "nowrap";
-c.style.cursor="pointer";
-c.innerHTML = root.v_userInfo.nickName;
-if (root.v_userInfo.status == "DISABLED") {
-} else if (root.v_userInfo.status == "Del") {
-} else {
-    c.style.cursor="pointer";
-    ee.setOnMouseEnter(c,function(sender,e){
-        sender.style.textDecoration="underline";
-    });
-    ee.setOnMouseLeave(c,function(sender,e){
-        sender.style.textDecoration="";
-    });
-}
-
-//username
+//title
 c = createPanel(root, root.id+"p16u", "", 77, cy+4, w-190, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
@@ -6339,12 +6537,12 @@ c.style.textOverflow = "ellipsis";
 c.style.inlineBlock = "max-width";
 c.style.whiteSpace = "nowrap";
 c.style.cursor="pointer";
-c.innerHTML = "@"+root.v_userInfo.userName;
+c.innerHTML = root.v_teamInfo.title;
 
 //note
-if (root.v_userInfo.note!="") {
+if (root.v_teamInfo.note.length>0) {
     c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
-    addText(c, root.v_userInfo.note, "left", "top", "微软雅黑", 12, "14171a", "normal");
+    addText(c, root.v_teamInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
     ee.setRect(c, null, null, null, rect.h);
@@ -6352,7 +6550,7 @@ if (root.v_userInfo.note!="") {
 } else {
     cy += 7;
 }
-
+/*
 //button
 c = null;
 if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
@@ -6458,6 +6656,7 @@ if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
     });
 }
 if (c) root.c_button = c;
+*/
 
 cy+=10;
 eb.setDivRect(root,null,null,null,cy);
