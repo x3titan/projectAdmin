@@ -26,7 +26,7 @@ if (!isIOS) {
     ee.getControl("layoutyitem20").heavy = 0;
 }
 setTimeout(function(){
-    ee.autoResize = false;
+    //ee.autoResize = false;
 },1000);
 
 g5.history = false;
@@ -154,14 +154,14 @@ sender.changePage = function(page) {
       <onCreate><![CDATA[sender.v_fitInner = true;
 sender.v_lastScrollTop = 0;
 sender.v_items = new Array();
-sender.c_title = g5.root.mainDiv.p2.p1.c_title;
+sender.c_title = g5.root.p_title.p1.c_title;
 sender.v_needRefresh = false;
 sender.v_status = "";
 
 sender.v_pageIndex = 0;
 
 sender.onActive = function() {
-    g5.root.mainDiv.p2.changePage(g5.root.mainDiv.p2.p1);
+    g5.root.p_title.changePage(g5.root.p_title.p1);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
@@ -171,7 +171,7 @@ sender.onActive = function() {
 
 sender.onDeactive = function() {
     this.v_lastScrollTop = document.documentElement.scrollTop;
-    g5.root.mainDiv.p2.changePage(null);
+    g5.root.p_title.changePage(null);
 }
 
 
@@ -254,7 +254,7 @@ sender.loadFromDB = function() {
             sender.v_items.push(item);
         }
         eb.processDock();
-        var rect = eb.getDivRectSetting(g5.root.mainDiv.p2);
+        var rect = eb.getDivRectSetting(g5.root.p_title);
         ee.tiledV(sender, 0, rect.h, 500); 
         
         if (itemCount<=0) {
@@ -302,14 +302,14 @@ sender.loadMore = function() {
       <onCreate><![CDATA[sender.v_fitInner = true;
 sender.v_lastScrollTop = 0;
 sender.v_items = new Array();
-sender.c_title = g5.root.mainDiv.p2.p2.c_title;
+sender.c_title = g5.root.p_title.p2.c_title;
 sender.v_needRefresh = false;
 sender.v_status = "";
 
 sender.v_pageIndex = 0;
 
 sender.onActive = function() {
-    g5.root.mainDiv.p2.changePage(g5.root.mainDiv.p2.p1);
+    g5.root.p_title.changePage(g5.root.p_title.p2);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
@@ -319,7 +319,7 @@ sender.onActive = function() {
 
 sender.onDeactive = function() {
     this.v_lastScrollTop = document.documentElement.scrollTop;
-    g5.root.mainDiv.p2.changePage(null);
+    g5.root.p_title.changePage(null);
 }
 
 
@@ -439,178 +439,6 @@ sender.loadMore = function() {
       <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125">
-      <backgroundColor>FFFFFF</backgroundColor>
-      <bgColorEnabled>true</bgColorEnabled>
-      <ee_LocalName>p2</ee_LocalName>
-      <height>655</height>
-      <heightRatio>0.935714285714286</heightRatio>
-      <layerName>题头</layerName>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender.style.position="fixed";
-
-sender.currentPage = null;
-sender.changePage = function(page) {
-    if (this.currentPage == page) return;
-    if (this.currentPage) {
-        if (this.currentPage.onDeactive) {
-            this.currentPage.onDeactive();
-        }
-        ee.setVisible(this.currentPage, false);
-    }
-    
-    this.currentPage = page;
-    if (this.currentPage) {
-        if (this.currentPage.onActive) {
-            this.currentPage.onActive();
-        }
-        ee.setVisible(this.currentPage, true);
-        ee.setVisible(sender, true);
-        ee.tiledResizeV(sender,1);
-        var r = eb.getDivRectSetting(g5.root.mainDiv);
-        ee.setRect(this, r.x, 0, null, null);
-        console.log(r.x);
-    } else {
-        ee.setVisible(sender, false);
-    }
-}
-</onCreate>
-      <sizeRatio>1.6375</sizeRatio>
-      <top>0</top>
-      <width>400</width>
-      <widthRatio>1</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel128">
-      <backgroundColor>FFC080</backgroundColor>
-      <dockX>fill</dockX>
-      <ee_LocalName>p1</ee_LocalName>
-      <height>53</height>
-      <heightRatio>0.0809160305343511</heightRatio>
-      <layerName>项目组列表</layerName>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
-sender.style.borderColor = "rgb(230,236,240)";
-sender.style.borderStyle = "solid";
-sender.style.borderTop = "";
-sender.style.borderLeft = "";
-sender.style.borderRight = "";</onCreate>
-      <sizeRatio>0.1325</sizeRatio>
-      <top>0</top>
-      <width>400</width>
-      <widthRatio>1</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel128/panel129">
-      <cursor>pointer</cursor>
-      <dockY>fill</dockY>
-      <ee_LocalName>c_title</ee_LocalName>
-      <fontBold>true</fontBold>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>14</fontSize>
-      <hAlign>left</hAlign>
-      <height>53</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>51</left>
-      <leftRatio>0.1275</leftRatio>
-      <onClick>g5.mainDiv.scrollTop = 0;</onClick>
-      <sizeRatio>0.257281553398058</sizeRatio>
-      <text>项目组列表</text>
-      <top>0</top>
-      <width>206</width>
-      <widthRatio>0.515</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel128/panel212">
-      <cursor>pointer</cursor>
-      <dockY>center</dockY>
-      <height>33</height>
-      <heightRatio>0.622641509433962</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>20</left>
-      <leftRatio>0.05</leftRatio>
-      <onClick>history.go(-1);
-window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
-      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
-sender.style.borderRadius = "50%";
-
-g5.initButtonV3(sender,[
-    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
-]);
-]]></onCreate>
-      <sizeRatio>1</sizeRatio>
-      <text><![CDATA[<]]></text>
-      <top>10</top>
-      <topRatio>0.188679245283019</topRatio>
-      <width>33</width>
-      <widthRatio>0.0825</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132">
-      <backgroundColor>FFC080</backgroundColor>
-      <dockX>fill</dockX>
-      <ee_LocalName>p2</ee_LocalName>
-      <height>53</height>
-      <heightRatio>0.0809160305343511</heightRatio>
-      <layerName>任务列表</layerName>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
-sender.style.borderColor = "rgb(230,236,240)";
-sender.style.borderStyle = "solid";
-sender.style.borderTop = "";
-sender.style.borderLeft = "";
-sender.style.borderRight = "";</onCreate>
-      <sizeRatio>0.1325</sizeRatio>
-      <top>0</top>
-      <width>400</width>
-      <widthRatio>1</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132/panel133">
-      <cursor>pointer</cursor>
-      <dockY>fill</dockY>
-      <ee_LocalName>c_title</ee_LocalName>
-      <fontBold>true</fontBold>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>14</fontSize>
-      <hAlign>left</hAlign>
-      <height>53</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>51</left>
-      <leftRatio>0.1275</leftRatio>
-      <onClick>g5.mainDiv.scrollTop = 0;</onClick>
-      <sizeRatio>0.257281553398058</sizeRatio>
-      <text>任务列表</text>
-      <top>0</top>
-      <width>206</width>
-      <widthRatio>0.515</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel125/panel132/panel134">
-      <cursor>pointer</cursor>
-      <dockY>center</dockY>
-      <height>33</height>
-      <heightRatio>0.622641509433962</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>20</left>
-      <leftRatio>0.05</leftRatio>
-      <onClick>history.go(-1);
-window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
-      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
-sender.style.borderRadius = "50%";
-
-g5.initButtonV3(sender,[
-    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
-]);
-]]></onCreate>
-      <sizeRatio>1</sizeRatio>
-      <text><![CDATA[<]]></text>
-      <top>10</top>
-      <topRatio>0.188679245283019</topRatio>
-      <width>33</width>
-      <widthRatio>0.0825</widthRatio>
-    </control>
     <control type="Panel" pathname="/divRoot/panel114/panel127">
       <dockX>fill</dockX>
       <ee_LocalName>p3</ee_LocalName>
@@ -634,6 +462,179 @@ sender.onDective = function() {
       <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
+    <control type="Panel" pathname="/divRoot/panel125">
+      <backgroundColor>FFFFFF</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <dockX>center</dockX>
+      <ee_LocalName>p_title</ee_LocalName>
+      <height>655</height>
+      <heightRatio>0.841902313624679</heightRatio>
+      <layerName>题头</layerName>
+      <left>365</left>
+      <leftRatio>0.322723253757737</leftRatio>
+      <onCreate>sender.style.position="fixed";
+
+sender.currentPage = null;
+sender.changePage = function(page) {
+    if (this.currentPage == page) return;
+    if (this.currentPage) {
+        if (this.currentPage.onDeactive) {
+            this.currentPage.onDeactive();
+        }
+        ee.setVisible(this.currentPage, false);
+    }
+    
+    this.currentPage = page;
+    if (this.currentPage) {
+        if (this.currentPage.onActive) {
+            this.currentPage.onActive();
+        }
+        ee.setVisible(this.currentPage, true);
+        ee.setVisible(sender, true);
+        ee.tiledResizeV(sender,1);
+        //var r = eb.getDivRectSetting(g5.root.mainDiv);
+        //ee.setRect(this, r.x, 0, null, null);
+        //console.log(r.x);
+    } else {
+        ee.setVisible(sender, false);
+    }
+}
+</onCreate>
+      <sizeRatio>1.6375</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>0.353669319186561</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel128">
+      <backgroundColor>FFC080</backgroundColor>
+      <dockX>fill</dockX>
+      <ee_LocalName>p1</ee_LocalName>
+      <height>53</height>
+      <heightRatio>0.0809160305343511</heightRatio>
+      <layerName>项目组列表</layerName>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onCreate>sender.style.boxSizing="border-box";
+sender.style.borderWidth = "1px";
+sender.style.borderColor = "rgb(230,236,240)";
+sender.style.borderStyle = "solid";
+sender.style.borderTop = "";
+sender.style.borderLeft = "";
+sender.style.borderRight = "";</onCreate>
+      <sizeRatio>0.1325</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel128/panel129">
+      <cursor>pointer</cursor>
+      <dockY>fill</dockY>
+      <ee_LocalName>c_title</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>14</fontSize>
+      <hAlign>left</hAlign>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>51</left>
+      <leftRatio>0.1275</leftRatio>
+      <onClick>g5.mainDiv.scrollTop = 0;</onClick>
+      <sizeRatio>0.257281553398058</sizeRatio>
+      <text>项目组列表</text>
+      <top>0</top>
+      <width>206</width>
+      <widthRatio>0.515</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel128/panel212">
+      <cursor>pointer</cursor>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.05</leftRatio>
+      <onClick>history.go(-1);
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <sizeRatio>1</sizeRatio>
+      <text><![CDATA[<]]></text>
+      <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel132">
+      <backgroundColor>FFC080</backgroundColor>
+      <dockX>fill</dockX>
+      <ee_LocalName>p2</ee_LocalName>
+      <height>53</height>
+      <heightRatio>0.0809160305343511</heightRatio>
+      <layerName>任务列表</layerName>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onCreate>sender.style.boxSizing="border-box";
+sender.style.borderWidth = "1px";
+sender.style.borderColor = "rgb(230,236,240)";
+sender.style.borderStyle = "solid";
+sender.style.borderTop = "";
+sender.style.borderLeft = "";
+sender.style.borderRight = "";</onCreate>
+      <sizeRatio>0.1325</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel132/panel133">
+      <cursor>pointer</cursor>
+      <dockY>fill</dockY>
+      <ee_LocalName>c_title</ee_LocalName>
+      <fontBold>true</fontBold>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>14</fontSize>
+      <hAlign>left</hAlign>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>51</left>
+      <leftRatio>0.1275</leftRatio>
+      <onClick>g5.mainDiv.scrollTop = 0;</onClick>
+      <sizeRatio>0.257281553398058</sizeRatio>
+      <text>任务列表</text>
+      <top>0</top>
+      <width>206</width>
+      <widthRatio>0.515</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel132/panel134">
+      <cursor>pointer</cursor>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.05</leftRatio>
+      <onClick>history.go(-1);
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <sizeRatio>1</sizeRatio>
+      <text><![CDATA[<]]></text>
+      <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
     <control type="Panel" pathname="/divRoot/panel65">
       <aniAlpha>appear:渐变出现</aniAlpha>
       <aniDelay>500</aniDelay>
@@ -644,6 +645,7 @@ sender.onDective = function() {
       <height>778</height>
       <heightRatio>1</heightRatio>
       <layerName>项目组</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
@@ -6244,7 +6246,7 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="12">
+  <g5Items count="11">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -6474,26 +6476,6 @@ sender.init(0);]]></functionCode>
       <varValue>null;</varValue>
       <functionParam />
       <functionCode />
-    </item>
-    <item name="changePage" type="20">
-      <varValue />
-      <functionParam>page</functionParam>
-      <functionCode>if (g5.currentPage == page) return;
-if (g5.currentPage) {
-    if (g5.currentPage.onDeactive) {
-        g5.currentPage.onDeactive();
-    }
-    ee.setVisible(g5.currentPage, false);
-}
-
-g5.currentPage = page;
-if (g5.currentPage) {
-    if (g5.currentPage.onActive) {
-        g5.currentPage.onActive();
-    }
-    ee.setVisible(g5.currentPage, true);
-}
-</functionCode>
     </item>
     <item name="alert1" type="20">
       <varValue />
