@@ -307,6 +307,11 @@ sender.v_status = "";
 
 sender.v_pageIndex = 0;
 
+sender.showTeamTask = function(teamId) {
+    sender.v_teamId = teamId;
+    this.parentNode.changePage(this);
+}
+
 sender.onActive = function() {
     g5.root.p_title.changePage(g5.root.p_title.p2);
     setTimeout(function() {
@@ -6560,7 +6565,7 @@ root.style.borderLeft = "";
 root.style.borderRight = "";
 root.style.cursor = "pointer";
 ee.setOnClick(root,function(sender,event) {
-    //g5.p2.p2.show(root.v_userInfo);
+    g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo.id);
 });
 ee.setOnMouseEnter(root, function(sender,e){
     sender.style.backgroundColor = "rgb(245,248,250)";
