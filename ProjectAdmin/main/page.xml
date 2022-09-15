@@ -1,14 +1,14 @@
 <page>
   <controls count="284">
     <control type="DivRoot" pathname="/divRoot">
-      <backgroundColor>FFFFFF</backgroundColor>
+      <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
       <height>778</height>
       <left>0</left>
       <onControlLoad>ee.setAutoScroll($g("divRoot"), "hidden");
-document.body.style.backgroundColor = "#ffffff";
+document.body.style.backgroundColor = "#f0f0f0";
 document.body.style.overflowY  = "scroll";
 document.body.style.overflowX  = "hidden";
 document.body.style.webkitTapHighlightColor = "rgba(0,0,0,0)";
@@ -47,7 +47,6 @@ setInterval(function() {
 
 </onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
-
 if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
 }
@@ -472,7 +471,13 @@ sender.onDective = function() {
       <layerName>题头</layerName>
       <left>365</left>
       <leftRatio>0.322723253757737</leftRatio>
-      <onCreate>sender.style.position="fixed";
+      <onCreate>sender.style.boxSizing="border-box";
+sender.style.borderWidth = "1px";
+sender.style.borderColor = "rgb(254,255,255)";
+sender.style.borderStyle = "solid";
+sender.style.borderTop = "";
+sender.style.borderBottom = "";
+sender.style.position="fixed";
 
 sender.currentPage = null;
 sender.changePage = function(page) {
@@ -515,7 +520,7 @@ sender.changePage = function(page) {
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
+sender.style.borderWidth = "2px";
 sender.style.borderColor = "rgb(230,236,240)";
 sender.style.borderStyle = "solid";
 sender.style.borderTop = "";
@@ -5564,14 +5569,14 @@ eio.appendDataSet(sqlResult,"taskName,time,id,chatCount,readCount",0,1000);]]></
 g5.task1 = eio.readDataSet();
 ee.setTableData(ee.getControl("tablebody1"), g5.task1, 0, 100);</script3>
     </taskSetItem>
-    <taskSetItem name="taskRefreshV2">
+    <taskSetItem name="getTaskList">
       <script1>//teamId,isHis(T/F),onComplete()
 eio.appendString8(eb.getCookie("paToken"));
-eio.appendString8(taskRefreshV2.teamId + "");
-eio.appendString8(taskRefreshV2.isHis);</script1>
+eio.appendString8(getTaskList.teamId + "");
+eio.appendString8(getTaskList.isHis);</script1>
       <script2><![CDATA[var token = eio.readString8();
-var history = eio.readInt32();
-var teamId = eio.readInt32();
+var teamId = parseInt(eio.readString8());
+var isHit = eio.readString8();
 var sql,sqlResult;
 
 sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
@@ -5609,8 +5614,6 @@ if (history == 1) {
         "+ ',' + cast(datediff(hour, regDatetime, closeDatetime) as varchar(10)) as [time], id, 1 as chatCount, 1 as readCount " +
         "from taskInfo where status = 'CLS' and teamId = " + teamId + " order by closeDatetime desc ";
 } else {
-//    sql = "select taskName, datediff(hour, regDatetime, getdate()) as [time], id " +
-//        "from taskInfo where status = 'NEW' and teamId = " + teamId + " order by regDatetime desc ";
     sql = 
         "SELECT TOP (100) PERCENT dbo.taskInfo.taskName, DATEDIFF(hour, " +  
         "      dbo.taskInfo.regDatetime, GETDATE()) AS time, dbo.taskInfo.id, " +  
@@ -5635,8 +5638,8 @@ eio.appendDataSet(sqlResult,"taskName,time,id,chatCount,readCount",0,1000);]]></
       <script3>if (eio.readString8()!="T") {
     return;
 }
-taskRefreshV2.dataset = eio.readDataSet();
-if (taskRefreshV2.onComplete) taskRefreshV2.onComplete(taskRefreshV2.dataset);</script3>
+getTaskList.dataset = eio.readDataSet();
+if (getTaskList.onComplete) getTaskList.onComplete(getTaskList.dataset);</script3>
     </taskSetItem>
     <taskSetItem name="taskDetail">
       <script1>eio.appendString8(eb.getCookie("paToken"));
@@ -6246,7 +6249,7 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="11">
+  <g5Items count="12">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -6278,53 +6281,6 @@ end:""
       <varValue>ee.getControl("divRoot");</varValue>
       <functionParam />
       <functionCode />
-    </item>
-    <item name="TeamInfo" type="20">
-      <varValue />
-      <functionParam />
-      <functionCode>var uSize = new g5.UserInfo();
-uSize = uSize.size;
-this.size = 6 + uSize + uSize;
-this.loadFromDataset = function(ds, x, idx) {
-    this.id = ds.getData(x,idx); x++;
-    this.status = ds.getData(x,idx); x++;
-    this.regDatetimeUTC = ds.getData(x,idx); x++;
-    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
-    this.lastAccessTimeUTC = ds.getData(x,idx); x++;
-    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
-    this.title = ds.getData(x,idx); x++;
-    this.note = ds.getData(x,idx); x++;
-    this.creator = new g5.UserInfo();
-    this.creator.loadFromDataset(ds, x, idx); x += this.creator.size;
-    this.owner = new g5.UserInfo();
-    this.owner.loadFromDataset(ds, x, idx); x += this.owner.size;
-}
-this.setDataset = function(ds, x, idx) {
-    ds.setData(x,idx,this.id); x++;
-    ds.setData(x,idx,this.status); x++;
-    ds.setData(x,idx,this.regDatetimeUTC); x++;
-    ds.setData(x,idx,this.lastAccessTimeUTC); x++;
-    ds.setData(x,idx,this.title); x++;
-    ds.setData(x,idx,this.note); x++;
-    this.creator.setDataset(ds, x, idx); x += this.creator.size;
-    this.owner.setDataset(ds, x, idx); x += this.owner.size;
-}
-this.clone = function() {
-    var r = new g5.TeamInfo();
-    r.id = this.id;
-    r.status = this.status;
-    r.regDatetime = this.regDatetime;
-    r.regDatetimeUTC = this.regDatetimeUTC;
-    r.lastAccessTime = this.lastAccessTime;
-    r.lastAccessTimeUTC = this.lastAccessTimeUTC;
-    r.title = this.title;
-    r.note = this.note;
-    r.creator = this.creator.clone();
-    r.owner = this.owner.clone();
-    return r;
-}
-
-</functionCode>
     </item>
     <item name="UserInfo" type="20">
       <varValue />
@@ -6373,6 +6329,109 @@ this.clone = function() {
     r.photo = this.photo;
     r.titleBg = this.titleBg;
     r.email = this.email;
+    return r;
+}
+
+</functionCode>
+    </item>
+    <item name="TeamInfo" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode>var uSize = new g5.UserInfo();
+uSize = uSize.size;
+this.size = 6 + uSize + uSize;
+this.loadFromDataset = function(ds, x, idx) {
+    this.id = ds.getData(x,idx); x++;
+    this.status = ds.getData(x,idx); x++;
+    this.regDatetimeUTC = ds.getData(x,idx); x++;
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.lastAccessTimeUTC = ds.getData(x,idx); x++;
+    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
+    this.title = ds.getData(x,idx); x++;
+    this.note = ds.getData(x,idx); x++;
+    this.creator = new g5.UserInfo();
+    this.creator.loadFromDataset(ds, x, idx); x += this.creator.size;
+    this.owner = new g5.UserInfo();
+    this.owner.loadFromDataset(ds, x, idx); x += this.owner.size;
+}
+this.setDataset = function(ds, x, idx) {
+    ds.setData(x,idx,this.id); x++;
+    ds.setData(x,idx,this.status); x++;
+    ds.setData(x,idx,this.regDatetimeUTC); x++;
+    ds.setData(x,idx,this.lastAccessTimeUTC); x++;
+    ds.setData(x,idx,this.title); x++;
+    ds.setData(x,idx,this.note); x++;
+    this.creator.setDataset(ds, x, idx); x += this.creator.size;
+    this.owner.setDataset(ds, x, idx); x += this.owner.size;
+}
+this.clone = function() {
+    var r = new g5.TeamInfo();
+    r.id = this.id;
+    r.status = this.status;
+    r.regDatetime = this.regDatetime;
+    r.regDatetimeUTC = this.regDatetimeUTC;
+    r.lastAccessTime = this.lastAccessTime;
+    r.lastAccessTimeUTC = this.lastAccessTimeUTC;
+    r.title = this.title;
+    r.note = this.note;
+    r.creator = this.creator.clone();
+    r.owner = this.owner.clone();
+    return r;
+}
+
+</functionCode>
+    </item>
+    <item name="TaskInfo" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode>var uSize = new g5.UserInfo();
+uSize = uSize.size;
+this.size = 9 + uSize + uSize;
+this.loadFromDataset = function(ds, x, idx) {
+    this.id = ds.getData(x,idx); x++;
+    this.status = ds.getData(x,idx); x++;
+    this.regDatetimeUTC = ds.getData(x,idx); x++;
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.closeDatetimeUTC = ds.getData(x,idx); x++;
+    this.closeDatetime = g5.getUtcTime(this.closeDatetimeUTC, true);
+    this.teamId = ds.getData(x,idx); x++;
+    this.taskName = ds.getData(x,idx); x++;
+    this.note = ds.getData(x,idx); x++;
+    this.chatCount = parseInt(ds.getData(x,idx)); x++;
+    this.readCount = parseInt(ds.getData(x,idx)); x++;
+    this.creator = new g5.UserInfo();
+    this.creator.loadFromDataset(ds, x, idx); x += this.creator.size;
+    this.closer = new g5.UserInfo();
+    this.closer.loadFromDataset(ds, x, idx); x += this.closer.size;
+}
+this.setDataset = function(ds, x, idx) {
+    ds.setData(x,idx,this.id); x++;
+    ds.setData(x,idx,this.status); x++;
+    ds.setData(x,idx,this.regDatetimeUTC); x++;
+    ds.setData(x,idx,this.closeDatetimeUTC); x++;
+    ds.setData(x,idx,this.teamId); x++;
+    ds.setData(x,idx,this.taskName); x++;
+    ds.setData(x,idx,this.note); x++;
+    ds.setData(x,idx,this.chatCount + ""); x++;
+    ds.setData(x,idx,this.readCount + ""); x++;
+    this.creator.setDataset(ds, x, idx); x += this.creator.size;
+    this.closer.setDataset(ds, x, idx); x += this.closer.size;
+}
+this.clone = function() {
+    var r = new g5.TeamInfo();
+    r.id = this.id;
+    r.status = this.status;
+    r.regDatetime = this.regDatetime;
+    r.regDatetimeUTC = this.regDatetimeUTC;
+    r.closeDatetime = this.closeDatetime;
+    r.closeDatetimeUTC = this.closeDatetimeUTC;
+    r.teamId = this.teamId;
+    r.taskName = this.taskName;
+    r.note = this.note;
+    r.chatCount = this.chatCount;
+    r.readCount = this.readCount;
+    r.creator = this.creator.clone();
+    r.closer = this.closer.clone();
     return r;
 }
 
