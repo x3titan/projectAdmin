@@ -5,7 +5,7 @@
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <left>0</left>
       <onControlLoad>ee.setAutoScroll($g("divRoot"), "hidden");
 document.body.style.backgroundColor = "#f0f0f0";
@@ -36,7 +36,8 @@ getUserInfo();
 //g5.teamId = -1;
 //getTeam();  
 eb.processDock();
-g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+g5.processUrl();
+//g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
 
 ee.getControl("edit7")._input.style.overflow = "auto";
 
@@ -44,6 +45,7 @@ ee.getControl("edit7")._input.style.overflow = "auto";
 setInterval(function() {
     taskRefresh();
 }, 20000);
+
 
 </onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
@@ -93,7 +95,7 @@ wx.onMenuShareAppMessage({
 ]]></pageHead>
       <pageTitle>团队任务管理器</pageTitle>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
     </control>
     <control type="Panel" pathname="/divRoot/panel114">
       <backgroundColor>FFFFFF</backgroundColor>
@@ -104,7 +106,7 @@ wx.onMenuShareAppMessage({
       <height>700</height>
       <heightRatio>0.89974293059126</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>365</left>
+      <left>245</left>
       <leftRatio>0.322723253757737</leftRatio>
       <note>主页面</note>
       <sizeRatio>1.75</sizeRatio>
@@ -637,7 +639,7 @@ sender.onDective = function() {
       <height>655</height>
       <heightRatio>0.841902313624679</heightRatio>
       <layerName>题头</layerName>
-      <left>365</left>
+      <left>245</left>
       <leftRatio>0.322723253757737</leftRatio>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "1px";
@@ -879,46 +881,46 @@ g5.initButtonV3(sender,[
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName>项目组</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel65/layouty7">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>692</height>
+      <height>665</height>
       <heightRatio>0.889705882352941</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>1.47560975609756</sizeRatio>
-      <top>86</top>
+      <top>83</top>
       <topRatio>0.110294117647059</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel65/layouty7/layoutyitem16">
       <backgroundColor>f0f0f0</backgroundColor>
       <backgroundImg>CPY0002.jpg</backgroundImg>
-      <height>629</height>
+      <height>605</height>
       <heightRatio>0.908959537572254</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.556145004420866</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69">
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>629</height>
+      <height>605</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
@@ -927,7 +929,7 @@ g5.initButtonV3(sender,[
       <outerRight>20</outerRight>
       <sizeRatio>0.57653528872594</sizeRatio>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tabletitle3">
@@ -941,7 +943,7 @@ g5.initButtonV3(sender,[
       <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody3</tableBody>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tabletitle3/tabletitleitem5">
@@ -952,13 +954,13 @@ g5.initButtonV3(sender,[
       <left>0</left>
       <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
-      <height>625</height>
+      <height>601</height>
       <heightRatio>0.993640699523052</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -966,14 +968,14 @@ g5.initButtonV3(sender,[
       <tableTitle>tabletitle3</tableTitle>
       <top>4</top>
       <topRatio>0.00635930047694754</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/tablebodyitem5">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -988,7 +990,7 @@ taskRefresh();
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/tablebodyitem5/panel70">
@@ -1001,16 +1003,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp105">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1023,8 +1025,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>62</top>
-      <width>1091</width>
+      <top>60</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp105/temp13">
@@ -1037,16 +1039,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp107">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1059,8 +1061,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>125</top>
-      <width>1091</width>
+      <top>120</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp107/temp14">
@@ -1073,16 +1075,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp109">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1095,8 +1097,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>187</top>
-      <width>1091</width>
+      <top>180</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp109/temp15">
@@ -1109,16 +1111,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp111">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>61</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1131,8 +1133,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>250</top>
-      <width>1091</width>
+      <top>240</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp111/temp16">
@@ -1145,16 +1147,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp113">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1167,8 +1169,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>312</top>
-      <width>1091</width>
+      <top>301</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp113/temp17">
@@ -1181,16 +1183,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp115">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1203,8 +1205,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>375</top>
-      <width>1091</width>
+      <top>361</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp115/temp18">
@@ -1217,16 +1219,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp117">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1239,8 +1241,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>437</top>
-      <width>1091</width>
+      <top>421</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp117/temp20">
@@ -1253,16 +1255,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp119">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1275,8 +1277,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>500</top>
-      <width>1091</width>
+      <top>481</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp119/temp22">
@@ -1289,16 +1291,16 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp121">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>20</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1311,8 +1313,8 @@ taskRefresh();
 </onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>姓名：评论的内容</text>
-      <top>562</top>
-      <width>1091</width>
+      <top>541</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem16/panel69/tablebody3/temp121/temp24">
@@ -1325,22 +1327,22 @@ taskRefresh();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.000916590284142988</sizeRatio>
-      <top>61</top>
+      <top>59</top>
       <topRatio>0.983870967741936</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel65/layouty7/layoutyitem17">
       <backgroundColor>d0d0d0</backgroundColor>
       <heavy>10</heavy>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0910404624277457</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0557029177718833</sizeRatio>
-      <top>629</top>
+      <top>605</top>
       <topRatio>0.908959537572254</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem17/panel76">
@@ -1354,7 +1356,7 @@ taskRefresh();
       <left>0</left>
       <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem17/panel77">
@@ -1364,17 +1366,17 @@ taskRefresh();
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>23</fontSizeAuto>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>220</left>
+      <left>173</left>
       <leftRatio>0.194331983805668</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit6"), "");
 ee.showAni(ee.getControl("panel67"));</onClick>
       <sizeRatio>0.228373702422145</sizeRatio>
       <text>创建项目组</text>
       <top>0</top>
-      <width>662</width>
+      <width>521</width>
       <widthRatio>0.58502024291498</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/layouty7/layoutyitem17/panel77/panel113">
@@ -1382,32 +1384,32 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>30</height>
+      <height>28</height>
       <heightRatio>0.46969696969697</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>104</left>
+      <left>82</left>
       <leftRatio>0.157407407407407</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.645833333333333</sizeRatio>
-      <top>16</top>
+      <top>15</top>
       <topRatio>0.257575757575758</topRatio>
-      <width>98</width>
+      <width>77</width>
       <widthRatio>0.148148148148148</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel65/layouty6">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>86</height>
+      <height>83</height>
       <heightRatio>0.110294117647059</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.182926829268293</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel65/layouty6/layoutyitem14">
@@ -1420,7 +1422,7 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <left>0</left>
       <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel65/layouty6/layoutyitem15">
@@ -1431,7 +1433,7 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>15</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>59</height>
+      <height>56</height>
       <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1439,7 +1441,7 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <text>　我的项目组</text>
       <top>27</top>
       <topRatio>0.313953488372093</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67">
@@ -1449,7 +1451,7 @@ ee.showAni(ee.getControl("panel67"));</onClick>
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[项目组->新建]]></layerName>
       <layerVisible>false</layerVisible>
@@ -1459,7 +1461,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68">
@@ -1467,15 +1469,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431318681318681</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>91</left>
+      <left>72</left>
       <leftRatio>0.0802792321116928</leftRatio>
       <sizeRatio>0.650103519668737</sizeRatio>
-      <top>185</top>
+      <top>178</top>
       <topRatio>0.237637362637363</topRatio>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>0.842931937172775</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68/panel71">
@@ -1486,23 +1488,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.118072289156627</sizeRatio>
       <text>+ 创建一个新的项目组</text>
       <top>0</top>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68/panel71/panel72">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>904</left>
+      <left>702</left>
       <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -1515,13 +1517,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>26</height>
+      <height>25</height>
       <heightRatio>0.551020408163265</heightRatio>
       <layerVisible>false</layerVisible>
       <left>8</left>
       <leftRatio>0.163265306122449</leftRatio>
       <sizeRatio>0.84375</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.244897959183673</topRatio>
       <width>32</width>
       <widthRatio>0.653061224489796</widthRatio>
@@ -1530,16 +1532,16 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>807</left>
+      <left>636</left>
       <leftRatio>0.847161572052402</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel67"),false);
 </onClick>
       <sizeRatio>0.7</sizeRatio>
       <top>0</top>
-      <width>146</width>
+      <width>115</width>
       <widthRatio>0.152838427947598</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel65/panel67/panel68/edit6">
@@ -1551,19 +1553,19 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>175</height>
+      <height>168</height>
       <heightRatio>0.519886363636364</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>41</left>
+      <left>33</left>
       <leftRatio>0.0433734939759036</leftRatio>
       <multiLine>true</multiLine>
       <sizeRatio>0.482849604221636</sizeRatio>
       <text>　　请在此输入项目组的名字，如：“App开发Android项目小组”。为了便于阅读，文字内容尽量不要有回车符，同时字数尽量控制在20字以内。</text>
-      <top>67</top>
+      <top>64</top>
       <topRatio>0.198863636363636</topRatio>
-      <width>870</width>
+      <width>686</width>
       <widthRatio>0.913253012048193</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68/panel75">
@@ -1574,17 +1576,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <dockY>ratio</dockY>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>98</left>
+      <left>77</left>
       <leftRatio>0.102620087336245</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel67"),false);</onClick>
       <sizeRatio>0.283132530120482</sizeRatio>
       <text>取消</text>
-      <top>263</top>
+      <top>253</top>
       <topRatio>0.784090909090909</topRatio>
-      <width>345</width>
+      <width>272</width>
       <widthRatio>0.362445414847162</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65/panel67/panel68/panel78">
@@ -1595,17 +1597,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <dockY>ratio</dockY>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>499</left>
+      <left>394</left>
       <leftRatio>0.524017467248908</leftRatio>
       <onClick>teamNew();</onClick>
       <sizeRatio>0.283132530120482</sizeRatio>
       <text>确定创建</text>
-      <top>263</top>
+      <top>253</top>
       <topRatio>0.784090909090909</topRatio>
-      <width>345</width>
+      <width>272</width>
       <widthRatio>0.362445414847162</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66">
@@ -1620,27 +1622,27 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>808080</fontColor>
       <fontSizeAuto>20</fontSizeAuto>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName>任务</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel66/layouty1">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>86</height>
+      <height>83</height>
       <heightRatio>0.110294117647059</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.182926829268293</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel66/layouty1/layoutyitem1">
@@ -1653,7 +1655,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <left>0</left>
       <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel66/layouty1/layoutyitem2">
@@ -1664,7 +1666,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>18</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>59</height>
+      <height>56</height>
       <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1672,7 +1674,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <text>　　任务管理系统</text>
       <top>27</top>
       <topRatio>0.313953488372093</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty1/layoutyitem2/panel7">
@@ -1682,19 +1684,19 @@ ee.setVisible(ee.getControl("panel1"), false);
       <dockY>ratio</dockY>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>40</fontSizeAuto>
-      <height>36</height>
+      <height>34</height>
       <heightRatio>0.60655737704918</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>906</left>
+      <left>714</left>
       <leftRatio>0.801011804384486</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel1"));
 ee.showAni(ee.getControl("panel1"));
 ee.showAni(ee.getControl("panel20"));
 </onClick>
       <sizeRatio>0.308333333333333</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.19672131147541</topRatio>
-      <width>229</width>
+      <width>180</width>
       <widthRatio>0.202360876897133</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty1/layoutyitem2/panel79">
@@ -1704,15 +1706,15 @@ ee.showAni(ee.getControl("panel20"));
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>30</height>
+      <height>28</height>
       <heightRatio>0.508196721311475</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>9</left>
+      <left>7</left>
       <leftRatio>0.00813008130081301</leftRatio>
       <sizeRatio>0.53448275862069</sizeRatio>
-      <top>15</top>
+      <top>14</top>
       <topRatio>0.245901639344262</topRatio>
-      <width>133</width>
+      <width>105</width>
       <widthRatio>0.117886178861789</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty1/layoutyitem2/panel80">
@@ -1722,48 +1724,48 @@ ee.showAni(ee.getControl("panel20"));
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>56</height>
+      <height>53</height>
       <heightRatio>0.950819672131147</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>6</left>
+      <left>4</left>
       <leftRatio>0.00487012987012987</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel66"), 1);</onClick>
       <sizeRatio>0.532110091743119</sizeRatio>
       <top>2</top>
       <topRatio>0.0327868852459016</topRatio>
-      <width>200</width>
+      <width>158</width>
       <widthRatio>0.176948051948052</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel66/layouty3">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>693</height>
+      <height>666</height>
       <heightRatio>0.89093137254902</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>1.31227436823105</sizeRatio>
-      <top>84</top>
+      <top>81</top>
       <topRatio>0.107843137254902</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel66/layouty3/layoutyitem6">
       <backgroundColor>f0f0f0</backgroundColor>
-      <height>630</height>
+      <height>605</height>
       <heightRatio>0.909090909090909</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.557029177718833</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6">
       <backgroundImg>CPY0002.jpg</backgroundImg>
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>565</height>
+      <height>543</height>
       <heightRatio>0.897125567322239</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
@@ -1771,9 +1773,9 @@ ee.showAni(ee.getControl("panel20"));
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
       <sizeRatio>1.15369649805447</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.0998487140695915</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.927797833935018</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tabletitle1">
@@ -1787,7 +1789,7 @@ ee.showAni(ee.getControl("panel20"));
       <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody1</tableBody>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tabletitle1/tabletitleitem1">
@@ -1798,7 +1800,7 @@ ee.showAni(ee.getControl("panel20"));
       <left>0</left>
       <sizeRatio>0.00476758045292014</sizeRatio>
       <top>0</top>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tabletitle1/tabletitleitem2">
@@ -1807,17 +1809,17 @@ ee.showAni(ee.getControl("panel20"));
       <height>4</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <sizeRatio>0.0158730158730159</sizeRatio>
       <top>0</top>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
-      <height>561</height>
+      <height>539</height>
       <heightRatio>0.992920353982301</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1825,14 +1827,14 @@ ee.showAni(ee.getControl("panel20"));
       <tableTitle>tabletitle1</tableTitle>
       <top>4</top>
       <topRatio>0.00707964601769911</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem1">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1853,7 +1855,7 @@ ee.setText(sender, text);]]></onUpdate>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
       <top>0</top>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem1/panel12">
@@ -1866,18 +1868,18 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem2">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -1913,7 +1915,7 @@ ee.setText(sender, text);]]></onUpdate>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
       <top>0</top>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/tablebodyitem2/panel13">
@@ -1926,16 +1928,16 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp37">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -1947,8 +1949,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>56</top>
-      <width>839</width>
+      <top>54</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp37/temp26">
@@ -1961,18 +1963,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp38">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -1983,8 +1985,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>56</top>
-      <width>252</width>
+      <top>54</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp38/temp28">
@@ -1997,16 +1999,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp39">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2018,8 +2020,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>112</top>
-      <width>839</width>
+      <top>108</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp39/temp30">
@@ -2032,18 +2034,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp40">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2054,8 +2056,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>112</top>
-      <width>252</width>
+      <top>108</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp40/temp32">
@@ -2068,16 +2070,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp41">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2089,8 +2091,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>168</top>
-      <width>839</width>
+      <top>162</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp41/temp34">
@@ -2103,18 +2105,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp42">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2125,8 +2127,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>168</top>
-      <width>252</width>
+      <top>162</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp42/temp36">
@@ -2139,16 +2141,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp43">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>57</height>
+      <height>53</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2160,8 +2162,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>224</top>
-      <width>839</width>
+      <top>216</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp43/temp56">
@@ -2174,18 +2176,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp44">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>57</height>
+      <height>53</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2196,8 +2198,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>224</top>
-      <width>252</width>
+      <top>216</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp44/temp58">
@@ -2210,16 +2212,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp45">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2231,8 +2233,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>281</top>
-      <width>839</width>
+      <top>269</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp45/temp60">
@@ -2245,18 +2247,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp46">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2267,8 +2269,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>281</top>
-      <width>252</width>
+      <top>269</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp46/temp61">
@@ -2281,16 +2283,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp47">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2302,8 +2304,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>337</top>
-      <width>839</width>
+      <top>323</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp47/temp62">
@@ -2316,18 +2318,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp48">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2338,8 +2340,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>337</top>
-      <width>252</width>
+      <top>323</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp48/temp63">
@@ -2352,16 +2354,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp49">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2373,8 +2375,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>393</top>
-      <width>839</width>
+      <top>377</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp49/temp64">
@@ -2387,18 +2389,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp50">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2409,8 +2411,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>393</top>
-      <width>252</width>
+      <top>377</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp50/temp65">
@@ -2423,16 +2425,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp51">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2444,8 +2446,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>449</top>
-      <width>839</width>
+      <top>431</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp51/temp66">
@@ -2458,18 +2460,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp52">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2480,8 +2482,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>449</top>
-      <width>252</width>
+      <top>431</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp52/temp67">
@@ -2494,16 +2496,16 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp53">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -2515,8 +2517,8 @@ g5.unreadCount =
 taskDetail();</onClick>
       <sizeRatio>0.066746126340882</sizeRatio>
       <text>测试项目名字1</text>
-      <top>505</top>
-      <width>839</width>
+      <top>485</top>
+      <width>655</width>
       <widthRatio>0.769019248395967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp53/temp68">
@@ -2529,18 +2531,18 @@ taskDetail();</onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00119189511323004</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>839</width>
+      <width>655</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp54">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.0998217468805704</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>839</left>
+      <left>655</left>
       <leftRatio>0.769019248395967</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"));
 g5.taskId = g5.task1.getData(2, sender.rowIndex);
@@ -2551,8 +2553,8 @@ taskDetail();
 </onClick>
       <sizeRatio>0.222222222222222</sizeRatio>
       <text>3天</text>
-      <top>505</top>
-      <width>252</width>
+      <top>485</top>
+      <width>196</width>
       <widthRatio>0.230980751604033</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel6/tablebody1/temp54/temp69">
@@ -2565,21 +2567,21 @@ taskDetail();
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00396825396825397</sizeRatio>
-      <top>55</top>
+      <top>53</top>
       <topRatio>0.982142857142857</topRatio>
-      <width>252</width>
+      <width>196</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel8">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>62</height>
+      <height>59</height>
       <heightRatio>0.0983358547655068</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.113438045375218</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel8/panel9">
@@ -2595,9 +2597,9 @@ taskDetail();
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
       <sizeRatio>0.00366636113657195</sizeRatio>
-      <top>58</top>
+      <top>55</top>
       <topRatio>0.935483870967742</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel8/panel10">
@@ -2606,15 +2608,15 @@ taskDetail();
       <fontBold>true</fontBold>
       <fontColor>808080</fontColor>
       <fontSizeAuto>20</fontSizeAuto>
-      <height>62</height>
+      <height>59</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>43</left>
+      <left>34</left>
       <leftRatio>0.0378378378378378</leftRatio>
       <sizeRatio>0.215946843853821</sizeRatio>
       <text>进行中的任务</text>
       <top>0</top>
-      <width>613</width>
+      <width>483</width>
       <widthRatio>0.542342342342342</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem6/panel8/panel11">
@@ -2623,29 +2625,29 @@ taskDetail();
       <fontBold>true</fontBold>
       <fontColor>808080</fontColor>
       <fontSizeAuto>20</fontSizeAuto>
-      <height>62</height>
+      <height>59</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>821</left>
+      <left>647</left>
       <leftRatio>0.726003490401396</leftRatio>
       <sizeRatio>0.477941176470588</sizeRatio>
       <text>用时</text>
       <top>0</top>
-      <width>268</width>
+      <width>211</width>
       <widthRatio>0.237347294938918</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel66/layouty3/layoutyitem7">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>10</heavy>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>0.0909090909090909</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0557029177718833</sizeRatio>
-      <top>630</top>
+      <top>605</top>
       <topRatio>0.909090909090909</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem7/panel4">
@@ -2659,7 +2661,7 @@ taskDetail();
       <left>0</left>
       <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem7/panel5">
@@ -2669,17 +2671,17 @@ taskDetail();
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>41</left>
+      <left>32</left>
       <leftRatio>0.036036036036036</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit1"), "");
 ee.showAni(ee.getControl("panel14"));</onClick>
       <sizeRatio>0.290748898678414</sizeRatio>
       <text>新建任务</text>
       <top>0</top>
-      <width>463</width>
+      <width>364</width>
       <widthRatio>0.409009009009009</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem7/panel5/panel99">
@@ -2687,10 +2689,10 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>28</height>
+      <height>27</height>
       <heightRatio>0.439393939393939</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>44</left>
+      <left>34</left>
       <leftRatio>0.0946502057613169</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -2699,7 +2701,7 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <sizeRatio>0.617021276595745</sizeRatio>
       <top>17</top>
       <topRatio>0.272727272727273</topRatio>
-      <width>90</width>
+      <width>70</width>
       <widthRatio>0.193415637860082</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem7/panel44">
@@ -2709,10 +2711,10 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>624</left>
+      <left>491</left>
       <leftRatio>0.551351351351351</leftRatio>
       <onClick>if (g5.history) {
     ee.setText(sender, "历史记录");
@@ -2727,7 +2729,7 @@ taskRefresh();</onClick>
       <sizeRatio>0.290748898678414</sizeRatio>
       <text>历史记录</text>
       <top>0</top>
-      <width>463</width>
+      <width>364</width>
       <widthRatio>0.409009009009009</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel66/layouty3/layoutyitem7/panel44/panel98">
@@ -2735,10 +2737,10 @@ taskRefresh();</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>28</height>
+      <height>27</height>
       <heightRatio>0.439393939393939</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>19</left>
+      <left>15</left>
       <leftRatio>0.0411522633744856</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -2747,7 +2749,7 @@ taskRefresh();</onClick>
       <sizeRatio>0.617021276595745</sizeRatio>
       <top>18</top>
       <topRatio>0.287878787878788</topRatio>
-      <width>90</width>
+      <width>70</width>
       <widthRatio>0.193415637860082</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20">
@@ -2758,7 +2760,7 @@ taskRefresh();</onClick>
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务->主菜单]]></layerName>
       <layerVisible>false</layerVisible>
@@ -2768,7 +2770,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1">
@@ -2778,15 +2780,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundSkin>App1PJ004</backgroundSkin>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>486</height>
+      <height>468</height>
       <heightRatio>0.625</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>225</left>
+      <left>177</left>
       <leftRatio>0.198988195615514</leftRatio>
       <sizeRatio>1.42857142857143</sizeRatio>
-      <top>109</top>
+      <top>104</top>
       <topRatio>0.139705882352941</topRatio>
-      <width>681</width>
+      <width>536</width>
       <widthRatio>0.602023608768971</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel3">
@@ -2795,10 +2797,10 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>128</height>
+      <height>123</height>
       <heightRatio>0.262745098039216</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>48</left>
+      <left>38</left>
       <leftRatio>0.0703363914373089</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit1"), "");
 ee.showAni(ee.getControl("panel14"));</onClick>
@@ -2807,9 +2809,9 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.992592592592593</sizeRatio>
-      <top>133</top>
+      <top>128</top>
       <topRatio>0.274509803921569</topRatio>
-      <width>281</width>
+      <width>221</width>
       <widthRatio>0.412844036697248</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel3/panel53">
@@ -2817,35 +2819,35 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>55</height>
+      <height>53</height>
       <heightRatio>0.432835820895522</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>73</left>
+      <left>57</left>
       <leftRatio>0.258503401360544</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.816901408450704</sizeRatio>
-      <top>20</top>
+      <top>19</top>
       <topRatio>0.156716417910448</topRatio>
-      <width>136</width>
+      <width>107</width>
       <widthRatio>0.482993197278912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel3/panel63">
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>36</height>
+      <height>35</height>
       <heightRatio>0.283582089552239</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>25</left>
+      <left>20</left>
       <leftRatio>0.0884353741496599</leftRatio>
       <sizeRatio>0.316666666666667</sizeRatio>
       <text>新建任务</text>
-      <top>80</top>
+      <top>77</top>
       <topRatio>0.626865671641791</topRatio>
-      <width>229</width>
+      <width>180</width>
       <widthRatio>0.816326530612245</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel88">
@@ -2854,10 +2856,10 @@ ee.showAni(ee.getControl("panel14"));</onClick>
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>128</height>
+      <height>123</height>
       <heightRatio>0.262745098039216</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>358</left>
+      <left>282</left>
       <leftRatio>0.525993883792049</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
@@ -2870,9 +2872,9 @@ ee.setEditText(ee.getControl("edit4"), "");
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.992592592592593</sizeRatio>
-      <top>133</top>
+      <top>128</top>
       <topRatio>0.274509803921569</topRatio>
-      <width>281</width>
+      <width>221</width>
       <widthRatio>0.412844036697248</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel88/panel100">
@@ -2880,35 +2882,35 @@ ee.setEditText(ee.getControl("edit4"), "");
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>55</height>
+      <height>53</height>
       <heightRatio>0.432835820895522</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>73</left>
+      <left>57</left>
       <leftRatio>0.258503401360544</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.816901408450704</sizeRatio>
-      <top>20</top>
+      <top>19</top>
       <topRatio>0.156716417910448</topRatio>
-      <width>136</width>
+      <width>107</width>
       <widthRatio>0.482993197278912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel88/panel101">
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>36</height>
+      <height>35</height>
       <heightRatio>0.283582089552239</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>25</left>
+      <left>20</left>
       <leftRatio>0.0884353741496599</leftRatio>
       <sizeRatio>0.316666666666667</sizeRatio>
       <text>修改密码</text>
-      <top>80</top>
+      <top>77</top>
       <topRatio>0.626865671641791</topRatio>
-      <width>229</width>
+      <width>180</width>
       <widthRatio>0.816326530612245</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel102">
@@ -2917,10 +2919,10 @@ ee.setEditText(ee.getControl("edit4"), "");
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>128</height>
+      <height>123</height>
       <heightRatio>0.262745098039216</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>358</left>
+      <left>282</left>
       <leftRatio>0.525993883792049</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
@@ -2933,9 +2935,9 @@ getTeamMemberList();
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.992592592592593</sizeRatio>
-      <top>272</top>
+      <top>262</top>
       <topRatio>0.558823529411765</topRatio>
-      <width>281</width>
+      <width>221</width>
       <widthRatio>0.412844036697248</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel102/panel103">
@@ -2943,35 +2945,35 @@ getTeamMemberList();
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>55</height>
+      <height>53</height>
       <heightRatio>0.432835820895522</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>73</left>
+      <left>57</left>
       <leftRatio>0.258503401360544</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.816901408450704</sizeRatio>
-      <top>20</top>
+      <top>19</top>
       <topRatio>0.156716417910448</topRatio>
-      <width>136</width>
+      <width>107</width>
       <widthRatio>0.482993197278912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel102/panel104">
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>36</height>
+      <height>35</height>
       <heightRatio>0.283582089552239</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>25</left>
+      <left>20</left>
       <leftRatio>0.0884353741496599</leftRatio>
       <sizeRatio>0.316666666666667</sizeRatio>
       <text>项目组成员</text>
-      <top>80</top>
+      <top>77</top>
       <topRatio>0.626865671641791</topRatio>
-      <width>229</width>
+      <width>180</width>
       <widthRatio>0.816326530612245</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel107">
@@ -2980,10 +2982,10 @@ getTeamMemberList();
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>128</height>
+      <height>123</height>
       <heightRatio>0.262745098039216</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>48</left>
+      <left>38</left>
       <leftRatio>0.0703363914373089</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel20"), false);
 ee.setVisible(ee.getControl("panel1"), false);
@@ -2994,9 +2996,9 @@ ee.setEditText(ee.getControl("edit5"), "");</onClick>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.992592592592593</sizeRatio>
-      <top>272</top>
+      <top>262</top>
       <topRatio>0.558823529411765</topRatio>
-      <width>281</width>
+      <width>221</width>
       <widthRatio>0.412844036697248</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel107/panel108">
@@ -3004,35 +3006,35 @@ ee.setEditText(ee.getControl("edit5"), "");</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>55</height>
+      <height>53</height>
       <heightRatio>0.432835820895522</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>73</left>
+      <left>57</left>
       <leftRatio>0.258503401360544</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.816901408450704</sizeRatio>
-      <top>20</top>
+      <top>19</top>
       <topRatio>0.156716417910448</topRatio>
-      <width>136</width>
+      <width>107</width>
       <widthRatio>0.482993197278912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel107/panel109">
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>36</height>
+      <height>35</height>
       <heightRatio>0.283582089552239</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>25</left>
+      <left>20</left>
       <leftRatio>0.0884353741496599</leftRatio>
       <sizeRatio>0.316666666666667</sizeRatio>
       <text>邀请朋友</text>
-      <top>80</top>
+      <top>77</top>
       <topRatio>0.626865671641791</topRatio>
-      <width>229</width>
+      <width>180</width>
       <widthRatio>0.816326530612245</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel110">
@@ -3041,10 +3043,10 @@ ee.setEditText(ee.getControl("edit5"), "");</onClick>
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>49</height>
+      <height>47</height>
       <heightRatio>0.1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>267</left>
+      <left>210</left>
       <leftRatio>0.391437308868502</leftRatio>
       <onClick>eb.setCookie("paToken", "");
 window.location.href = ee.getUrl("/login");
@@ -3054,9 +3056,9 @@ window.location.href = ee.getUrl("/login");
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.291428571428571</sizeRatio>
-      <top>415</top>
+      <top>400</top>
       <topRatio>0.854901960784314</topRatio>
-      <width>364</width>
+      <width>287</width>
       <widthRatio>0.535168195718654</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel110/panel111">
@@ -3067,16 +3069,16 @@ window.location.href = ee.getUrl("/login");
       <height>27</height>
       <heightRatio>0.529411764705882</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>19</left>
+      <left>15</left>
       <leftRatio>0.0523560209424084</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
       <outerRight>5</outerRight>
       <outerTop>5</outerTop>
       <sizeRatio>0.658536585365854</sizeRatio>
-      <top>11</top>
+      <top>10</top>
       <topRatio>0.235294117647059</topRatio>
-      <width>78</width>
+      <width>62</width>
       <widthRatio>0.214659685863874</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel110/panel112">
@@ -3088,13 +3090,13 @@ window.location.href = ee.getUrl("/login");
       <height>37</height>
       <heightRatio>0.725490196078431</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>133</left>
+      <left>105</left>
       <leftRatio>0.366492146596859</leftRatio>
       <sizeRatio>0.44578313253012</sizeRatio>
       <text>注销</text>
-      <top>6</top>
+      <top>5</top>
       <topRatio>0.137254901960784</topRatio>
-      <width>158</width>
+      <width>125</width>
       <widthRatio>0.43455497382199</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel20/panel1/panel2">
@@ -3105,10 +3107,10 @@ window.location.href = ee.getUrl("/login");
       <fontBold>true</fontBold>
       <fontColor>404040</fontColor>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>96</height>
+      <height>93</height>
       <heightRatio>0.198039215686275</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>44</left>
+      <left>35</left>
       <leftRatio>0.0644257703081232</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -3117,9 +3119,9 @@ window.location.href = ee.getUrl("/login");
       <sizeRatio>0.32475884244373</sizeRatio>
       <text>用户名
 手机号</text>
-      <top>23</top>
+      <top>22</top>
       <topRatio>0.0470588235294118</topRatio>
-      <width>593</width>
+      <width>467</width>
       <widthRatio>0.871148459383754</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14">
@@ -3130,7 +3132,7 @@ window.location.href = ee.getUrl("/login");
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务->新建]]></layerName>
       <layerVisible>false</layerVisible>
@@ -3140,7 +3142,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15">
@@ -3148,15 +3150,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431372549019608</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>91</left>
+      <left>72</left>
       <leftRatio>0.0803149606299213</leftRatio>
       <sizeRatio>0.657943925233645</sizeRatio>
-      <top>186</top>
+      <top>179</top>
       <topRatio>0.238970588235294</topRatio>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>0.84251968503937</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15/panel21">
@@ -3167,23 +3169,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.104700854700855</sizeRatio>
       <text>+ 新建任务</text>
       <top>0</top>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15/panel21/panel24">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>904</left>
+      <left>702</left>
       <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -3196,13 +3198,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>26</height>
+      <height>25</height>
       <heightRatio>0.551020408163265</heightRatio>
       <layerVisible>false</layerVisible>
       <left>8</left>
       <leftRatio>0.163265306122449</leftRatio>
       <sizeRatio>0.84375</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.244897959183673</topRatio>
       <width>32</width>
       <widthRatio>0.653061224489796</widthRatio>
@@ -3211,16 +3213,16 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>809</left>
+      <left>638</left>
       <leftRatio>0.849015317286652</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel14"),1);
 </onClick>
       <sizeRatio>0.710144927536232</sizeRatio>
       <top>0</top>
-      <width>144</width>
+      <width>113</width>
       <widthRatio>0.150984682713348</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15/panel22">
@@ -3232,16 +3234,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>51</height>
+      <height>49</height>
       <heightRatio>0.150568181818182</heightRatio>
       <layerVisible>false</layerVisible>
+      <left>79</left>
       <leftRatio>0.105032822757112</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel14"),1);</onClick>
       <sizeRatio>0.33125</sizeRatio>
       <text>取消</text>
-      <top>261</top>
+      <top>251</top>
       <topRatio>0.775568181818182</topRatio>
-      <width>334</width>
+      <width>263</width>
       <widthRatio>0.350109409190372</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel14/panel15/panel23">
@@ -3253,17 +3256,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>51</height>
+      <height>49</height>
       <heightRatio>0.150568181818182</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>507</left>
+      <left>399</left>
       <leftRatio>0.531728665207877</leftRatio>
       <onClick>taskNew();</onClick>
       <sizeRatio>0.33125</sizeRatio>
       <text>确定创建</text>
-      <top>261</top>
+      <top>251</top>
       <topRatio>0.775568181818182</topRatio>
-      <width>334</width>
+      <width>263</width>
       <widthRatio>0.350109409190372</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel14/panel15/edit1">
@@ -3275,12 +3278,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>173</height>
+      <height>166</height>
       <heightRatio>0.514204545454545</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>44</left>
+      <left>35</left>
       <leftRatio>0.0459518599562363</leftRatio>
       <multiLine>true</multiLine>
       <outerBottom>2</outerBottom>
@@ -3289,9 +3292,9 @@ ee.setVisible(ee.getControl("panel1"), false);
       <outerTop>2</outerTop>
       <sizeRatio>0.435096153846154</sizeRatio>
       <text>　　请在此输入任务的简要描述文字，如果文字比较多建议写在后续的回复里面。为了便于阅读文字内容尽量不要有回车符，同时字数尽量控制在100字以内。</text>
-      <top>69</top>
+      <top>66</top>
       <topRatio>0.204545454545455</topRatio>
-      <width>868</width>
+      <width>684</width>
       <widthRatio>0.910284463894967</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16">
@@ -3303,40 +3306,40 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName>任务详细</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel16/layouty4">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>228</height>
+      <height>219</height>
       <heightRatio>0.292892156862745</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.417102966841187</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel16/layouty4/layoutyitem8">
       <backgroundColor>BFCEDF</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>14</heavy>
-      <height>28</height>
+      <height>27</height>
       <heightRatio>0.12280701754386</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0247568523430592</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel16/layouty4/layoutyitem9">
@@ -3345,14 +3348,14 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>15</fontSizeAuto>
-      <height>200</height>
+      <height>192</height>
       <heightRatio>0.87719298245614</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.17683465959328</sizeRatio>
-      <top>28</top>
+      <top>27</top>
       <topRatio>0.12280701754386</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel17">
@@ -3365,17 +3368,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>18</fontSizeAuto>
-      <height>79</height>
+      <height>76</height>
       <heightRatio>0.395238095238095</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>919</left>
+      <left>724</left>
       <leftRatio>0.812154696132597</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel16"), 1);
 taskRefresh();</onClick>
       <sizeRatio>0.846938775510204</sizeRatio>
       <top>3</top>
       <topRatio>0.0142857142857143</topRatio>
-      <width>204</width>
+      <width>161</width>
       <widthRatio>0.180478821362799</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel17/panel126">
@@ -3383,10 +3386,10 @@ taskRefresh();</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>46</height>
+      <height>44</height>
       <heightRatio>0.578313253012048</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>17</left>
+      <left>13</left>
       <leftRatio>0.0816326530612245</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -3395,7 +3398,7 @@ taskRefresh();</onClick>
       <sizeRatio>0.6</sizeRatio>
       <top>14</top>
       <topRatio>0.180722891566265</topRatio>
-      <width>167</width>
+      <width>131</width>
       <widthRatio>0.816326530612245</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel18">
@@ -3403,15 +3406,15 @@ taskRefresh();</onClick>
       <backgroundSkin>App1PJ004</backgroundSkin>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>178</height>
+      <height>171</height>
       <heightRatio>0.89047619047619</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>28</left>
+      <left>22</left>
       <leftRatio>0.025</leftRatio>
       <sizeRatio>0.373253493013972</sizeRatio>
       <top>11</top>
       <topRatio>0.0571428571428571</topRatio>
-      <width>885</width>
+      <width>697</width>
       <widthRatio>0.7828125</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel18/panel19">
@@ -3422,7 +3425,7 @@ taskRefresh();</onClick>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>158</height>
+      <height>151</height>
       <heightRatio>0.887640449438202</heightRatio>
       <layerVisible>false</layerVisible>
       <left>10</left>
@@ -3436,7 +3439,7 @@ taskRefresh();</onClick>
 内容。。。</text>
       <top>10</top>
       <topRatio>0.0561797752808989</topRatio>
-      <width>865</width>
+      <width>677</width>
       <widthRatio>0.977401129943503</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel97">
@@ -3447,19 +3450,19 @@ taskRefresh();</onClick>
       <dockY>ratio</dockY>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>42</fontSizeAuto>
-      <height>48</height>
+      <height>46</height>
       <heightRatio>0.238095238095238</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>923</left>
+      <left>727</left>
       <leftRatio>0.815837937384899</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit7"),g5.taskName);
 ee.showAni(ee.getControl("panel89"));
 </onClick>
       <sizeRatio>0.54945054945055</sizeRatio>
       <text>修改标题</text>
-      <top>89</top>
+      <top>85</top>
       <topRatio>0.442857142857143</topRatio>
-      <width>190</width>
+      <width>149</width>
       <widthRatio>0.167587476979742</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty4/layoutyitem9/panel116">
@@ -3470,51 +3473,51 @@ ee.showAni(ee.getControl("panel89"));
       <dockY>ratio</dockY>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>42</fontSizeAuto>
-      <height>48</height>
+      <height>46</height>
       <heightRatio>0.238095238095238</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>923</left>
+      <left>727</left>
       <leftRatio>0.815837937384899</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit8"),g5.taskNote);
 ee.showAni(ee.getControl("panel117"));
 </onClick>
       <sizeRatio>0.54945054945055</sizeRatio>
       <text>修改备注</text>
-      <top>142</top>
+      <top>136</top>
       <topRatio>0.70952380952381</topRatio>
-      <width>190</width>
+      <width>149</width>
       <widthRatio>0.167587476979742</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel16/layouty5">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>551</height>
+      <height>530</height>
       <heightRatio>0.708333333333333</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>1.04144144144144</sizeRatio>
-      <top>227</top>
+      <top>218</top>
       <topRatio>0.291666666666667</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel16/layouty5/layoutyitem10">
       <backgroundColor>f0f0f0</backgroundColor>
-      <height>501</height>
+      <height>482</height>
       <heightRatio>0.909255898366606</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.442970822281167</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26">
       <backgroundImg>CPY0002.jpg</backgroundImg>
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>449</height>
+      <height>432</height>
       <heightRatio>0.897142857142857</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
@@ -3522,9 +3525,9 @@ ee.showAni(ee.getControl("panel117"));
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
       <sizeRatio>0.916342412451362</sizeRatio>
-      <top>50</top>
+      <top>48</top>
       <topRatio>0.0990476190476191</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.927797833935018</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tabletitle2">
@@ -3538,7 +3541,7 @@ ee.showAni(ee.getControl("panel117"));
       <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody2</tableBody>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tabletitle2/tabletitleitem3">
@@ -3549,7 +3552,7 @@ ee.showAni(ee.getControl("panel117"));
       <left>0</left>
       <sizeRatio>0.00531914893617021</sizeRatio>
       <top>0</top>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tabletitle2/tabletitleitem4">
@@ -3558,17 +3561,17 @@ ee.showAni(ee.getControl("panel117"));
       <height>4</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.0117994100294985</sizeRatio>
       <top>0</top>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
-      <height>445</height>
+      <height>428</height>
       <heightRatio>0.99109131403118</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -3577,14 +3580,14 @@ ee.showAni(ee.getControl("panel117"));
       <tableTitle>tabletitle2</tableTitle>
       <top>4</top>
       <topRatio>0.0089086859688196</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem3">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -3595,7 +3598,7 @@ ee.setText(sender, text);]]></onUpdate>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>0</top>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem3/panel27">
@@ -3608,23 +3611,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem4">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
       <top>0</top>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/tablebodyitem4/panel28">
@@ -3637,23 +3640,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp19">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>64</top>
-      <width>752</width>
+      <top>61</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp19/temp1">
@@ -3666,23 +3669,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp21">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>64</top>
-      <width>339</width>
+      <top>61</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp21/temp2">
@@ -3695,23 +3698,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp23">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>127</top>
-      <width>752</width>
+      <top>122</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp23/temp3">
@@ -3724,23 +3727,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp25">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>127</top>
-      <width>339</width>
+      <top>122</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp25/temp4">
@@ -3753,23 +3756,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp27">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>62</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>191</top>
-      <width>752</width>
+      <top>183</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp27/temp5">
@@ -3782,23 +3785,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp29">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>63</height>
+      <height>62</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>191</top>
-      <width>339</width>
+      <top>183</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp29/temp6">
@@ -3811,23 +3814,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp31">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>254</top>
-      <width>752</width>
+      <top>245</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp31/temp7">
@@ -3840,23 +3843,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp33">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>254</top>
-      <width>339</width>
+      <top>245</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp33/temp8">
@@ -3869,23 +3872,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp35">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>318</top>
-      <width>752</width>
+      <top>306</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp35/temp9">
@@ -3898,23 +3901,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp55">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>63</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>318</top>
-      <width>339</width>
+      <top>306</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp55/temp10">
@@ -3927,23 +3930,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp57">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0851063829787234</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>381</top>
-      <width>752</width>
+      <top>367</top>
+      <width>587</width>
       <widthRatio>0.689275893675527</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp57/temp11">
@@ -3956,23 +3959,23 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00132978723404255</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>752</width>
+      <width>587</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp59">
       <backgroundColor>d0d0d0</backgroundColor>
       <fontSizeAuto>35</fontSizeAuto>
-      <height>64</height>
+      <height>61</height>
       <heightRatio>0.143820224719101</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>752</left>
+      <left>587</left>
       <leftRatio>0.689275893675527</leftRatio>
       <sizeRatio>0.188790560471976</sizeRatio>
       <text>2016年8月3日22点</text>
-      <top>381</top>
-      <width>339</width>
+      <top>367</top>
+      <width>264</width>
       <widthRatio>0.310724106324473</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel26/tablebody2/temp59/temp12">
@@ -3985,21 +3988,21 @@ ee.setText(sender, text);]]></onUpdate>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00294985250737463</sizeRatio>
-      <top>63</top>
+      <top>60</top>
       <topRatio>0.984375</topRatio>
-      <width>339</width>
+      <width>264</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel29">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
-      <height>49</height>
+      <height>47</height>
       <heightRatio>0.0983358547655068</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.113438045375218</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel29/panel30">
@@ -4015,9 +4018,9 @@ ee.setText(sender, text);]]></onUpdate>
       <outerLeft>20</outerLeft>
       <outerRight>20</outerRight>
       <sizeRatio>0.00366636113657195</sizeRatio>
-      <top>45</top>
+      <top>43</top>
       <topRatio>0.918367346938776</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel29/panel31">
@@ -4026,15 +4029,15 @@ ee.setText(sender, text);]]></onUpdate>
       <fontBold>true</fontBold>
       <fontColor>808080</fontColor>
       <fontSizeAuto>20</fontSizeAuto>
-      <height>49</height>
+      <height>47</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>108</left>
+      <left>85</left>
       <leftRatio>0.0954954954954955</leftRatio>
       <sizeRatio>0.315151515151515</sizeRatio>
       <text>评论</text>
       <top>0</top>
-      <width>336</width>
+      <width>265</width>
       <widthRatio>0.297297297297297</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem10/panel29/panel32">
@@ -4043,29 +4046,29 @@ ee.setText(sender, text);]]></onUpdate>
       <fontBold>true</fontBold>
       <fontColor>808080</fontColor>
       <fontSizeAuto>20</fontSizeAuto>
-      <height>49</height>
+      <height>47</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>774</left>
+      <left>610</left>
       <leftRatio>0.684684684684685</leftRatio>
       <sizeRatio>0.335483870967742</sizeRatio>
       <text>时间</text>
       <top>0</top>
-      <width>316</width>
+      <width>249</width>
       <widthRatio>0.279279279279279</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel16/layouty5/layoutyitem11">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <heavy>10</heavy>
-      <height>50</height>
+      <height>48</height>
       <heightRatio>0.0907441016333938</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0442086648983201</sizeRatio>
-      <top>501</top>
+      <top>482</top>
       <topRatio>0.909255898366606</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem11/panel34">
@@ -4079,7 +4082,7 @@ ee.setText(sender, text);]]></onUpdate>
       <left>0</left>
       <sizeRatio>0.0017683465959328</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem11/panel42">
@@ -4089,17 +4092,17 @@ ee.setText(sender, text);]]></onUpdate>
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>50</height>
+      <height>48</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>624</left>
+      <left>491</left>
       <leftRatio>0.551351351351351</leftRatio>
       <onClick>ee.setEditText(ee.getControl("edit2"), "");
 ee.showAni(ee.getControl("panel33"));</onClick>
       <sizeRatio>0.233480176211454</sizeRatio>
       <text>发表评论</text>
       <top>0</top>
-      <width>463</width>
+      <width>364</width>
       <widthRatio>0.409009009009009</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem11/panel42/panel105">
@@ -4107,10 +4110,10 @@ ee.showAni(ee.getControl("panel33"));</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>26</height>
+      <height>25</height>
       <heightRatio>0.528301886792453</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>51</left>
+      <left>40</left>
       <leftRatio>0.111111111111111</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -4119,7 +4122,7 @@ ee.showAni(ee.getControl("panel33"));</onClick>
       <sizeRatio>0.682926829268293</sizeRatio>
       <top>11</top>
       <topRatio>0.226415094339623</topRatio>
-      <width>78</width>
+      <width>61</width>
       <widthRatio>0.168724279835391</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem11/panel43">
@@ -4129,10 +4132,10 @@ ee.showAni(ee.getControl("panel33"));</onClick>
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>50</height>
+      <height>48</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>39</left>
+      <left>31</left>
       <leftRatio>0.0345528455284553</leftRatio>
       <onClick>if (!confirm("您确定本项目已经完成或者由于某种原因导致无法继续？")) {
     return;
@@ -4141,7 +4144,7 @@ taskClose();</onClick>
       <sizeRatio>0.263681592039801</sizeRatio>
       <text>完成任务</text>
       <top>0</top>
-      <width>462</width>
+      <width>364</width>
       <widthRatio>0.408536585365854</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel16/layouty5/layoutyitem11/panel43/panel106">
@@ -4149,10 +4152,10 @@ taskClose();</onClick>
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>26</height>
+      <height>25</height>
       <heightRatio>0.528301886792453</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>53</left>
+      <left>42</left>
       <leftRatio>0.115702479338843</leftRatio>
       <outerBottom>5</outerBottom>
       <outerLeft>5</outerLeft>
@@ -4161,7 +4164,7 @@ taskClose();</onClick>
       <sizeRatio>0.682926829268293</sizeRatio>
       <top>11</top>
       <topRatio>0.226415094339623</topRatio>
-      <width>78</width>
+      <width>62</width>
       <widthRatio>0.169421487603306</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33">
@@ -4172,7 +4175,7 @@ taskClose();</onClick>
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务详细->发表评论]]></layerName>
       <layerVisible>false</layerVisible>
@@ -4182,7 +4185,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35">
@@ -4190,15 +4193,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431318681318681</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>91</left>
+      <left>72</left>
       <leftRatio>0.0802792321116928</leftRatio>
       <sizeRatio>0.650103519668737</sizeRatio>
-      <top>185</top>
+      <top>178</top>
       <topRatio>0.237637362637363</topRatio>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>0.842931937172775</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35/panel36">
@@ -4209,23 +4212,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.104700854700855</sizeRatio>
       <text>+ 发表评论</text>
       <top>0</top>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35/panel36/panel37">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>904</left>
+      <left>702</left>
       <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -4238,13 +4241,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>28</height>
+      <height>27</height>
       <heightRatio>0.591836734693878</heightRatio>
       <layerVisible>false</layerVisible>
       <left>8</left>
       <leftRatio>0.163265306122449</leftRatio>
       <sizeRatio>0.90625</sizeRatio>
-      <top>10</top>
+      <top>9</top>
       <topRatio>0.204081632653061</topRatio>
       <width>32</width>
       <widthRatio>0.653061224489796</widthRatio>
@@ -4253,15 +4256,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>799</left>
+      <left>630</left>
       <leftRatio>0.838427947598253</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel33"),1);</onClick>
       <sizeRatio>0.653333333333333</sizeRatio>
       <top>0</top>
-      <width>156</width>
+      <width>123</width>
       <widthRatio>0.163755458515284</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35/panel40">
@@ -4273,17 +4276,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>104</left>
+      <left>82</left>
       <leftRatio>0.109170305676856</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel33"),1);</onClick>
       <sizeRatio>0.276470588235294</sizeRatio>
       <text>取消</text>
-      <top>264</top>
+      <top>254</top>
       <topRatio>0.786931818181818</topRatio>
-      <width>354</width>
+      <width>279</width>
       <widthRatio>0.37117903930131</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel33/panel35/panel41">
@@ -4295,17 +4298,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>485</left>
+      <left>382</left>
       <leftRatio>0.508733624454148</leftRatio>
       <onClick>chatNew();</onClick>
       <sizeRatio>0.276470588235294</sizeRatio>
       <text>确定发表</text>
-      <top>264</top>
+      <top>254</top>
       <topRatio>0.786931818181818</topRatio>
-      <width>354</width>
+      <width>279</width>
       <widthRatio>0.37117903930131</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel33/panel35/edit2">
@@ -4317,12 +4320,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>178</height>
+      <height>172</height>
       <heightRatio>0.53125</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>46</left>
+      <left>36</left>
       <leftRatio>0.0480349344978166</leftRatio>
       <multiLine>true</multiLine>
       <outerBottom>2</outerBottom>
@@ -4331,9 +4334,9 @@ ee.setVisible(ee.getControl("panel1"), false);
       <outerTop>2</outerTop>
       <sizeRatio>0.451690821256039</sizeRatio>
       <text>　　请在此输入任务评论的简要描述文字，如果文字比较多建议写在后续的回复里面。为了便于阅读文字内容尽量不要有回车符，同时字数尽量控制在100字以内。</text>
-      <top>66</top>
+      <top>63</top>
       <topRatio>0.196022727272727</topRatio>
-      <width>861</width>
+      <width>679</width>
       <widthRatio>0.903930131004367</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45">
@@ -4343,7 +4346,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务->主菜单->修改密码]]></layerName>
       <layerVisible>false</layerVisible>
@@ -4353,7 +4356,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46">
@@ -4361,15 +4364,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431372549019608</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>90</left>
+      <left>71</left>
       <leftRatio>0.079136690647482</leftRatio>
       <sizeRatio>0.750533049040512</sizeRatio>
-      <top>186</top>
+      <top>179</top>
       <topRatio>0.238970588235294</topRatio>
-      <width>954</width>
+      <width>752</width>
       <widthRatio>0.843525179856115</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46/panel47">
@@ -4380,23 +4383,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.104700854700855</sizeRatio>
       <text>修改密码</text>
       <top>0</top>
-      <width>954</width>
+      <width>752</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46/panel47/panel48">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>905</left>
+      <left>703</left>
       <leftRatio>0.948637316561845</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -4409,13 +4412,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>24</height>
+      <height>23</height>
       <heightRatio>0.510204081632653</heightRatio>
       <layerVisible>false</layerVisible>
       <left>11</left>
       <leftRatio>0.224489795918367</leftRatio>
       <sizeRatio>0.862068965517241</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.244897959183673</topRatio>
       <width>29</width>
       <widthRatio>0.591836734693878</widthRatio>
@@ -4424,16 +4427,16 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>769</left>
+      <left>606</left>
       <leftRatio>0.805676855895197</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel45"),false);
 </onClick>
       <sizeRatio>0.550561797752809</sizeRatio>
       <top>0</top>
-      <width>185</width>
+      <width>146</width>
       <widthRatio>0.194323144104804</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel45/panel46/edit3">
@@ -4443,19 +4446,19 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>B5B5B5</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.167613636363636</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <inputPassword>true</inputPassword>
       <layerVisible>false</layerVisible>
-      <left>40</left>
+      <left>32</left>
       <leftRatio>0.042</leftRatio>
       <sizeRatio>0.129385964912281</sizeRatio>
       <text>请输入新的密码</text>
-      <top>83</top>
+      <top>80</top>
       <topRatio>0.247159090909091</topRatio>
-      <width>870</width>
+      <width>686</width>
       <widthRatio>0.912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46/panel51">
@@ -4467,17 +4470,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>92</left>
+      <left>72</left>
       <leftRatio>0.0960698689956332</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel45"),false);</onClick>
       <sizeRatio>0.265536723163842</sizeRatio>
       <text>取消</text>
-      <top>253</top>
+      <top>243</top>
       <topRatio>0.752840909090909</topRatio>
-      <width>369</width>
+      <width>291</width>
       <widthRatio>0.38646288209607</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel45/panel46/panel52">
@@ -4489,17 +4492,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>492</left>
+      <left>387</left>
       <leftRatio>0.51528384279476</leftRatio>
       <onClick>modifyPassword();</onClick>
       <sizeRatio>0.265536723163842</sizeRatio>
       <text>确定修改</text>
-      <top>253</top>
+      <top>243</top>
       <topRatio>0.752840909090909</topRatio>
-      <width>369</width>
+      <width>291</width>
       <widthRatio>0.38646288209607</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel45/panel46/edit4">
@@ -4509,19 +4512,19 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>B5B5B5</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.167613636363636</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <inputPassword>true</inputPassword>
       <layerVisible>false</layerVisible>
-      <left>42</left>
+      <left>33</left>
       <leftRatio>0.044</leftRatio>
       <sizeRatio>0.129385964912281</sizeRatio>
       <text>请再次输入一遍上面的密码</text>
-      <top>156</top>
+      <top>150</top>
       <topRatio>0.463068181818182</topRatio>
-      <width>870</width>
+      <width>686</width>
       <widthRatio>0.912</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54">
@@ -4531,7 +4534,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务->主菜单->邀请朋友加入]]></layerName>
       <layerVisible>false</layerVisible>
@@ -4541,7 +4544,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55">
@@ -4549,15 +4552,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431318681318681</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>91</left>
+      <left>72</left>
       <leftRatio>0.0802792321116928</leftRatio>
       <sizeRatio>0.650103519668737</sizeRatio>
-      <top>185</top>
+      <top>178</top>
       <topRatio>0.237637362637363</topRatio>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>0.842931937172775</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel56">
@@ -4568,23 +4571,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.104477611940299</sizeRatio>
       <text>邀请朋友加入</text>
       <top>0</top>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel56/panel57">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>904</left>
+      <left>702</left>
       <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -4597,13 +4600,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>24</height>
+      <height>23</height>
       <heightRatio>0.510204081632653</heightRatio>
       <layerVisible>false</layerVisible>
       <left>11</left>
       <leftRatio>0.224489795918367</leftRatio>
       <sizeRatio>0.862068965517241</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.244897959183673</topRatio>
       <width>29</width>
       <widthRatio>0.591836734693878</widthRatio>
@@ -4612,16 +4615,16 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>768</left>
+      <left>605</left>
       <leftRatio>0.805676855895197</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel54"),false);
 </onClick>
       <sizeRatio>0.550561797752809</sizeRatio>
       <top>0</top>
-      <width>185</width>
+      <width>146</width>
       <widthRatio>0.194323144104804</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel54/panel55/edit5">
@@ -4631,18 +4634,18 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>B5B5B5</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
-      <height>56</height>
+      <height>54</height>
       <heightRatio>0.167613636363636</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>42</left>
+      <left>33</left>
       <leftRatio>0.044</leftRatio>
       <sizeRatio>0.12910284463895</sizeRatio>
       <text>请输入您朋友的手机号码或者姓名</text>
-      <top>162</top>
+      <top>156</top>
       <topRatio>0.482954545454545</topRatio>
-      <width>871</width>
+      <width>686</width>
       <widthRatio>0.914</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel60">
@@ -4654,16 +4657,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
+      <left>79</left>
       <leftRatio>0.104803493449782</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel54"),false);</onClick>
       <sizeRatio>0.27810650887574</sizeRatio>
       <text>取消</text>
-      <top>252</top>
+      <top>242</top>
       <topRatio>0.75</topRatio>
-      <width>352</width>
+      <width>277</width>
       <widthRatio>0.368995633187773</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel61">
@@ -4675,17 +4679,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>493</left>
+      <left>389</left>
       <leftRatio>0.517467248908297</leftRatio>
       <onClick>addUser();</onClick>
       <sizeRatio>0.27810650887574</sizeRatio>
       <text>发送邀请</text>
-      <top>252</top>
+      <top>242</top>
       <topRatio>0.75</topRatio>
-      <width>352</width>
+      <width>277</width>
       <widthRatio>0.368995633187773</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel54/panel55/panel62">
@@ -4694,17 +4698,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>808080</fontColor>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>82</height>
+      <height>79</height>
       <heightRatio>0.244318181818182</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>73</left>
+      <left>58</left>
       <leftRatio>0.0771084337349398</leftRatio>
       <sizeRatio>0.245714285714286</sizeRatio>
       <text>　　如果您的朋友是未注册用户，系统会以短信的形式通知对方；如果您的朋友已经注册，则会自动加入本项目组。</text>
-      <top>68</top>
+      <top>65</top>
       <topRatio>0.201704545454545</topRatio>
       <vAlign>top</vAlign>
-      <width>804</width>
+      <width>633</width>
       <widthRatio>0.843373493975904</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81">
@@ -4714,45 +4718,45 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务->主菜单->项目组成员列表]]></layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel81/layouty8">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>692</height>
+      <height>665</height>
       <heightRatio>0.889705882352941</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>1.47560975609756</sizeRatio>
-      <top>86</top>
+      <top>83</top>
       <topRatio>0.110294117647059</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel81/layouty8/layoutyitem18">
       <backgroundColor>f0f0f0</backgroundColor>
-      <height>629</height>
+      <height>605</height>
       <heightRatio>0.908959537572254</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.556145004420866</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82">
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>629</height>
+      <height>605</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
@@ -4761,7 +4765,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <outerRight>20</outerRight>
       <sizeRatio>0.57653528872594</sizeRatio>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="TableTitle" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tabletitle4">
@@ -4775,7 +4779,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <sizeRatio>0.00366636113657195</sizeRatio>
       <tableBody>tablebody4</tableBody>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableTitleItem" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tabletitle4/tabletitleitem6">
@@ -4786,13 +4790,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <left>0</left>
       <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBody" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4">
       <autoScroll>true</autoScroll>
       <dynamicMode>true</dynamicMode>
-      <height>625</height>
+      <height>601</height>
       <heightRatio>0.993640699523052</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4800,14 +4804,14 @@ ee.setVisible(ee.getControl("panel1"), false);
       <tableTitle>tabletitle4</tableTitle>
       <top>4</top>
       <topRatio>0.00635930047694754</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="TableBodyItem" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/tablebodyitem6">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4821,7 +4825,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/tablebodyitem6/panel83">
@@ -4834,16 +4838,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp70">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4855,8 +4859,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>62</top>
-      <width>1091</width>
+      <top>60</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp70/temp71">
@@ -4869,16 +4873,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp72">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4890,8 +4894,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>125</top>
-      <width>1091</width>
+      <top>120</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp72/temp73">
@@ -4904,16 +4908,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp74">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4925,8 +4929,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>187</top>
-      <width>1091</width>
+      <top>180</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp74/temp75">
@@ -4939,16 +4943,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp76">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>61</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4960,8 +4964,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>250</top>
-      <width>1091</width>
+      <top>240</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp76/temp77">
@@ -4974,16 +4978,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp78">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -4995,8 +4999,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>312</top>
-      <width>1091</width>
+      <top>301</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp78/temp79">
@@ -5009,16 +5013,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp80">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -5030,8 +5034,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>375</top>
-      <width>1091</width>
+      <top>361</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp80/temp81">
@@ -5044,16 +5048,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp82">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -5065,8 +5069,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>437</top>
-      <width>1091</width>
+      <top>421</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp82/temp83">
@@ -5079,16 +5083,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp84">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>62</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -5100,8 +5104,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>500</top>
-      <width>1091</width>
+      <top>481</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp84/temp85">
@@ -5114,16 +5118,16 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp86">
       <backgroundColor>f0f0f0</backgroundColor>
       <fontSizeAuto>22</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0992</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -5135,8 +5139,8 @@ g5.teamMemberId = parseInt(g5.teamMemberList.getData(1, sender.rowIndex));
 g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <sizeRatio>0.0568285976168653</sizeRatio>
       <text>谭江天：评论的内容</text>
-      <top>562</top>
-      <width>1091</width>
+      <top>541</top>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem18/panel82/tablebody4/temp86/temp87">
@@ -5149,22 +5153,22 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.00183318056828598</sizeRatio>
-      <top>60</top>
+      <top>58</top>
       <topRatio>0.967741935483871</topRatio>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel81/layouty8/layoutyitem19">
       <backgroundColor>d0d0d0</backgroundColor>
       <heavy>10</heavy>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>0.0910404624277457</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.0557029177718833</sizeRatio>
-      <top>629</top>
+      <top>605</top>
       <topRatio>0.908959537572254</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem19/panel84">
@@ -5181,7 +5185,7 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <outerRight>20</outerRight>
       <sizeRatio>0.00366636113657195</sizeRatio>
       <top>0</top>
-      <width>1091</width>
+      <width>851</width>
       <widthRatio>0.964633068081344</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem19/panel85">
@@ -5191,10 +5195,10 @@ g5.teamMemberName = g5.teamMemberList.getData(0, sender.rowIndex);]]></onClick>
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>23</fontSizeAuto>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>44</left>
+      <left>34</left>
       <leftRatio>0.0386178861788618</leftRatio>
       <onClick><![CDATA[if (g5.teamMemberId<=0) return;
 if (!confirm("您是否确定要踢出" + g5.teamMemberName + "？")) return;
@@ -5202,7 +5206,7 @@ teamKick();]]></onClick>
       <sizeRatio>0.305555555555556</sizeRatio>
       <text>踢出项目组</text>
       <top>0</top>
-      <width>497</width>
+      <width>391</width>
       <widthRatio>0.439024390243902</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty8/layoutyitem19/panel87">
@@ -5212,10 +5216,10 @@ teamKick();]]></onClick>
       <fontColor>404040</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>23</fontSizeAuto>
-      <height>63</height>
+      <height>60</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>575</left>
+      <left>453</left>
       <leftRatio>0.508130081300813</leftRatio>
       <onClick><![CDATA[if (g5.teamMemberId<=0) return;
 if (!confirm("您是否确定要把" + g5.teamMemberName + "做为您的接班人？")) return;
@@ -5223,20 +5227,20 @@ teamGiveAdmin();]]></onClick>
       <sizeRatio>0.302752293577982</sizeRatio>
       <text>移交管理权</text>
       <top>0</top>
-      <width>501</width>
+      <width>395</width>
       <widthRatio>0.443089430894309</widthRatio>
     </control>
     <control type="LayoutY" pathname="/divRoot/panel81/layouty9">
       <dockX>fill</dockX>
       <dockY>ratio</dockY>
       <fieldCount>2</fieldCount>
-      <height>86</height>
+      <height>83</height>
       <heightRatio>0.110294117647059</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.182926829268293</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel81/layouty9/layoutyitem20">
@@ -5249,7 +5253,7 @@ teamGiveAdmin();]]></onClick>
       <left>0</left>
       <sizeRatio>0.0238726790450928</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="LayoutYItem" pathname="/divRoot/panel81/layouty9/layoutyitem21">
@@ -5259,7 +5263,7 @@ teamGiveAdmin();]]></onClick>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>15</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>59</height>
+      <height>56</height>
       <heightRatio>0.686046511627907</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
@@ -5267,7 +5271,7 @@ teamGiveAdmin();]]></onClick>
       <text>　项目组成员</text>
       <top>27</top>
       <topRatio>0.313953488372093</topRatio>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel81/layouty9/layoutyitem21/panel86">
@@ -5279,17 +5283,17 @@ teamGiveAdmin();]]></onClick>
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>18</fontSizeAuto>
-      <height>59</height>
+      <height>56</height>
       <heightRatio>3.44262295081967</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>954</left>
+      <left>752</left>
       <leftRatio>0.84349593495935</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel81"), false);</onClick>
       <sizeRatio>2.59259259259259</sizeRatio>
       <text>×</text>
       <top>0</top>
       <topRatio>0.459016393442623</topRatio>
-      <width>186</width>
+      <width>147</width>
       <widthRatio>0.164634146341463</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89">
@@ -5300,7 +5304,7 @@ teamGiveAdmin();]]></onClick>
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务详细->修改任务名字]]></layerName>
       <layerVisible>false</layerVisible>
@@ -5310,7 +5314,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90">
@@ -5318,15 +5322,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431318681318681</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>91</left>
+      <left>72</left>
       <leftRatio>0.0802792321116928</leftRatio>
       <sizeRatio>0.650103519668737</sizeRatio>
-      <top>185</top>
+      <top>178</top>
       <topRatio>0.237637362637363</topRatio>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>0.842931937172775</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90/panel91">
@@ -5337,23 +5341,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.136871508379888</sizeRatio>
       <text>+ 修改任务</text>
       <top>0</top>
-      <width>953</width>
+      <width>751</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90/panel91/panel92">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>904</left>
+      <left>702</left>
       <leftRatio>0.948583420776495</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -5366,13 +5370,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>26</height>
+      <height>25</height>
       <heightRatio>0.551020408163265</heightRatio>
       <layerVisible>false</layerVisible>
       <left>8</left>
       <leftRatio>0.163265306122449</leftRatio>
       <sizeRatio>0.84375</sizeRatio>
-      <top>12</top>
+      <top>11</top>
       <topRatio>0.244897959183673</topRatio>
       <width>32</width>
       <widthRatio>0.653061224489796</widthRatio>
@@ -5381,15 +5385,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>809</left>
+      <left>638</left>
       <leftRatio>0.849344978165939</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel89"),1);</onClick>
       <sizeRatio>0.710144927536232</sizeRatio>
       <top>0</top>
-      <width>144</width>
+      <width>113</width>
       <widthRatio>0.150655021834061</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel89/panel90/edit7">
@@ -5401,19 +5405,19 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>175</height>
+      <height>168</height>
       <heightRatio>0.519886363636364</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>42</left>
+      <left>33</left>
       <leftRatio>0.0436681222707424</leftRatio>
       <multiLine>true</multiLine>
       <sizeRatio>0.437799043062201</sizeRatio>
       <text>　　请在此输入任务的简要描述文字，如果文字比较多建议写在后续的回复里面。为了便于阅读文字内容尽量不要有回车符，同时字数尽量控制在100字以内。</text>
-      <top>67</top>
+      <top>64</top>
       <topRatio>0.198863636363636</topRatio>
-      <width>870</width>
+      <width>685</width>
       <widthRatio>0.912663755458515</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90/panel95">
@@ -5425,17 +5429,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>89</left>
+      <left>71</left>
       <leftRatio>0.0938864628820961</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel89"),1);</onClick>
       <sizeRatio>0.264044943820225</sizeRatio>
       <text>取消</text>
-      <top>262</top>
+      <top>251</top>
       <topRatio>0.778409090909091</topRatio>
-      <width>370</width>
+      <width>292</width>
       <widthRatio>0.388646288209607</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel89/panel90/panel96">
@@ -5447,17 +5451,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>489</left>
+      <left>385</left>
       <leftRatio>0.513100436681223</leftRatio>
       <onClick>taskModify();</onClick>
       <sizeRatio>0.264044943820225</sizeRatio>
       <text>确定修改</text>
-      <top>262</top>
+      <top>251</top>
       <topRatio>0.778409090909091</topRatio>
-      <width>370</width>
+      <width>292</width>
       <widthRatio>0.388646288209607</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117">
@@ -5468,7 +5472,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>stretch</backgroundImgMode>
       <dockX>fill</dockX>
       <dockY>fill</dockY>
-      <height>778</height>
+      <height>748</height>
       <heightRatio>1</heightRatio>
       <layerName><![CDATA[任务详细->修改任务备注]]></layerName>
       <layerVisible>false</layerVisible>
@@ -5478,7 +5482,7 @@ ee.setVisible(ee.getControl("panel1"), false);
 </onClick>
       <sizeRatio>0.68788682581786</sizeRatio>
       <top>0</top>
-      <width>1131</width>
+      <width>891</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118">
@@ -5486,15 +5490,15 @@ ee.setVisible(ee.getControl("panel1"), false);
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>336</height>
+      <height>323</height>
       <heightRatio>0.431372549019608</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>92</left>
+      <left>72</left>
       <leftRatio>0.0810313075506446</leftRatio>
       <sizeRatio>0.768558951965066</sizeRatio>
-      <top>186</top>
+      <top>179</top>
       <topRatio>0.238970588235294</topRatio>
-      <width>954</width>
+      <width>752</width>
       <widthRatio>0.843462246777164</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118/panel119">
@@ -5505,23 +5509,23 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontColor>FFFFFF</fontColor>
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>25</fontSizeAuto>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>0.139204545454545</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.106986899563319</sizeRatio>
       <text>修改备注</text>
       <top>0</top>
-      <width>954</width>
+      <width>752</width>
       <widthRatio>1</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118/panel119/panel120">
       <dockX>right</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>905</left>
+      <left>703</left>
       <leftRatio>0.948637316561845</leftRatio>
       <onClick>ee.setVisible(ee.getControl("panel19"),false);</onClick>
       <sizeRatio>0.959183673469388</sizeRatio>
@@ -5534,13 +5538,13 @@ ee.setVisible(ee.getControl("panel1"), false);
       <backgroundImgMode>fill</backgroundImgMode>
       <dockX>ratio</dockX>
       <dockY>ratio</dockY>
-      <height>28</height>
+      <height>27</height>
       <heightRatio>0.591836734693878</heightRatio>
       <layerVisible>false</layerVisible>
       <left>8</left>
       <leftRatio>0.163265306122449</leftRatio>
       <sizeRatio>0.90625</sizeRatio>
-      <top>10</top>
+      <top>9</top>
       <topRatio>0.204081632653061</topRatio>
       <width>32</width>
       <widthRatio>0.653061224489796</widthRatio>
@@ -5549,16 +5553,16 @@ ee.setVisible(ee.getControl("panel1"), false);
       <cursor>pointer</cursor>
       <dockX>ratio</dockX>
       <dockY>fill</dockY>
-      <height>47</height>
+      <height>45</height>
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>800</left>
+      <left>630</left>
       <leftRatio>0.838427947598253</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel117"), 1);
 </onClick>
       <sizeRatio>0.653333333333333</sizeRatio>
       <top>0</top>
-      <width>156</width>
+      <width>123</width>
       <widthRatio>0.163755458515284</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118/panel123">
@@ -5570,17 +5574,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>104</left>
+      <left>82</left>
       <leftRatio>0.109170305676856</leftRatio>
       <onClick>ee.showAni(ee.getControl("panel117"), 1);</onClick>
       <sizeRatio>0.276470588235294</sizeRatio>
       <text>取消</text>
-      <top>264</top>
+      <top>254</top>
       <topRatio>0.786931818181818</topRatio>
-      <width>354</width>
+      <width>279</width>
       <widthRatio>0.37117903930131</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel117/panel118/panel124">
@@ -5592,17 +5596,17 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontSizeAuto>30</fontSizeAuto>
-      <height>45</height>
+      <height>43</height>
       <heightRatio>0.133522727272727</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>485</left>
+      <left>383</left>
       <leftRatio>0.508733624454148</leftRatio>
       <onClick>taskModifyNote();</onClick>
       <sizeRatio>0.276470588235294</sizeRatio>
       <text>确定修改</text>
-      <top>264</top>
+      <top>254</top>
       <topRatio>0.786931818181818</topRatio>
-      <width>354</width>
+      <width>279</width>
       <widthRatio>0.37117903930131</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel117/panel118/edit8">
@@ -5614,12 +5618,12 @@ ee.setVisible(ee.getControl("panel1"), false);
       <fontFamily>黑体</fontFamily>
       <fontSizeAuto>28</fontSizeAuto>
       <hAlign>left</hAlign>
-      <height>175</height>
+      <height>168</height>
       <heightRatio>0.519886363636364</heightRatio>
       <inputFont>黑体</inputFont>
       <inputFontSizeAuto>25</inputFontSizeAuto>
       <layerVisible>false</layerVisible>
-      <left>52</left>
+      <left>41</left>
       <leftRatio>0.054585152838428</leftRatio>
       <multiLine>true</multiLine>
       <outerBottom>2</outerBottom>
@@ -5628,9 +5632,9 @@ ee.setVisible(ee.getControl("panel1"), false);
       <outerTop>2</outerTop>
       <sizeRatio>0.447432762836186</sizeRatio>
       <text>　　请在此输入任务备注，您可以将项目信息、项目联系人等内容写在这里。</text>
-      <top>72</top>
+      <top>69</top>
       <topRatio>0.213068181818182</topRatio>
-      <width>852</width>
+      <width>672</width>
       <widthRatio>0.893013100436681</widthRatio>
     </control>
   </controls>
