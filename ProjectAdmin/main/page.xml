@@ -47,6 +47,11 @@ setInterval(function() {
 
 </onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
+
+window.addEventListener("popstate", function (a) {
+    g5.processUrl();
+})
+
 if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
 }
@@ -160,6 +165,7 @@ sender.v_status = "";
 sender.v_pageIndex = 0;
 
 sender.onActive = function() {
+    g5.pushHistory2("/PA/team");
     g5.root.p_title.changePage(g5.root.p_title.p1);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -313,6 +319,7 @@ sender.showTeamTask = function(teamId) {
 }
 
 sender.onActive = function() {
+    g5.pushHistory2("/PA/task/" + escape(this.v_teamId));
     g5.root.p_title.changePage(g5.root.p_title.p2);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -462,13 +469,13 @@ sender.v_status = "";
 
 sender.v_pageIndex = 0;
 
-sender.showTeamTask = function(teamId) {
-    sender.v_teamId = teamId;
+sender.showTaskChat = function(taskId) {
+    sender.v_taskId = taskId;
     this.parentNode.changePage(this);
 }
 
 sender.onActive = function() {
-    g5.root.p_title.changePage(g5.root.p_title.p2);
+    g5.root.p_title.changePage(g5.root.p_title.p3);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
@@ -545,20 +552,19 @@ sender.show = function(v_userInfo) {
 }
 
 sender.loadFromDB = function() {
-    getTaskList.pageIndex = sender.v_pageIndex;
-    getTaskList.teamId = sender.v_teamId;
-    getTaskList.isHis = "F";
-    getTaskList.onComplete = function(dataset) {
+    getTaskChat.pageIndex = sender.v_pageIndex;
+    getTaskChat.taskId = sender.v_taskId;
+    getTaskChat.onComplete = function(dataset) {
         var root = sender;
         var cy = 0;
         var itemWidth = eb.getDivRect(root).w;
         var itemCount = 0;
         for (var i=0; i<dataset.rowCount; i++) {
             itemCount++;
-            var item = createPanel(root, "mp2list_" + dataset.getData(0,i), "", 0, cy, itemWidth, 5);
+            var item = createPanel(root, "mp3list_" + dataset.getData(0,i), "", 0, cy, itemWidth, 5);
             sender.loadRecord(item, dataset, i);
             item.v_mode = "";
-            g5.renderTask(item);
+            g5.renderTaskChat(item);
             cy += eb.getDivRect(item).h;
             sender.v_items.push(item);
         }
@@ -568,7 +574,7 @@ sender.loadFromDB = function() {
         
         if (itemCount<=0) {
             sender.v_status = "noResult";
-            var item = createPanel(sender, "mp2end", "", 0, cy, itemWidth, 60);
+            var item = createPanel(sender, "mp3end", "", 0, cy, itemWidth, 60);
             addText(item, "没有更多了", "center", "center", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "a0a0a0" ,"bold");
             sender.v_items.push(item);
         } else {
@@ -581,12 +587,12 @@ sender.loadFromDB = function() {
         }
         ee.tiledResizeV(sender, 3);
     }
-    getTaskList();
+    getTaskChat();
 }
 
 sender.loadRecord = function(panel, dataset, index) {
-    panel.v_taskInfo = new g5.TaskInfo();
-    panel.v_taskInfo.loadFromDataset(dataset,0,index);
+    panel.v_taskChat = new g5.TaskChat();
+    panel.v_taskChat.loadFromDataset(dataset,0,index);
 }
 
 sender.loadMore = function() {
@@ -5628,7 +5634,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <widthRatio>0.893013100436681</widthRatio>
     </control>
   </controls>
-  <taskSet count="17">
+  <taskSet count="18">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -6429,21 +6435,6 @@ if (db.getString(sqlResult, "sessionId").length < 5) {
 }
 var userId = db.getString(sqlResult, "id");
 
-sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
-sqlResult = db.executeQuery("PJ", sql);
-if (sqlResult == null) {
-    eio.appendString8("F");
-    es.logWarning("系统繁忙请稍候再试");
-    return;
-}
-db.read(sqlResult);
-if (db.getString(sqlResult, "sessionId").length < 5) {
-    eio.appendString8("F");
-    es.logWarning("用户token失效, sql=" + sql);
-    return;
-}
-var userId = db.getString(sqlResult, "id");
-
 var top = (pageIndex+1)*pageSize;
 sql =
     "exec VP_TaskInfo " +
@@ -6470,9 +6461,59 @@ eio.appendDataSet(sqlResult,
 getTaskList.dataset = eio.readDataSet();
 if (getTaskList.onComplete) getTaskList.onComplete(getTaskList.dataset);</script3>
     </taskSetItem>
+    <taskSetItem name="getTaskChat">
+      <script1>//pageIndex,taskId,onComplete()
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(getTaskChat.pageIndex + "");
+eio.appendString8(getTaskChat.taskId + "");</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var pageIndex = parseInt(eio.readString8());
+var pageSize = 10;
+var taskId = parseInt(eio.readString8());
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+var top = (pageIndex+1)*pageSize;
+sql =
+    "exec VP_TaskChat " +
+    taskId +
+    "," + top + ";";
+es.logWarning(sql);
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");
+eio.appendDataSet(sqlResult,
+    "id,regDatetime,taskId,title," +
+    "usrId,usrEnabled,usrRegDatetime,usrLastAccessTime,usrIdName,usrMobile,usrNickName,usrNote,usrPhoto,usrTitleBg,usrEmail",
+    pageIndex*pageSize, pageSize);
+]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    return;
+}
+getTaskChat.dataset = eio.readDataSet();
+if (getTaskChat.onComplete) getTaskChat.onComplete(getTaskChat.dataset);</script3>
+    </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="13">
+  <g5Items count="18">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -6655,6 +6696,41 @@ this.clone = function() {
     r.readCount = this.readCount;
     r.creator = this.creator.clone();
     r.closer = this.closer.clone();
+    return r;
+}
+
+</functionCode>
+    </item>
+    <item name="TaskChat" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode>var uSize = new g5.UserInfo();
+uSize = uSize.size;
+this.size = 4 + uSize;
+this.loadFromDataset = function(ds, x, idx) {
+    this.id = ds.getData(x,idx); x++;
+    this.regDatetimeUTC = ds.getData(x,idx); x++;
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.taskId = ds.getData(x,idx); x++;
+    this.content = ds.getData(x,idx); x++;
+    this.poster = new g5.UserInfo();
+    this.poster.loadFromDataset(ds, x, idx); x += this.poster.size;
+}
+this.setDataset = function(ds, x, idx) {
+    ds.setData(x,idx,this.id); x++;
+    ds.setData(x,idx,this.regDatetimeUTC); x++;
+    ds.setData(x,idx,this.taskId); x++;
+    ds.setData(x,idx,this.content); x++;
+    this.poster.setDataset(ds, x, idx); x += this.poster.size;
+}
+this.clone = function() {
+    var r = new g5.TeamInfo();
+    r.id = this.id;
+    r.regDatetime = this.regDatetime;
+    r.regDatetimeUTC = this.regDatetimeUTC;
+    r.taskId = this.taskId;
+    r.content = this.content;
+    r.poster = this.poster.clone();
     return r;
 }
 
@@ -6946,7 +7022,7 @@ root.style.borderLeft = "";
 root.style.borderRight = "";
 root.style.cursor = "pointer";
 ee.setOnClick(root,function(sender,event) {
-    //g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo.id);
+    g5.root.mainDiv.p1.p3.showTaskChat(root.v_taskInfo.id);
 });
 ee.setOnMouseEnter(root, function(sender,e){
     sender.style.backgroundColor = "rgb(245,248,250)";
@@ -6970,6 +7046,169 @@ c.innerHTML = root.v_taskInfo.taskName;
 if (root.v_taskInfo.note.length>0) {
     c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
     addText(c, root.v_taskInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
+    eb.processDock();
+    var rect = eb.getDivRect(c.label);
+    ee.setRect(c, null, null, null, rect.h);
+    cy += rect.h;
+} else {
+    cy += 7;
+}
+/*
+//button
+c = null;
+if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
+} else if (root.v_userInfo.status == "DISABLED") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "封号", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_userInfo.status == "FREEZE") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "冻结", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_userInfo.status == "Del") {
+    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
+    addText(c, "已销号", "right", "middle", "微软雅黑", 12, "606060", "");
+} else if (root.v_mode.charAt(0)=="x") {
+    c = createPanel(root, root.id+"button11", "", 505, 12, 80, 40);
+    addText(c, "已屏蔽", "center", "middle", "微软雅黑", 12, "ffffff", "bold");
+    c.style.borderRadius = "20px";
+    root.v_isBlock = false;
+    root.c_button11 = c;
+    g5.initButtonV3(c,[
+        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","已屏蔽","已屏蔽","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("#ffffff","#f3e3eb","#f1cddb","屏蔽","屏蔽","屏蔽","#e0245e","#1da1f2","#1da1f2","#e0245e")
+    ]);
+    root.changeButton = function() {
+        this.v_isBlock = !this.v_isBlock;    
+        this.c_button11.init(this.v_isBlock?0:1);
+    }
+    ee.setOnClick(c, function(sender, event) {
+        if (sender.parentNode.v_isBlock) {
+            blockUser.userId = sender.parentNode.v_userInfo.id;
+            blockUser.isBlock = 0;
+            blockUser();    
+        } else {
+            blockUser.userId = sender.parentNode.v_userInfo.id;
+            blockUser.isBlock = 1;
+            blockUser();    
+        }
+        sender.parentNode.changeButton();
+        window.event? window.event.cancelBubble = true : event.stopPropagation();    
+    });
+    eb.initMouseEvent(c);
+    root.changeButton();    
+} else {
+    c = createPanel(root, root.id+"button01", "", w-128-15, 14, 128, 28);
+    c.v_right = w-15;
+    root.button1 = c;
+    c.style.cursor="pointer";
+    addText(c, "...", "center", "top", "微软雅黑", 11, "1DA1F2", "bold");
+    g5.initButtonV3(c,[
+        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","取消屏蔽","取消屏蔽","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("","#e8f5fe","#d2ecfc","关注","关注","关注","#1da1f2","#1da1f2","#1da1f2","#1da1f2"),
+        new g5.BStyle("#1da1f2","#ca2055","#b31d4b","正在关注","取消关注","取消关注","#ffffff","#ffffff","#ffffff",""),
+        new g5.BStyle("","#e8f5fe","#d2ecfc","编辑个人资料","编辑个人资料","编辑个人资料","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
+    ]);
+    c.style.borderRadius = parseInt(eb.getDivRectSetting(c).h/2) + "px";
+    c.refreshStatus = function(index) {
+        this.init(index);
+        var w = 100;
+        if (index == 0) {
+            w = 90;
+        } else if (index == 1) {
+            w = 55;
+        } else if (index == 2) {
+            w = 90;
+        } else if (index == 3) {
+            w = 120;
+        }
+        ee.setRect(this, this.v_right-w,null,w,null);
+    }
+    root.refreshButton = function() {
+        if (root.v_userInfo.isFollow) {
+            root.button1.refreshStatus(2);
+        } else {
+            root.button1.refreshStatus(1);
+        }
+        if (root.v_userInfo.userName == g5.myUserInfo.userName) {
+            root.button1.refreshStatus(3);
+        }
+        if (root.v_userInfo.isBlock1) {
+            root.button1.refreshStatus(0);
+        }
+    }
+    root.refreshButton();
+    ee.setOnClick(c, function(sender, event) {
+        if (sender.v_index==0) {
+            g5.setBlock1(root.v_userInfo,null);
+        } else if (sender.v_index==1) {
+            //follow
+            g5.setFollow(root.v_userInfo, function(v_userInfo) {
+                sender.refreshStatus(2);
+                root.v_userInfo = v_userInfo.clone();
+            });
+        } else if (sender.v_index==2) {
+            //unfollow
+            g5.setFollow(root.v_userInfo, function(v_userInfo) {
+                sender.refreshStatus(1);
+                root.v_userInfo = v_userInfo.clone();
+            });
+        } else if (sender.v_index==3) {
+            //编辑个人资料
+            g5.p2.p17.show();
+        }
+        window.event? window.event.cancelBubble = true : event.stopPropagation();    
+    });
+}
+if (c) root.c_button = c;
+*/
+
+cy+=10;
+eb.setDivRect(root,null,null,null,cy);
+return root; 
+
+
+
+
+]]></functionCode>
+    </item>
+    <item name="renderTaskChat" type="20">
+      <varValue />
+      <functionParam>root</functionParam>
+      <functionCode><![CDATA[var w = eb.getDivRect(root).w;
+var c,cy=10;
+
+root.style.boxSizing="border-box";
+root.style.borderWidth = "1px";
+root.style.borderColor = "rgb(230,236,240)";
+root.style.borderStyle = "solid";
+root.style.borderTop = "";
+root.style.borderLeft = "";
+root.style.borderRight = "";
+root.style.cursor = "pointer";
+ee.setOnClick(root,function(sender,event) {
+    //g5.root.mainDiv.p1.p3.showTaskChat(root.v_taskInfo.id);
+});
+ee.setOnMouseEnter(root, function(sender,e){
+    sender.style.backgroundColor = "rgb(245,248,250)";
+});
+ee.setOnMouseLeave(root, function(sender,e){
+    sender.style.backgroundColor = "#ffffff";
+});
+
+//title
+//c = createPanel(root, root.id+"p16u", "", 77, cy+4, w-190, 22); cy+=22;
+//c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+//c.style.fontSize = "12pt";
+//c.style.color = "#6e7f8d";
+//c.style.textOverflow = "ellipsis";
+//c.style.inlineBlock = "max-width";
+//c.style.whiteSpace = "nowrap";
+//c.style.cursor="pointer";
+//c.innerHTML = root.v_taskChat.content;
+
+//note
+if (root.v_taskChat.content.length>0) {
+    c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
+    addText(c, root.v_taskChat.content, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
     ee.setRect(c, null, null, null, rect.h);
@@ -7121,6 +7360,121 @@ if (returnString) {
 } else {
     return r;
 }]]></functionCode>
+    </item>
+    <item name="processUrl" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode><![CDATA[g5.notPushHistoryCount = 1;
+var p = g5.getQueryString("p");
+var url = new URL(window.location.href);
+var pn = url.pathname;
+var pns = url.pathname.split("/");
+pns.splice(0,1);
+/*
+if ((window.location.href.toLowerCase() == "http://www.fistalk.com/") ||
+   (window.location.href.toLowerCase() == "http://www.fistalk.com")) {
+    window.location.href = "https://www.fistalk.com";
+    return;
+}
+*/
+if (pn == "" || pn == "/") pn = "/PA/home";
+
+if (pn=="/PA/team") {
+    g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+} else if ((pns[0]=="PA") &amp;&amp; (pns[1]=="task")) {
+    g5.root.mainDiv.p1.p2.showTeamTask(pns[2]);
+} else if (pn=="/home") {
+    g5.p2.p1.show();
+} else if (pn=="/login") {
+    eb.delCookie("twitterGToken");
+    window.location.href = ee.getUrl("/pc/new");
+} else if (pns[0]=="msg") {
+    g5.p2.p9.show(null,null,null,null,pns[1]);
+} else if (pn=="/settings") {
+    g5.p2.p10.show();
+//} else if (pns[0]=="search") {
+//    g5.p2.p11.show(unescape(pns[1]));    
+} else if (pn.indexOf("search/hot")>=0) {
+    g5.p2.p11.showByPage("c1",unescape(pns[2]));    
+} else if (pn.indexOf("search/new")>=0) {
+    g5.p2.p11.showByPage("c2",unescape(pns[2]));    
+} else if (pn.indexOf("search/user")>=0) {
+    g5.p2.p11.showByPage("c3",unescape(pns[2]));    
+} else if (pn.indexOf("search/photo")>=0) {
+    g5.p2.p11.showByPage("c4",unescape(pns[2]));    
+} else if (pn.indexOf("search/video")>=0) {
+    g5.p2.p11.showByPage("c5",unescape(pns[2]));    
+} else if (pn=="/notifications") {
+    g5.p2.p12.show();
+} else if (pns[0]=="messages" &amp;&amp; pns[1]) {
+    g5.p2.p14.showByUserName(unescape(pns[1]));
+} else if (pn=="/settings") {
+    g5.p2.p10.show();
+} else if (pn=="/settings/account") {
+    g5.p2.p17.show();
+} else if (pn=="/settings/PrivacySafety") {
+    g5.p2.p18.show();
+} else if (pn=="/settings/blocked") {
+    g5.p2.p19.show();
+} else if (pn=="/settings/username") {
+    g5.p2.p20.show();
+} else if (pn=="/settings/cellphone") {
+    g5.p2.p21.show();
+} else if (pn=="/settings/email") {
+    g5.p2.p22.show();
+} else if (pn=="/settings/password") {
+    g5.p2.p23.show();
+} else if (pn=="/settings/comment") {
+    g5.p2.p24.show();
+} else if (pn=="/settings/homepage") {
+    g5.p2.p25.show();
+} else if (pn=="/settings/image") {
+    g5.p2.p26.show();
+} else if (pn=="/settings/DelAccount") {
+    g5.p2.p27.show();
+} else if (pn=="/settings/private") {
+    g5.p2.p28.show();
+} else if (pn == "/settings/FansRequest") {
+    g5.p2.p29.show();
+} else if (pn == "/settings/hide") {
+    g5.p2.p30.show();
+} else if (pn == "/settings/donate") {
+    g5.p2.p35.show();
+} else if (pn == "/compose") {
+    g5.p2.p31.showLast();
+} else if (pn == "/youtube") {
+    g5.p2.p32.show();
+} else {
+    if (pns[1]=="following") {
+        g5.p2.p16.showByUserName(unescape(pns[0]));
+    } else if (pns[1] =="followers") {
+        g5.p2.p15.showByUserName(unescape(pns[0]));
+    } else {
+        g5.p2.p2.show(null,null, unescape(pns[0]));
+    }
+}
+]]></functionCode>
+    </item>
+    <item name="pushHistory2" type="20">
+      <varValue />
+      <functionParam>getString</functionParam>
+      <functionCode><![CDATA[//console.log("his=" + getString);
+var url = new URL(window.location.href);
+var header = url.origin;
+
+if (g5.notPushHistoryCount>0) {
+    g5.notPushHistoryCount--;
+    return;
+}
+window.history.pushState({},"",url.origin+getString);
+]]></functionCode>
+    </item>
+    <item name="getQueryString" type="20">
+      <varValue />
+      <functionParam>paramName</functionParam>
+      <functionCode>var reg = new RegExp("(^|&amp;)"+ paramName +"=([^&amp;]*)(&amp;|$)");
+var r = window.location.search.substr(1).match(reg);
+if(r!=null)return  unescape(r[2]); return null;</functionCode>
     </item>
   </g5Items>
 </page>
