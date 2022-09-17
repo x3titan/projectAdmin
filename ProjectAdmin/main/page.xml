@@ -46,7 +46,9 @@ setInterval(function() {
     taskRefresh();
 }, 20000);
 
-
+setInterval(function() {
+    g5.refreshMain();
+}, 100);
 </onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
 
@@ -100,19 +102,18 @@ wx.onMenuShareAppMessage({
     <control type="Panel" pathname="/divRoot/panel114">
       <backgroundColor>FFFFFF</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
-      <dockX>center</dockX>
       <ee_LocalName>mainDiv</ee_LocalName>
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
-      <heightRatio>0.89974293059126</heightRatio>
+      <heightRatio>0.935828877005348</heightRatio>
       <layerVisible>false</layerVisible>
       <left>245</left>
-      <leftRatio>0.322723253757737</leftRatio>
+      <leftRatio>0.274971941638608</leftRatio>
       <note>主页面</note>
       <sizeRatio>1.75</sizeRatio>
       <top>0</top>
       <width>400</width>
-      <widthRatio>0.353669319186561</widthRatio>
+      <widthRatio>0.448933782267116</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115">
       <dockX>fill</dockX>
@@ -134,11 +135,11 @@ sender.changePage = function(page) {
     
     this.currentPage = page;
     if (this.currentPage) {
+        ee.setVisible(this.currentPage, true);
+        ee.setVisible(sender, true);
         if (this.currentPage.onActive) {
             this.currentPage.onActive();
         }
-        ee.setVisible(this.currentPage, true);
-        ee.setVisible(sender, true);
     } else {
         ee.setVisible(sender, false);
     }
@@ -316,7 +317,12 @@ sender.v_status = "";
 sender.v_pageIndex = 0;
 
 sender.showTeamTask = function(teamId) {
-    sender.v_teamId = teamId;
+    if (this.v_teamId != teamId) {
+        for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
+        this.v_items = new Array();
+        this.v_lastScrollTop = 0;
+    }
+    this.v_teamId = teamId;
     this.parentNode.changePage(this);
 }
 
@@ -327,75 +333,14 @@ sender.onActive = function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
     ee.tiledResizeV(this, 2);
-    if (this.v_items.length<=0) this.loadFromDB();
+    if (this.v_items.length<=0) {
+        this.loadFromDB();
+    }
 }
 
 sender.onDeactive = function() {
     this.v_lastScrollTop = document.documentElement.scrollTop;
     g5.root.p_title.changePage(null);
-}
-
-
-
-
-
-
-
-sender.activePage = function() {
-    g5.pushHistory2("/" + escape(this.v_userInfo.userName) + "/following");
-    g5.pageMode = 0;
-    g5.refreshMain(true);
-    ee.setVisible(g5.p4, true);
-    g5.p4.changePage("a10");
-    ee.setVisible(this, true)
-}
-
-sender.close = function() {
-    this.v_lastScrollTop = document.documentElement.scrollTop;
-    ee.setVisible(g5.p4, false);
-    ee.setVisible(this, false)
-}
-
-sender.showByUserName = function(userName) {
-    if (userName == this.v_userInfo.userName) {
-        g5.changeP2(15);
-        setTimeout(function() {
-            document.documentElement.scrollTop = sender.v_lastScrollTop;
-        }, 1); 
-        ee.tiledResizeV(this, 2);
-        return;
-    }
-    if (getOtherUserInfo2.busy) false;
-    getOtherUserInfo2.keyType = "userName";
-    getOtherUserInfo2.userKey = userName;
-    getOtherUserInfo2.onComplete = function(v_userInfo) {
-        sender.show(v_userInfo);
-    }
-    getOtherUserInfo2();
-}
-
-sender.refresh = function() {
-    if (this.v_userInfo.id == g5.myUserInfo.id) this.v_needRefresh = true;
-}
-
-sender.show = function(v_userInfo) {
-    if (this.v_needRefresh) {
-        this.v_needRefresh = false;
-    } else if (this.v_userInfo.id == v_userInfo.id) {
-        g5.changeP2(15);
-        ee.tiledResizeV(this, 2);
-        document.documentElement.scrollTop = this.v_lastScrollTop;
-        return;
-    }
-    this.v_userInfo = v_userInfo.clone();
-    this.refreshCount();
-    document.documentElement.scrollTop = 0;
-    this.v_pageIndex = 0;
-    for (var i=0; i<sender.v_items.length; i++) ee.removeControl(sender.v_items[i]);
-    sender.v_items = new Array();
-    g5.changeP2(-1);
-    g5.changeP2(15);
-    this.loadFromDB();               
 }
 
 sender.loadFromDB = function() {
@@ -472,11 +417,17 @@ sender.v_status = "";
 sender.v_pageIndex = 0;
 
 sender.showTaskChat = function(taskId) {
-    sender.v_taskId = taskId;
+    if (this.v_taskId != taskId) {
+        for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
+        this.v_items = new Array();
+        this.v_lastScrollTop = 0;
+    }
+    this.v_taskId = taskId;
     this.parentNode.changePage(this);
 }
 
 sender.onActive = function() {
+    g5.pushHistory2("/PA/taskBoard/" + escape(this.v_taskId));
     g5.root.p_title.changePage(g5.root.p_title.p3);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -636,18 +587,12 @@ sender.onDective = function() {
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>center</dockX>
       <ee_LocalName>p_title</ee_LocalName>
-      <height>655</height>
-      <heightRatio>0.841902313624679</heightRatio>
+      <height>103</height>
+      <heightRatio>0.137700534759358</heightRatio>
       <layerName>题头</layerName>
       <left>245</left>
-      <leftRatio>0.322723253757737</leftRatio>
-      <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
-sender.style.borderColor = "rgb(254,255,255)";
-sender.style.borderStyle = "solid";
-sender.style.borderTop = "";
-sender.style.borderBottom = "";
-sender.style.position="fixed";
+      <leftRatio>0.274971941638608</leftRatio>
+      <onCreate>sender.style.position="fixed";
 
 sender.currentPage = null;
 sender.changePage = function(page) {
@@ -661,24 +606,21 @@ sender.changePage = function(page) {
     
     this.currentPage = page;
     if (this.currentPage) {
-        if (this.currentPage.onActive) {
-            this.currentPage.onActive();
-        }
         ee.setVisible(this.currentPage, true);
         ee.setVisible(sender, true);
         ee.tiledResizeV(sender,1);
-        //var r = eb.getDivRectSetting(g5.root.mainDiv);
-        //ee.setRect(this, r.x, 0, null, null);
-        //console.log(r.x);
+        if (this.currentPage.onActive) {
+            this.currentPage.onActive();
+        }
     } else {
         ee.setVisible(sender, false);
     }
 }
 </onCreate>
-      <sizeRatio>1.6375</sizeRatio>
+      <sizeRatio>0.2575</sizeRatio>
       <top>0</top>
       <width>400</width>
-      <widthRatio>0.353669319186561</widthRatio>
+      <widthRatio>0.448933782267116</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel128">
       <backgroundColor>FFC080</backgroundColor>
@@ -752,10 +694,9 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.0809160305343511</heightRatio>
       <layerName>任务列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
+sender.style.borderWidth = "2px";
 sender.style.borderColor = "rgb(230,236,240)";
 sender.style.borderStyle = "solid";
 sender.style.borderTop = "";
@@ -817,9 +758,10 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.0809160305343511</heightRatio>
       <layerName>任务详细</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
+sender.style.borderWidth = "2px";
 sender.style.borderColor = "rgb(230,236,240)";
 sender.style.borderStyle = "solid";
 sender.style.borderTop = "";
@@ -6517,7 +6459,7 @@ if (getTaskChat.onComplete) getTaskChat.onComplete(getTaskChat.dataset);</script
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="18">
+  <g5Items count="19">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -7036,7 +6978,7 @@ ee.setOnMouseLeave(root, function(sender,e){
 });
 
 //title
-c = createPanel(root, root.id+"p16u", "", 77, cy+4, w-190, 22); cy+=22;
+c = createPanel(root, root.id+"p16u", "", 20, cy+4, w-60, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
 c.style.color = "#6e7f8d";
@@ -7057,6 +6999,13 @@ if (root.v_taskInfo.note.length>0) {
 } else {
     cy += 7;
 }
+
+c = createPanel(root, root.id+"rCount", "", 20, cy+4, 30, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "12pt";
+c.style.color = "#6e7f8d";
+c.innerHTML = root.v_taskInfo.chatCount;
+
 /*
 //button
 c = null;
@@ -7385,69 +7334,14 @@ if (pn == "" || pn == "/") pn = "/PA/home";
 
 if (pn=="/PA/team") {
     g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
-} else if ((pns[0]=="PA") &amp;&amp; (pns[1]=="task")) {
-    g5.root.mainDiv.p1.p2.showTeamTask(pns[2]);
-} else if (pn=="/home") {
-    g5.p2.p1.show();
+} else if (pn.indexOf("/PA/task/")>=0) {
+    g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]));
+} else if (pn.indexOf("/PA/taskBoard/")>=0) {
+    g5.root.mainDiv.p1.p3.showTaskChat(unescape(pns[2]));
 } else if (pn=="/login") {
-    eb.delCookie("twitterGToken");
-    window.location.href = ee.getUrl("/pc/new");
-} else if (pns[0]=="msg") {
-    g5.p2.p9.show(null,null,null,null,pns[1]);
-} else if (pn=="/settings") {
-    g5.p2.p10.show();
-//} else if (pns[0]=="search") {
-//    g5.p2.p11.show(unescape(pns[1]));    
-} else if (pn.indexOf("search/hot")>=0) {
+    eb.delCookie("paToken");
+    window.location.href = ee.getUrl("/login");
     g5.p2.p11.showByPage("c1",unescape(pns[2]));    
-} else if (pn.indexOf("search/new")>=0) {
-    g5.p2.p11.showByPage("c2",unescape(pns[2]));    
-} else if (pn.indexOf("search/user")>=0) {
-    g5.p2.p11.showByPage("c3",unescape(pns[2]));    
-} else if (pn.indexOf("search/photo")>=0) {
-    g5.p2.p11.showByPage("c4",unescape(pns[2]));    
-} else if (pn.indexOf("search/video")>=0) {
-    g5.p2.p11.showByPage("c5",unescape(pns[2]));    
-} else if (pn=="/notifications") {
-    g5.p2.p12.show();
-} else if (pns[0]=="messages" &amp;&amp; pns[1]) {
-    g5.p2.p14.showByUserName(unescape(pns[1]));
-} else if (pn=="/settings") {
-    g5.p2.p10.show();
-} else if (pn=="/settings/account") {
-    g5.p2.p17.show();
-} else if (pn=="/settings/PrivacySafety") {
-    g5.p2.p18.show();
-} else if (pn=="/settings/blocked") {
-    g5.p2.p19.show();
-} else if (pn=="/settings/username") {
-    g5.p2.p20.show();
-} else if (pn=="/settings/cellphone") {
-    g5.p2.p21.show();
-} else if (pn=="/settings/email") {
-    g5.p2.p22.show();
-} else if (pn=="/settings/password") {
-    g5.p2.p23.show();
-} else if (pn=="/settings/comment") {
-    g5.p2.p24.show();
-} else if (pn=="/settings/homepage") {
-    g5.p2.p25.show();
-} else if (pn=="/settings/image") {
-    g5.p2.p26.show();
-} else if (pn=="/settings/DelAccount") {
-    g5.p2.p27.show();
-} else if (pn=="/settings/private") {
-    g5.p2.p28.show();
-} else if (pn == "/settings/FansRequest") {
-    g5.p2.p29.show();
-} else if (pn == "/settings/hide") {
-    g5.p2.p30.show();
-} else if (pn == "/settings/donate") {
-    g5.p2.p35.show();
-} else if (pn == "/compose") {
-    g5.p2.p31.showLast();
-} else if (pn == "/youtube") {
-    g5.p2.p32.show();
 } else {
     if (pns[1]=="following") {
         g5.p2.p16.showByUserName(unescape(pns[0]));
@@ -7479,6 +7373,27 @@ window.history.pushState({},"",url.origin+getString);
       <functionCode>var reg = new RegExp("(^|&amp;)"+ paramName +"=([^&amp;]*)(&amp;|$)");
 var r = window.location.search.substr(1).match(reg);
 if(r!=null)return  unescape(r[2]); return null;</functionCode>
+    </item>
+    <item name="refreshMain" type="20">
+      <varValue />
+      <functionParam>refresh</functionParam>
+      <functionCode><![CDATA[var scr = eb.getClientSize();
+var w;
+if (scr.w > 450) {
+    w = 450;
+} else {
+    w = scr.w;
+}
+var x = parseInt((scr.w - w)/2);
+if (x < 2) x = 0;
+
+
+var r = eb.getDivRectSetting(g5.root.mainDiv);
+if ((r.x != x) || (r.y != 0) || (r.w != w)) {
+    ee.setRect(g5.root.mainDiv, x, 0, w, null);
+    ee.setRect(g5.root.p_title, x, 0, w, null);
+    eb.processDock();
+}]]></functionCode>
     </item>
   </g5Items>
 </page>
