@@ -6438,7 +6438,6 @@ sql =
     "exec VP_TaskChat " +
     taskId +
     "," + top + ";";
-es.logWarning(sql);
 sqlResult = db.executeQuery("PJ", sql);
 if (sqlResult == null) {
     eio.appendString8("F");
