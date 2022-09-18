@@ -1676,7 +1676,6 @@ sender.onDective = function() {
       <height>103</height>
       <heightRatio>0.137700534759358</heightRatio>
       <layerName>题头</layerName>
-      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.274971941638608</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -1846,7 +1845,6 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.0809160305343511</heightRatio>
       <layerName>任务详细</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -1913,8 +1911,21 @@ g5.initButtonV3(sender,[
       <layerVisible>false</layerVisible>
       <left>347</left>
       <leftRatio>0.8675</leftRatio>
-      <onClick>history.go(-1);
-window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onClick>var v_style = new Array();
+var v_onClick = new Array();
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表评论","发表评论","发表评论","#808080","#000000","#000000",""));
+v_onClick.push(
+    function (senderBtnC, event) {
+    }
+);
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","直接设置任务为完成","直接设置任务为完成","直接设置任务为完成","#808080","#000000","#000000",""));
+v_onClick.push(
+    function (senderBtnC, event) {
+    }
+);
+g5.root.popBlank.p4.show(sender, 200, v_style, v_onClick); 
+        
+//window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.dot3+"</svg>";
 sender.style.borderRadius = "30%";
 
@@ -6702,6 +6713,7 @@ ee.setVisible(ee.getControl("panel1"), false);
       <height>766</height>
       <heightRatio>1</heightRatio>
       <layerName>主界面弹窗无背景色</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate><![CDATA[sender.style.position = "fixed";
 sender.style.zIndex=100;
@@ -6794,6 +6806,7 @@ if (sender.v_closeCount>=4) {
       <height>205</height>
       <heightRatio>0.271523178807947</heightRatio>
       <layerName>p4.通用弹出菜单</layerName>
+      <layerVisible>false</layerVisible>
       <left>375</left>
       <leftRatio>0.414364640883978</leftRatio>
       <onAni2End>ee.setVisible(sender.parentNode, false);</onAni2End>
@@ -6842,7 +6855,7 @@ sender.showPos = function(x, y, width, v_style, v_function) {
         this.v_items.push(item);
         cy += 0 + eb.getDivRect(item).h;
     }
-    g5.tiledV(this, 0, 0, 0);
+    ee.tiledV(this, 0, 0, 0);
 
     ee.setRect(this, x, y, null, null);
     
@@ -9532,7 +9545,7 @@ if (getTaskChat.onComplete) getTaskChat.onComplete(getTaskChat.dataset);</script
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="19">
+  <g5Items count="20">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -10467,6 +10480,22 @@ if ((r.x != x) || (r.y != 0) || (r.w != w)) {
     ee.setRect(g5.root.p_title, x, 0, w, null);
     eb.processDock();
 }]]></functionCode>
+    </item>
+    <item name="getRectAbs" type="20">
+      <varValue />
+      <functionParam>div</functionParam>
+      <functionCode>var rect = eb.getDivRect(div);
+var result = eb.getDivRect(div);
+while (true) {
+    div = div.parentNode;
+    if (eb.isEmpty(div)) break;
+    if (div.id == "divRoot") break;
+    rect = eb.getDivRect(div);
+    result.x+=rect.x-div.scrollLeft;
+    result.y+=rect.y-div.scrollTop;
+}
+result.y -= document.documentElement.scrollTop;
+return result;</functionCode>
     </item>
   </g5Items>
 </page>
