@@ -1,6 +1,6 @@
 <EBProj>
   <projectName>项目管理系统</projectName>
-  <projectItems count="191">
+  <projectItems count="327">
     <page pathname="/login" alias="登录总入口" />
     <image pathname="/login/banner.jpg" />
     <image pathname="/login/CPY0000.jpg" />
@@ -192,6 +192,142 @@
     <image pathname="/samples/button2/qb38.png" />
     <page pathname="/temp" alias="临时页面" />
     <page pathname="/temp/t1" alias="" />
+    <image pathname="/temp/t1/dialogMask.png" />
+    <image pathname="/temp/t1/i087_00000.png" />
+    <image pathname="/temp/t1/i087_01000.png" />
+    <image pathname="/temp/t1/i087_01001.png" />
+    <image pathname="/temp/t1/i087_07000.png" />
+    <image pathname="/temp/t1/i087_26000.png" />
+    <image pathname="/temp/t1/i087_31000.png" />
+    <page pathname="/temp/main" alias="" />
+    <image pathname="/temp/main/01114d59941891000000212989593d.gif" />
+    <image pathname="/temp/main/0152395be39c37a80121ab5d479b6c.gif" />
+    <image pathname="/temp/main/1445249706879614.gif" />
+    <image pathname="/temp/main/arrowR.png" />
+    <image pathname="/temp/main/back.png" />
+    <image pathname="/temp/main/back1.png" />
+    <image pathname="/temp/main/cirMask.png" />
+    <image pathname="/temp/main/close.png" />
+    <image pathname="/temp/main/config.png" />
+    <image pathname="/temp/main/CPY0000.jpg" />
+    <image pathname="/temp/main/CPY0001.jpg" />
+    <image pathname="/temp/main/CPY0002.jpg" />
+    <image pathname="/temp/main/CPY0003.jpg" />
+    <image pathname="/temp/main/CPY0004.jpg" />
+    <image pathname="/temp/main/d1.png" />
+    <image pathname="/temp/main/d1s.png" />
+    <image pathname="/temp/main/d2.png" />
+    <image pathname="/temp/main/d2s.png" />
+    <image pathname="/temp/main/d3.png" />
+    <image pathname="/temp/main/d3s.png" />
+    <image pathname="/temp/main/d4.png" />
+    <image pathname="/temp/main/d4s.png" />
+    <image pathname="/temp/main/dark1.png" />
+    <image pathname="/temp/main/date.png" />
+    <image pathname="/temp/main/e1.png" />
+    <image pathname="/temp/main/e2.png" />
+    <image pathname="/temp/main/e3.png" />
+    <image pathname="/temp/main/e4.png" />
+    <image pathname="/temp/main/empty.png" />
+    <image pathname="/temp/main/empty02.gif" />
+    <image pathname="/temp/main/fingerP.png" />
+    <image pathname="/temp/main/fist.jpg" />
+    <image pathname="/temp/main/fistalk72x72.png" />
+    <image pathname="/temp/main/fistal_black128.png" />
+    <image pathname="/temp/main/getLogo2.png" />
+    <image pathname="/temp/main/getLogoBlue.png" />
+    <image pathname="/temp/main/huati1.jpg" />
+    <image pathname="/temp/main/i087_01.png" />
+    <image pathname="/temp/main/img.png" />
+    <image pathname="/temp/main/L01a.png" />
+    <image pathname="/temp/main/L01b.png" />
+    <image pathname="/temp/main/L01c.png" />
+    <image pathname="/temp/main/L02a.png" />
+    <image pathname="/temp/main/L02b.png" />
+    <image pathname="/temp/main/L02c.png" />
+    <image pathname="/temp/main/L03a.png" />
+    <image pathname="/temp/main/L03b.png" />
+    <image pathname="/temp/main/L03c.png" />
+    <image pathname="/temp/main/L04a.png" />
+    <image pathname="/temp/main/L04b.png" />
+    <image pathname="/temp/main/L04c.png" />
+    <image pathname="/temp/main/L05a.png" />
+    <image pathname="/temp/main/L05b.png" />
+    <image pathname="/temp/main/L05c.png" />
+    <image pathname="/temp/main/L06a.png" />
+    <image pathname="/temp/main/L06b.png" />
+    <image pathname="/temp/main/L06c.png" />
+    <image pathname="/temp/main/L07a.png" />
+    <image pathname="/temp/main/L07b.png" />
+    <image pathname="/temp/main/L07c.png" />
+    <image pathname="/temp/main/L1.png" />
+    <image pathname="/temp/main/L2.png" />
+    <image pathname="/temp/main/L3.png" />
+    <image pathname="/temp/main/L4.png" />
+    <image pathname="/temp/main/L5.png" />
+    <image pathname="/temp/main/L6.png" />
+    <image pathname="/temp/main/L7.png" />
+    <image pathname="/temp/main/L8.png" />
+    <image pathname="/temp/main/link.png" />
+    <image pathname="/temp/main/new.png" />
+    <image pathname="/temp/main/newGet.png" />
+    <page pathname="/temp/main/page1" alias="" />
+    <image pathname="/temp/main/page1/cirMask.png" />
+    <image pathname="/temp/main/page1/CPY0000.jpg" />
+    <image pathname="/temp/main/page1/CPY0002.jpg" />
+    <image pathname="/temp/main/page1/e1.png" />
+    <image pathname="/temp/main/page1/e2.png" />
+    <image pathname="/temp/main/page1/e3.png" />
+    <image pathname="/temp/main/page1/e4.png" />
+    <page pathname="/temp/main/page2" alias="" />
+    <image pathname="/temp/main/page2/cirMask.png" />
+    <image pathname="/temp/main/page2/CPY0000.jpg" />
+    <image pathname="/temp/main/page2/CPY0002.jpg" />
+    <image pathname="/temp/main/page2/e1.png" />
+    <image pathname="/temp/main/page2/e2.png" />
+    <image pathname="/temp/main/page2/e3.png" />
+    <image pathname="/temp/main/page2/e4.png" />
+    <page pathname="/temp/main/page4" alias="" />
+    <image pathname="/temp/main/page4/arrowR.png" />
+    <image pathname="/temp/main/page4/back.png" />
+    <image pathname="/temp/main/page4/cirMask.png" />
+    <image pathname="/temp/main/page4/CPY0000.jpg" />
+    <image pathname="/temp/main/page4/CPY0002.jpg" />
+    <image pathname="/temp/main/page4/e1.png" />
+    <image pathname="/temp/main/page4/e2.png" />
+    <image pathname="/temp/main/page4/e3.png" />
+    <image pathname="/temp/main/page4/e4.png" />
+    <page pathname="/temp/main/pageChat" alias="" />
+    <image pathname="/temp/main/pageChat/arrowR.png" />
+    <image pathname="/temp/main/pageChat/back.png" />
+    <image pathname="/temp/main/pageChat/cirMask.png" />
+    <image pathname="/temp/main/pageChat/CPY0000.jpg" />
+    <image pathname="/temp/main/pageChat/CPY0002.jpg" />
+    <image pathname="/temp/main/pageChat/e1.png" />
+    <image pathname="/temp/main/pageChat/e2.png" />
+    <image pathname="/temp/main/pageChat/e3.png" />
+    <image pathname="/temp/main/pageChat/e4.png" />
+    <image pathname="/temp/main/pageList1.png" />
+    <image pathname="/temp/main/pageList2.png" />
+    <page pathname="/temp/main/pageMain" alias="" />
+    <image pathname="/temp/main/pageMain/getLogo2.png" />
+    <image pathname="/temp/main/privateMode1.jpg" />
+    <image pathname="/temp/main/privateMode2.jpg" />
+    <image pathname="/temp/main/robot.jpg" />
+    <page pathname="/temp/main/temp" alias="" />
+    <image pathname="/temp/main/temp/arrowR.png" />
+    <image pathname="/temp/main/temp/back.png" />
+    <image pathname="/temp/main/temp/cirMask.png" />
+    <image pathname="/temp/main/temp/CPY0000.jpg" />
+    <image pathname="/temp/main/temp/CPY0002.jpg" />
+    <image pathname="/temp/main/temp/e1.png" />
+    <image pathname="/temp/main/temp/e2.png" />
+    <image pathname="/temp/main/temp/e3.png" />
+    <image pathname="/temp/main/temp/e4.png" />
+    <image pathname="/temp/main/upload.png" />
+    <image pathname="/temp/main/user.png" />
+    <image pathname="/temp/main/youtubeHit.jpg" />
+    <image pathname="/temp/main/youtubeHit1.jpg" />
   </projectItems>
   <dbConnections count="1">
     <connection name="PJ">
