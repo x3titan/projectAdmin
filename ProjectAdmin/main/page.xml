@@ -573,37 +573,31 @@ sender.loadMore = function() {
 sender.c_title = sender.c_titleBar.c_title;
 sender.c_button = sender.c_titleBar.c_button;
 sender.c_cirText = sender.c_p1.c_progressText;
-sender.c_cir = sender.c_p1.c_progressee;
+sender.c_cir = sender.c_p1.c_progress;
 
 sender.init = function(titleText, keepLast) {
     if (eb.isEmpty(titleText)) titleText = "";
     ee.setText(this.c_title, titleText);
     if (!keepLast) this.c_edit.setEditText("");
     this.c_photos.v_photos = new Array();
-    g5.refreshPhoto(this.c_photos);
+    //g5.refreshPhoto(this.c_photos);
     this.check();
     this.c_cir.refresh(0);
     ee.setText(this.c_cirText, "");    
 }
 
-sender.activePage = function() {
-    g5.pushHistory2("/compose");
-    ee.setVisible(this, true);
-    ee.resizeV(this, 2);
-    //ee.tiledV(this,0,0,0);
-    //ee.tiledResizeV(this, 2);
+sender.onActive = function() {
+    g5.pushHistory2("/PA/composeChat/" + escape(this.v_taskId));
+    ee.tiledResizeV(this, 2);
 }
 
-sender.close = function() {
-    ee.setVisible(this, false);
-    this.c_photos.v_photos = new Array();
-    g5.refreshPhoto(this.c_photos);
+sender.onDeactive = function() {
+    g5.root.p_title.changePage(null);
 }
 
 sender.check = function() {
     this.c_button.setEnabled(
-        ((this.c_edit.getEditText().trim().length>0) &amp;&amp;(this.c_edit.getEditText().trim().length<=200)) ||
-        this.c_photos.v_photos.length>0
+        ((this.c_edit.getEditText().trim().length>0) &amp;&amp;(this.c_edit.getEditText().trim().length<=200))
     );    
 }
 
@@ -612,147 +606,24 @@ sender.showLast = function() {
     g5.changeP2(30);
 }
 
-sender.showNew = function() {
+sender.showNew = function(taskId) {
+    this.v_taskId = taskId;
     this.c_p1.resize();
-    this.init("发言", this.v_lastOp == "new");
+    this.init("发表动态", this.v_lastOp == "new");
     this.v_lastOp = "new";
     this.onComplete = function() {
-        if (newTwitter.busy) return;
-        newTwitter.uplinkType = "N";
-        newTwitter.uplinkId = 0;
-        newTwitter.content = sender.c_edit.getEditText();
-        newTwitter.photos = sender.c_photos.v_photos;
-        newTwitter.onComplete = function(contentId) {
+        chatNewV2.taskId = sender.v_taskId;
+        chatNewV2.content = sender.c_edit.getEditText();
+        chatNewV2.onComplete = function(taskId) {
             sender.v_lastOp = "";
             history.go(-1);
-            var newContent = new g5.ContentInfo();
-            newContent.id = contentId;
-            newContent.seconds = 0;
-            newContent.status = "IDL";
-            newContent.uplinkType = "N";
-            newContent.uplinkId = 0;
-            newContent.content = newTwitter.content;
-            newContent.photos = newTwitter.photos;
-            newContent.reCount = 0;
-            newContent.fwCount = 0;
-            newContent.likeCount = 0;
-            newContent.unlikeCount = 0;
-            newContent.isForward = false;
-            newContent.isLike = false;
-            newContent.isUnlike = false;
-            g5.p2.p1.insert(newContent.clone(),new g5.ContentInfo(),g5.myUserInfo,new g5.UserInfo());
-            if (showUserPage.v_userInfo) {
-                if (showUserPage.v_userInfo.id == g5.myUserInfo.id) {
-                    g5.p2.p2.insert(newContent.clone(),new g5.ContentInfo(),g5.myUserInfo,new g5.UserInfo());
-                }
-            }
         }
-        newTwitter();
+        chatNewV2();
     }
-    g5.changeP2(30);
-    ee.getControl("panel51").v_photos = new Array();
-    g5.refreshPhoto(ee.getControl("panel51"));
+    this.parentNode.changePage(this);
 }
 
-sender.showRe = function(v_content,v_reContent,v_userInfo,v_reUserInfo) {
-    this.c_p1.resize();
-    this.init("回复发言", this.v_lastOp == "re" &amp;&amp; this.v_lastId == v_content.id);
-    this.v_lastOp = "re";
-    this.v_lastId = v_content.id;
-    this.onComplete = function() {
-        if (newTwitter.busy) return;
-        var contentIdB;
-        if (v_content.exUplinkType=="L") {
-            contentIdB = v_content.exContentId;
-        } else {
-            contentIdB = v_content.id;
-        }
-        newTwitter.uplinkType = "R";
-        newTwitter.uplinkId = contentIdB;
-        newTwitter.content = sender.c_edit.getEditText();
-        newTwitter.photos = sender.c_photos.v_photos;
-        newTwitter.onComplete = function(contentId) {
-            sender.v_lastOp = "";
-            history.go(-1);
-            var newContent = new g5.ContentInfo();
-            newContent.id = contentId;
-            newContent.seconds = 0;
-            newContent.status = "IDL";
-            newContent.uplinkType = "R";
-            newContent.uplinkId = contentIdB;
-            newContent.content = newTwitter.content;
-            newContent.photos = newTwitter.photos;
-            newContent.reCount = 0;
-            newContent.fwCount = 0;
-            newContent.likeCount = 0;
-            newContent.unlikeCount = 0;
-            newContent.isForward = false;
-            newContent.isLike = false;
-            newContent.isUnlike = false;
-            var newReContent = v_content.clone();
-            if (newReContent.exUplinkType=="L") newReContent.id = newReContent.exContentId;
-            g5.p2.p1.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            g5.p2.p2.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            g5.p2.p9.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            v_content.reCount++;
-            g5.syncTwitter(v_content,v_reContent,v_userInfo,v_reUserInfo);
-        }
-        newTwitter();
-    }
-    g5.changeP2(30);
-    ee.getControl("panel51").v_photos = new Array();
-    g5.refreshPhoto(ee.getControl("panel51"));
-}
-
-sender.showFw = function(v_content,v_reContent,v_userInfo,v_reUserInfo) {
-    this.c_p1.resize();
-    this.init("带评论转发", this.v_lastOp == "fw" &amp;&amp; this.v_lastId == v_content.id);
-    this.v_lastOp = "fw";
-    this.v_lastId = v_content.id;
-    this.onComplete = function() {
-        if (newTwitter.busy) return;
-        var contentIdB;
-        if (v_content.exUplinkType=="L") {
-            contentIdB = v_content.exContentId;
-        } else {
-            contentIdB = v_content.id;
-        }
-        newTwitter.uplinkType = "F";
-        newTwitter.uplinkId = contentIdB;
-        newTwitter.content = sender.c_edit.getEditText();
-        newTwitter.photos = sender.c_photos.v_photos;
-        newTwitter.onComplete = function(contentId) {
-            sender.v_lastOp = "";
-            history.go(-1);
-            var newContent = new g5.ContentInfo();
-            newContent.id = contentId;
-            newContent.seconds = 0;
-            newContent.status = "IDL";
-            newContent.uplinkType = "F";
-            newContent.uplinkId = contentIdB;
-            newContent.content = newTwitter.content;
-            newContent.photos = newTwitter.photos;
-            newContent.reCount = 0;
-            newContent.fwCount = 0;
-            newContent.likeCount = 0;
-            newContent.unlikeCount = 0;
-            newContent.isForward = false;
-            newContent.isLike = false;
-            newContent.isUnlike = false;
-            var newReContent = v_content.clone();
-            if (newReContent.exUplinkType=="L") newReContent.id = newReContent.exContentId;
-            g5.p2.p1.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            g5.p2.p2.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            g5.p2.p9.insert(newContent.clone(),newReContent,g5.myUserInfo,v_userInfo);
-            v_content.fwCount++;
-            g5.syncTwitter(v_content,v_reContent,v_userInfo,v_reUserInfo)
-        }
-        newTwitter();
-    }
-    g5.changeP2(30);
-    ee.getControl("panel51").v_photos = new Array();
-    g5.refreshPhoto(ee.getControl("panel51"));
-}]]></onCreate>
+]]></onCreate>
       <sizeRatio>1.89</sizeRatio>
       <top>0</top>
       <width>400</width>
@@ -816,7 +687,7 @@ g5.initButtonV3(sender,[
       <left>63</left>
       <leftRatio>0.1575</leftRatio>
       <sizeRatio>0.231884057971014</sizeRatio>
-      <text>发表任务信息</text>
+      <text>发表动态</text>
       <top>1</top>
       <topRatio>0.0196078431372549</topRatio>
       <width>207</width>
@@ -837,17 +708,11 @@ g5.initButtonV3(sender,[
       <layerVisible>false</layerVisible>
       <left>287</left>
       <leftRatio>0.7175</leftRatio>
-      <onClick><![CDATA[if (!sender.v_enabled) return;
-var content = g5.p2.p31.c_edit.getEditText();
-var photos = sender.parentNode.parentNode.c_photos.v_photos;
-if ((content.length<=0) &amp;&amp; (photos.length<=0)) {
-    g5.alert1("提示", "发言内容不能为空，您至少要留有文字或者至少一张图片或者视频。");
-    return;
-}
+      <onClick>if (!sender.v_enabled) return;
 
 if (sender.parentNode.parentNode.onComplete) {
     sender.parentNode.parentNode.onComplete();
-}]]></onClick>
+}</onClick>
       <onCreate>g5.initButtonV3(sender,[
     new g5.BStyle("#1da1f2","#1a91da","#1781c2","","","","","","",""),
     new g5.BStyle("#8ed0f9","#8ed0f9","#8ed0f9","","","","","","","")
@@ -884,8 +749,8 @@ sender.setEnabled(false);
       <__U_onHeightChange-sender-oldH-newH>var dy = newH - oldH;
 if (dy == 0) return;
 
-var r = eb.getDivRectSetting(g5.p2.p31.c_p1);
-ee.setRect(g5.p2.p31.c_p1, null, r.y + dy, null,null);
+var r = eb.getDivRectSetting(sender.parentNode.c_p1);
+ee.setRect(sender.parentNode.c_p1, null, r.y + dy, null,null);
 </__U_onHeightChange-sender-oldH-newH>
       <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml><![CDATA[var text = ee.getEditText(sender.c_edit);
 
@@ -902,7 +767,7 @@ sender.setCurPosAbs(cp);
 
 sender.processUserName();
 
-g5.p2.p31.check();
+sender.parentNode.check();
 var newText = newText.trim();
 var c = ee.getControl("panel580");
 if (newText.length<180) {
@@ -1304,6 +1169,7 @@ sender.setUsername = function(username) {
 
 sender.processUserName = function() {
     var userName = this.getUsername();
+    return;
     if (userName.length>0) {
         g5.p2.p34.show(sender, userName, function(username) {
             sender.setUsername(username);
@@ -1908,10 +1774,10 @@ g5.initButtonV3(sender,[
       <leftRatio>0.8675</leftRatio>
       <onClick>var v_style = new Array();
 var v_onClick = new Array();
-v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表评论","发表评论","发表评论","#808080","#000000","#000000",""));
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表动态","发表动态","发表动态","#808080","#000000","#000000",""));
 v_onClick.push(
     function (senderBtnC, event) {
-    
+        g5.root.mainDiv.p1.p4.showNew(g5.root.mainDiv.p1.p3.v_taskId);
     }
 );
 v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","直接设置任务为完成","直接设置任务为完成","直接设置任务为完成","#808080","#000000","#000000",""));
@@ -8663,7 +8529,7 @@ g5.initButtonV3(sender,[
       <widthRatio>0.902366863905325</widthRatio>
     </control>
   </controls>
-  <taskSet count="18">
+  <taskSet count="19">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -9538,6 +9404,47 @@ eio.appendDataSet(sqlResult,
 }
 getTaskChat.dataset = eio.readDataSet();
 if (getTaskChat.onComplete) getTaskChat.onComplete(getTaskChat.dataset);</script3>
+    </taskSetItem>
+    <taskSetItem name="chatNewV2">
+      <script1>//taskId,content,onComplete
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(chatNewV2.taskId + "");
+eio.appendString16(chatNewV2.content);</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var taskId = parseInt(eio.readString8());
+var content = eio.readString16();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "insert into taskChat (taskId, userId, title) values (" + 
+    taskId + "," +
+    userId + "," +
+    "'" + db.encode(content) + "')";
+sqlResult = db.executeNoneQuery("PJ", sql);
+if (!sqlResult) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    return;
+}
+if (chatNewV2.onComplete) chatNewV2.onComplete(chatNewV2.taskId);</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
@@ -10420,11 +10327,14 @@ if (pn=="/PA/team") {
     g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]));
 } else if (pn.indexOf("/PA/taskBoard/")>=0) {
     g5.root.mainDiv.p1.p3.showTaskChat(unescape(pns[2]));
+} else if (pn.indexOf("/PA/composeChat/")>=0) {
+    g5.root.mainDiv.p1.p4.showNew(unescape(pns[2]));
 } else if (pn=="/login") {
     eb.delCookie("paToken");
     window.location.href = ee.getUrl("/login");
     g5.p2.p11.showByPage("c1",unescape(pns[2]));    
 } else {
+    return;
     if (pns[1]=="following") {
         g5.p2.p16.showByUserName(unescape(pns[0]));
     } else if (pns[1] =="followers") {
