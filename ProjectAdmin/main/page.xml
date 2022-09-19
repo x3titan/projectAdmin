@@ -1,5 +1,5 @@
 <page>
-  <controls count="361">
+  <controls count="362">
     <control type="DivRoot" pathname="/divRoot">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
@@ -106,6 +106,7 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -120,6 +121,7 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -167,6 +169,12 @@ sender.v_pageIndex = 0;
 
 sender.onActive = function() {
     g5.pushHistory2("/PA/team");
+    if (this.v_needRefresh) {
+        for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
+        this.v_items = new Array();
+        this.v_lastScrollTop = 0;
+        this.v_needRefresh = false;
+    }
     g5.root.p_title.changePage(g5.root.p_title.p1);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -311,7 +319,6 @@ sender.v_items = new Array();
 sender.c_title = g5.root.p_title.p2.c_title;
 sender.v_needRefresh = false;
 sender.v_status = "";
-sender.v_needRefresh = false;
 
 sender.v_pageIndex = 0;
 
@@ -1520,6 +1527,7 @@ sender.v_photos = new Array();</onCreate>
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>新建项目或任务</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -1545,7 +1553,6 @@ sender.init = function(clear) {
 }
 
 sender.onActive = function() {
-    g5.pushHistory2("/PA/newTeam");
     ee.tiledResizeV(this, 2);
 }
 
@@ -1555,7 +1562,8 @@ sender.onDeactive = function() {
 
 sender.check = function() {
     this.c_button.setEnabled(
-        ((this.c_edit.getEditText().trim().length>0) &amp;&amp;(this.c_edit.getEditText().trim().length<=200))
+        (this.c_edit.getEditText().trim().length<=900) &amp;&amp;
+        ((ee.getEditText(this.c_editTitle).trim().length>0) &amp;&amp; (ee.getEditText(this.c_editTitle).trim().length<=50))
     );    
 }
 
@@ -1568,25 +1576,51 @@ sender.showNewTeam = function() {
     this.c_p1.resize();
     this.init(true);
     ee.setText(this.c_title, "创建项目组");
-    this.c_button.setText("sss");
-    ee.setText(this.c_editTitle, "aaaaa");
-    ee.setText(this.c_editTitle, "abbbba");
-    ee.setText(this.c_edit.c_label, "xxxxxx");
+    this.c_button.setText("创建",0);
+    this.c_button.setText("创建",1);
+    ee.setText(this.c_editTitle, "在这里输入项目组名称");
+    ee.setText(this.c_edit.c_label, "在这里输入项目组描述");
     this.v_lastOp = "showNewTeam";
     this.onComplete = function() {
-        chatNewV2.taskId = sender.v_taskId;
-        chatNewV2.content = sender.c_edit.getEditText();
-        chatNewV2.onComplete = function(taskId) {
+        //teamNewV2(teamTitle,teamNote,onComplete())
+        teamNewV2.teamTitle = ee.getEditText(sender.c_editTitle);
+        teamNewV2.teamNote = sender.c_edit.getEditText();
+        teamNewV2.onComplete = function(taskId) {
             sender.v_lastOp = "";
-            g5.root.mainDiv.p1.p2.v_needRefresh = true;
-            g5.root.mainDiv.p1.p3.v_needRefresh = true;
+            g5.root.mainDiv.p1.p1.v_needRefresh = true;
             history.go(-1);
         }
-        chatNewV2();
+        teamNewV2();
     }
+    g5.pushHistory2("/PA/newTeam");
     this.parentNode.changePage(this);
 }
 
+sender.showNewTask = function(teamId) {
+    this.v_teamId = teamId;
+    this.c_p1.resize();
+    this.init(true);
+    ee.setText(this.c_title, "创建新的任务");
+    this.c_button.setText("创建",0);
+    this.c_button.setText("创建",1);
+    ee.setText(this.c_editTitle, "在这里输任务名称");
+    ee.setText(this.c_edit.c_label, "在这输入任务描述");
+    this.v_lastOp = "showNewTask";
+    this.onComplete = function() {
+        taskNewV2.teamId = sender.v_teamId;
+        taskNewV2.taskTitle = ee.getEditText(sender.c_editTitle);
+        taskNewV2.taskNote = sender.c_edit.getEditText();
+        taskNewV2.onComplete = function(taskId) {
+            sender.v_lastOp = "";
+            g5.root.mainDiv.p1.p1.v_needRefresh = true;
+            g5.root.mainDiv.p1.p2.v_needRefresh = true;
+            history.go(-1);
+        }
+        taskNewV2();
+    }
+    g5.pushHistory2("/PA/newTask/" + escape(this.v_teamId));
+    this.parentNode.changePage(this);
+}
 ]]></onCreate>
       <sizeRatio>1.89</sizeRatio>
       <top>-1</top>
@@ -1679,8 +1713,8 @@ if (sender.parentNode.parentNode.onComplete) {
     sender.parentNode.parentNode.onComplete();
 }</onClick>
       <onCreate>g5.initButtonV3(sender,[
-    new g5.BStyle("#1da1f2","#1a91da","#1781c2","x","","","","","",""),
-    new g5.BStyle("#8ed0f9","#8ed0f9","#8ed0f9","x","","","","","","")
+    new g5.BStyle("#1da1f2","#1a91da","#1781c2","","","","","","",""),
+    new g5.BStyle("#8ed0f9","#8ed0f9","#8ed0f9","","","","","","","")
 ]);
 sender.style.borderRadius = parseInt(eb.getDivRect(sender).h/2) + "px";
 
@@ -1703,6 +1737,135 @@ sender.setEnabled(false);
       <topRatio>0.156862745098039</topRatio>
       <width>83</width>
       <widthRatio>0.2075</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166">
+      <backgroundColor>F5F5F5</backgroundColor>
+      <backgroundImgMode>fill</backgroundImgMode>
+      <bgColorEnabled>true</bgColorEnabled>
+      <dockX>fill</dockX>
+      <ee_LocalName>c_editTitlePanel</ee_LocalName>
+      <fontColor>808080</fontColor>
+      <fontFamily>微软雅黑</fontFamily>
+      <fontSize>12</fontSize>
+      <hAlign>left</hAlign>
+      <height>39</height>
+      <heightRatio>0.0515873015873016</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>30</left>
+      <leftRatio>0.075</leftRatio>
+      <onCreate>sender.style.boxSizing="border-box";
+//sender.style.borderRadius = "5px";
+sender.style.borderWidth = "2px";
+sender.style.borderColor = "rgb(29,161,242)";
+sender.style.borderStyle = "solid";
+sender.style.backgroundColor = "#f5f5ff";
+sender.style.borderTop = "";
+sender.style.borderRight = "";
+sender.style.borderLeft = "";
+
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>0.114705882352941</sizeRatio>
+      <top>67</top>
+      <topRatio>0.0886243386243386</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Edit" pathname="/divRoot/panel114/panel115/panel144/panel166/edit9">
+      <backgroundSkin>empty</backgroundSkin>
+      <dockX>fill</dockX>
+      <dockY>fill</dockY>
+      <ee_LocalName>c_edit</ee_LocalName>
+      <fontColor>C0C0C0</fontColor>
+      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
+      <fontSize>14</fontSize>
+      <hAlign>left</hAlign>
+      <height>37</height>
+      <heightRatio>0.948717948717949</heightRatio>
+      <inputFont>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</inputFont>
+      <inputFontSize>14</inputFontSize>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <onChange>sender.parentNode.parentNode.parentNode.check();</onChange>
+      <onCreate>sender._input.addEventListener("keydown", function(event) {
+    if (event.keyCode==13) {
+        ee.getControl("edit8")._input.focus();
+        event.preventDefault();
+        return false;
+    }
+});</onCreate>
+      <outerBottom>2</outerBottom>
+      <outerRight>39</outerRight>
+      <sizeRatio>0.122923588039867</sizeRatio>
+      <text>题头提示</text>
+      <top>0</top>
+      <width>301</width>
+      <widthRatio>0.885294117647059</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel167">
+      <backgroundColor>EAEAF4</backgroundColor>
+      <dockX>right</dockX>
+      <ee_LocalName>c_progress</ee_LocalName>
+      <height>39</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>301</left>
+      <leftRatio>0.885294117647059</leftRatio>
+      <onCreate><![CDATA[sender.innerHTML = "<svg><path fill=\"none\"></path><path fill=\"none\"></path></svg>";
+sender.v_x = parseInt(eb.getDivRect(sender).w/2);
+sender.v_y = parseInt(eb.getDivRect(sender).h/2);
+sender.v_r = 9;
+sender.v_color = "#29a5f2";
+sender.v_bgColor = "#ecf0f3";
+sender.v_width = "4px";
+sender.v_progress = "0.0001";
+sender.refresh = function(progress) {
+    var path = this.childNodes[0].childNodes[0];
+    path.style.stroke=sender.v_bgColor;
+    path.style.strokeWidth=sender.v_width;
+    var des = ["M",this.v_x,this.v_y-this.v_r,"A",this.v_r,this.v_r,0,1,1,this.v_x-0.0001,this.v_y-this.v_r];
+    path.setAttribute("d", des.join(" "));
+    
+    if (!eb.isEmpty(progress)) this.v_progress = progress;
+    this.v_progress = Math.min(0.9999,this.v_progress);
+    this.v_progress = Math.max(0.0001,this.v_progress);
+    path = this.childNodes[0].childNodes[1];
+    var ag = 90+360-this.v_progress*360;  
+    var ag = ag*(Math.PI/180);
+    var dx = (this.v_x+(Math.cos(ag)*this.v_r)).toFixed(2);
+    var dy = (this.v_y-(Math.sin(ag)*this.v_r)).toFixed(2);
+    var opt = window.Number(this.v_progress>0.5);
+    des = ["M",this.v_x,(this.v_y-this.v_r)+"","A",this.v_r,this.v_r,0,opt,1,dx,dy];
+    path.style.stroke=sender.v_color;
+    path.style.strokeWidth=sender.v_width;
+    path.setAttribute("d", des.join(" "));
+}
+
+
+
+]]></onCreate>
+      <sizeRatio>1</sizeRatio>
+      <text>圆形进度条</text>
+      <top>0</top>
+      <width>39</width>
+      <widthRatio>0.114705882352941</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel168">
+      <backgroundColor>EAEAF4</backgroundColor>
+      <dockX>right</dockX>
+      <ee_LocalName>c_progressText</ee_LocalName>
+      <fontFamily>Helvetica</fontFamily>
+      <height>39</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>301</left>
+      <leftRatio>0.885294117647059</leftRatio>
+      <sizeRatio>1</sizeRatio>
+      <text>.</text>
+      <top>0</top>
+      <width>39</width>
+      <widthRatio>0.114705882352941</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel156">
       <__U_editFontColor>000000</__U_editFontColor>
@@ -2469,134 +2632,6 @@ sender.v_photos = new Array();</onCreate>
       <width>340</width>
       <widthRatio>1</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166">
-      <backgroundColor>F5F5F5</backgroundColor>
-      <backgroundImgMode>fill</backgroundImgMode>
-      <bgColorEnabled>true</bgColorEnabled>
-      <dockX>fill</dockX>
-      <ee_LocalName>c_editTitlePanel</ee_LocalName>
-      <fontColor>808080</fontColor>
-      <fontFamily>微软雅黑</fontFamily>
-      <fontSize>12</fontSize>
-      <hAlign>left</hAlign>
-      <height>39</height>
-      <heightRatio>0.0515873015873016</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>30</left>
-      <leftRatio>0.075</leftRatio>
-      <onCreate>sender.style.boxSizing="border-box";
-//sender.style.borderRadius = "5px";
-sender.style.borderWidth = "2px";
-sender.style.borderColor = "rgb(29,161,242)";
-sender.style.borderStyle = "solid";
-sender.style.backgroundColor = "#f5f5ff";
-sender.style.borderTop = "";
-sender.style.borderRight = "";
-sender.style.borderLeft = "";
-
-</onCreate>
-      <outerLeft>30</outerLeft>
-      <outerRight>30</outerRight>
-      <sizeRatio>0.114705882352941</sizeRatio>
-      <top>67</top>
-      <topRatio>0.0886243386243386</topRatio>
-      <width>340</width>
-      <widthRatio>0.85</widthRatio>
-    </control>
-    <control type="Edit" pathname="/divRoot/panel114/panel115/panel144/panel166/edit9">
-      <backgroundSkin>empty</backgroundSkin>
-      <dockX>fill</dockX>
-      <dockY>fill</dockY>
-      <ee_LocalName>c_edit</ee_LocalName>
-      <fontColor>C0C0C0</fontColor>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>14</fontSize>
-      <hAlign>left</hAlign>
-      <height>37</height>
-      <heightRatio>0.948717948717949</heightRatio>
-      <inputFont>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</inputFont>
-      <inputFontSize>14</inputFontSize>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender._input.addEventListener("keydown", function(event) {
-    if (event.keyCode==13) {
-        ee.getControl("edit8")._input.focus();
-        event.preventDefault();
-        return false;
-    }
-});</onCreate>
-      <outerBottom>2</outerBottom>
-      <outerRight>39</outerRight>
-      <sizeRatio>0.122923588039867</sizeRatio>
-      <text>题头提示</text>
-      <top>0</top>
-      <width>301</width>
-      <widthRatio>0.885294117647059</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel167">
-      <backgroundColor>EAEAF4</backgroundColor>
-      <dockX>right</dockX>
-      <ee_LocalName>c_progress</ee_LocalName>
-      <height>39</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>301</left>
-      <leftRatio>0.885294117647059</leftRatio>
-      <onCreate><![CDATA[sender.innerHTML = "<svg><path fill=\"none\"></path><path fill=\"none\"></path></svg>";
-sender.v_x = parseInt(eb.getDivRect(sender).w/2);
-sender.v_y = parseInt(eb.getDivRect(sender).h/2);
-sender.v_r = 9;
-sender.v_color = "#29a5f2";
-sender.v_bgColor = "#ecf0f3";
-sender.v_width = "4px";
-sender.v_progress = "0.0001";
-sender.refresh = function(progress) {
-    var path = this.childNodes[0].childNodes[0];
-    path.style.stroke=sender.v_bgColor;
-    path.style.strokeWidth=sender.v_width;
-    var des = ["M",this.v_x,this.v_y-this.v_r,"A",this.v_r,this.v_r,0,1,1,this.v_x-0.0001,this.v_y-this.v_r];
-    path.setAttribute("d", des.join(" "));
-    
-    if (!eb.isEmpty(progress)) this.v_progress = progress;
-    this.v_progress = Math.min(0.9999,this.v_progress);
-    this.v_progress = Math.max(0.0001,this.v_progress);
-    path = this.childNodes[0].childNodes[1];
-    var ag = 90+360-this.v_progress*360;  
-    var ag = ag*(Math.PI/180);
-    var dx = (this.v_x+(Math.cos(ag)*this.v_r)).toFixed(2);
-    var dy = (this.v_y-(Math.sin(ag)*this.v_r)).toFixed(2);
-    var opt = window.Number(this.v_progress>0.5);
-    des = ["M",this.v_x,(this.v_y-this.v_r)+"","A",this.v_r,this.v_r,0,opt,1,dx,dy];
-    path.style.stroke=sender.v_color;
-    path.style.strokeWidth=sender.v_width;
-    path.setAttribute("d", des.join(" "));
-}
-
-
-
-]]></onCreate>
-      <sizeRatio>1</sizeRatio>
-      <text>圆形进度条</text>
-      <top>0</top>
-      <width>39</width>
-      <widthRatio>0.114705882352941</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel168">
-      <backgroundColor>EAEAF4</backgroundColor>
-      <dockX>right</dockX>
-      <ee_LocalName>c_progressText</ee_LocalName>
-      <fontFamily>Helvetica</fontFamily>
-      <height>39</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>301</left>
-      <leftRatio>0.885294117647059</leftRatio>
-      <sizeRatio>1</sizeRatio>
-      <text>.</text>
-      <top>0</top>
-      <width>39</width>
-      <widthRatio>0.114705882352941</widthRatio>
-    </control>
     <control type="Panel" pathname="/divRoot/panel114/panel127">
       <dockX>fill</dockX>
       <ee_LocalName>p3</ee_LocalName>
@@ -2628,7 +2663,6 @@ sender.onDective = function() {
       <height>103</height>
       <heightRatio>0.134464751958225</heightRatio>
       <layerName>题头</layerName>
-      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.279427942794279</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -2787,11 +2821,11 @@ sender.style.borderRight = "";</onCreate>
       <left>51</left>
       <leftRatio>0.1275</leftRatio>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
-      <sizeRatio>0.257281553398058</sizeRatio>
+      <sizeRatio>0.228448275862069</sizeRatio>
       <text>任务列表</text>
       <top>0</top>
-      <width>206</width>
-      <widthRatio>0.515</widthRatio>
+      <width>232</width>
+      <widthRatio>0.58</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel132/panel134">
       <cursor>pointer</cursor>
@@ -2817,6 +2851,32 @@ g5.initButtonV3(sender,[
       <width>33</width>
       <widthRatio>0.0825</widthRatio>
     </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel132/panel169">
+      <cursor>pointer</cursor>
+      <dockX>right</dockX>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>347</left>
+      <leftRatio>0.8325</leftRatio>
+      <onClick>g5.root.mainDiv.p1.p5.showNewTask(g5.root.mainDiv.p1.p2.v_teamId);
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.new+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <outerRight>20</outerRight>
+      <sizeRatio>1</sizeRatio>
+      <text>+</text>
+      <top>10</top>
+      <topRatio>0.566037735849057</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
     <control type="Panel" pathname="/divRoot/panel125/panel136">
       <backgroundColor>FFC080</backgroundColor>
       <dockX>fill</dockX>
@@ -2824,7 +2884,6 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.514563106796117</heightRatio>
       <layerName>任务详细</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -9650,7 +9709,7 @@ g5.initButtonV3(sender,[
       <widthRatio>0.902366863905325</widthRatio>
     </control>
   </controls>
-  <taskSet count="19">
+  <taskSet count="21">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -10466,7 +10525,7 @@ if (sqlResult == null) {
 }
 eio.appendString8("T");
 eio.appendDataSet(sqlResult,
-    "id,status,regDatetime,closeDatetime,teamId,taskName,note,chatCount,readCount," +
+    "id,status,regDatetime,closeDatetime,updateDatetime,teamId,taskName,note,chatCount,readCount," +
     "ctrId,ctrEnabled,ctrRegDatetime,ctrLastAccessTime,ctrIdName,ctrMobile,ctrNickName,ctrNote,ctrPhoto,ctrTitleBg,ctrEmail," +
     "clsId,clsEnabled,clsRegDatetime,clsLastAccessTime,clsIdName,clsMobile,clsNickName,clsNote,clsPhoto,clsTitleBg,clsEmail",
     pageIndex*pageSize, pageSize);
@@ -10567,9 +10626,98 @@ eio.appendString8("T");]]></script2>
 }
 if (chatNewV2.onComplete) chatNewV2.onComplete(chatNewV2.taskId);</script3>
     </taskSetItem>
+    <taskSetItem name="teamNewV2">
+      <script1>//teamNewV2(teamTitle,teamNote,onComplete())
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(teamNewV2.teamTitle);
+eio.appendString16(teamNewV2.teamNote);</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var teamTitle = eio.readString8();
+var teamNote = eio.readString16();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "exec teamNew " +
+    userId +
+    ",'" + db.encode(teamTitle) + "'" +
+    ",'" + db.encode(teamNote) + "';";
+sqlResult = db.executeNoneQuery("PJ", sql);
+if (!sqlResult) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    g5.alert1("无法创建项目组：" + eio.readString8());
+    return;
+}
+
+if (teamNewV2.onComplete) teamNewV2.onComplete();</script3>
+    </taskSetItem>
+    <taskSetItem name="taskNewV2">
+      <script1>//taskNewV2(teamId,taskTitle,taskNote,onComplete())
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(taskNewV2.teamId + "");
+eio.appendString8(taskNewV2.taskTitle);
+eio.appendString16(taskNewV2.taskNote);</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var teamId = parseInt(eio.readString8());
+var taskTitle = eio.readString8();
+var taskNote = eio.readString16();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "exec taskNew " +
+    userId +
+    "," + teamId +
+    ",'" + db.encode(taskTitle) + "'" +
+    ",'" + db.encode(taskNote) + "';";
+sqlResult = db.executeNoneQuery("PJ", sql);
+if (!sqlResult) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    g5.alert1("无法创建项目组：" + eio.readString8());
+    return;
+}
+
+if (taskNewV2.onComplete) taskNewV2.onComplete();</script3>
+    </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="20">
+  <g5Items count="21">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -10665,9 +10813,9 @@ this.loadFromDataset = function(ds, x, idx) {
     this.id = ds.getData(x,idx); x++;
     this.status = ds.getData(x,idx); x++;
     this.regDatetimeUTC = ds.getData(x,idx); x++;
-    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC);
     this.lastAccessTimeUTC = ds.getData(x,idx); x++;
-    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC, true);
+    this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC);
     this.title = ds.getData(x,idx); x++;
     this.note = ds.getData(x,idx); x++;
     this.creator = new g5.UserInfo();
@@ -10707,14 +10855,16 @@ this.clone = function() {
       <functionParam />
       <functionCode>var uSize = new g5.UserInfo();
 uSize = uSize.size;
-this.size = 9 + uSize + uSize;
+this.size = 10 + uSize + uSize;
 this.loadFromDataset = function(ds, x, idx) {
     this.id = ds.getData(x,idx); x++;
     this.status = ds.getData(x,idx); x++;
     this.regDatetimeUTC = ds.getData(x,idx); x++;
-    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC);
     this.closeDatetimeUTC = ds.getData(x,idx); x++;
-    this.closeDatetime = g5.getUtcTime(this.closeDatetimeUTC, true);
+    this.closeDatetime = g5.getUtcTime(this.closeDatetimeUTC);
+    this.updateDatetimeUTC = ds.getData(x,idx); x++;
+    this.updateDatetime = g5.getUtcTime(this.updateDatetimeUTC);
     this.teamId = ds.getData(x,idx); x++;
     this.taskName = ds.getData(x,idx); x++;
     this.note = ds.getData(x,idx); x++;
@@ -10767,7 +10917,7 @@ this.size = 4 + uSize;
 this.loadFromDataset = function(ds, x, idx) {
     this.id = ds.getData(x,idx); x++;
     this.regDatetimeUTC = ds.getData(x,idx); x++;
-    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC, true);
+    this.regDatetime = g5.getUtcTime(this.regDatetimeUTC);
     this.taskId = ds.getData(x,idx); x++;
     this.content = ds.getData(x,idx); x++;
     this.poster = new g5.UserInfo();
@@ -10815,7 +10965,7 @@ this.bdColor = bdColor;</functionCode>
 sender.init = function(index) {
     this.v_index = index;
     this.style.backgroundColor = this.v_style[index].color1;
-    this.setText(this.v_style[index].text1);
+    this.setTextCurrent(this.v_style[index].text1);
     this.setTextColor(this.v_style[index].tColor1);
     if (this.v_style[index].bdColor=="") {
         this.style.borderWidth = "0px";
@@ -10833,7 +10983,17 @@ sender.init = function(index) {
     eb.setDock(this.c_cover,"fill","fill");
 }
 
-sender.setText = function(text) {
+sender.setText = function(text1, styleIndex, text2, text3) {
+    if (!styleIndex) styleIndex = 0;
+    if (!text2) text2 = text1;
+    if (!text3) text3 = text2;
+    this.v_style[styleIndex].text1 = text1;
+    this.v_style[styleIndex].text2 = text2;
+    this.v_style[styleIndex].text3 = text3;
+    this.setTextCurrent(text1);
+}
+
+sender.setTextCurrent = function(text) {
     var index = this.v_index;
     if ((this.v_style[index].text1.length>0) || (this.v_style[index].text2.length>0) || (this.v_style[index].text3.length>0)) {
         ee.setText(this,text);
@@ -10850,37 +11010,37 @@ sender.setTextColor = function(color) {
 ee.setOnMouseEnter(sender, function(sender,event) { 
     var s =sender.v_style[sender.v_index];
     sender.style.backgroundColor = s.color2;
-    this.setText(s.text2);
+    this.setTextCurrent(s.text2);
     this.setTextColor(s.tColor2);
 });
 ee.setOnMouseLeave(sender, function(sender,event) { 
     var s =sender.v_style[sender.v_index];
     sender.style.backgroundColor = s.color1;
-    this.setText(s.text1);
+    this.setTextCurrent(s.text1);
     this.setTextColor(s.tColor1);
 });
 sender.eeMouseDown = function(sender,event,x,y) {
     var s =sender.v_style[sender.v_index];
     sender.style.backgroundColor = s.color3;
-    this.setText(s.text3);
+    this.setTextCurrent(s.text3);
     this.setTextColor(s.tColor3);
 }
 sender.eeMouseUp = function(sender,event,x,y) {
     var s =sender.v_style[sender.v_index];
     if ("ontouchstart" in window) {
         sender.style.backgroundColor = s.color1;
-        this.setText(s.text1);
+        this.setTextCurrent(s.text1);
         this.setTextColor(s.tColor1);
     } else {
         sender.style.backgroundColor = s.color2;
-        this.setText(s.text2);
+        this.setTextCurrent(s.text2);
         this.setTextColor(s.tColor2);
     }
 }
 sender.eeOnClickCancel = function(sender,event) {
     var s =sender.v_style[sender.v_index];
     sender.style.backgroundColor = s.color1;
-    this.setText(s.text1);
+    this.setTextCurrent(s.text1);
     this.setTextColor(s.tColor1);
 }
 eb.initMouseEvent(sender);
@@ -10926,7 +11086,7 @@ ee.setOnMouseLeave(root, function(sender,e){
 });
 
 //title
-c = createPanel(root, root.id+"p16u", "", 77, cy+4, w-190, 22); cy+=22;
+c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
 c.style.color = "#6e7f8d";
@@ -10938,7 +11098,7 @@ c.innerHTML = root.v_teamInfo.title;
 
 //note
 if (root.v_teamInfo.note.length>0) {
-    c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
+    c = createPanel(root, root.id+"panel16", "", 20, cy, w-40, 22);
     addText(c, root.v_teamInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
@@ -11089,7 +11249,7 @@ ee.setOnMouseLeave(root, function(sender,e){
 });
 
 //title
-c = createPanel(root, root.id+"p16u", "", 20, cy+4, w-60, 22); cy+=22;
+c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
 c.style.color = "#6e7f8d";
@@ -11101,7 +11261,7 @@ c.innerHTML = root.v_taskInfo.taskName;
 
 //note
 if (root.v_taskInfo.note.length>0) {
-    c = createPanel(root, root.id+"panel16", "", 77, cy, w-77-15, 22);
+    c = createPanel(root, root.id+"panel16", "", 20, cy, w - 40, 22);
     addText(c, root.v_taskInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
@@ -11111,11 +11271,30 @@ if (root.v_taskInfo.note.length>0) {
     cy += 7;
 }
 
-c = createPanel(root, root.id+"rCount", "", 20, cy+4, 30, 22); cy+=22;
+var hint = "";
+hint += "创建:" + g5.getTimeStr(root.v_taskInfo.regDatetime);
+hint += "　　动态:" + root.v_taskInfo.chatCount + "条";
+c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
-c.style.fontSize = "12pt";
+c.style.fontSize = "9pt";
 c.style.color = "#6e7f8d";
-c.innerHTML = root.v_taskInfo.chatCount;
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.innerHTML = hint;
+
+hint = "";
+hint += "更新:" + g5.getTimeStr(root.v_taskInfo.updateDatetime);
+hint += "　　未读:" + root.v_taskInfo.readCount + "条";
+c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "9pt";
+c.style.color = "#6e7f8d";
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.innerHTML = hint;
+
 
 /*
 //button
@@ -11458,6 +11637,7 @@ if (pn=="/PA/team") {
     window.location.href = ee.getUrl("/login");
     g5.p2.p11.showByPage("c1",unescape(pns[2]));    
 } else {
+    g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
     return;
     if (pns[1]=="following") {
         g5.p2.p16.showByUserName(unescape(pns[0]));
@@ -11526,6 +11706,30 @@ while (true) {
 }
 result.y -= document.documentElement.scrollTop;
 return result;</functionCode>
+    </item>
+    <item name="getTimeStr" type="20">
+      <varValue />
+      <functionParam>dateTime</functionParam>
+      <functionCode><![CDATA[var s = "";
+s +=
+    (dateTime.getYear()<1000 ? 1900+dateTime.getYear():dateTime.getYear()) + "年" +
+    (dateTime.getMonth()+1) + "月" +
+    dateTime.getDate() + "日";
+
+var diff = new Date();
+diff = parseInt((diff.getTime() - dateTime.getTime())/1000);
+s += "(";
+if (diff<60) {
+    s += diff + "秒";
+} else if (diff<60*60) {
+    s += parseInt(diff/60) + "分钟";
+} else if (diff<60*60*24) {
+    s += parseInt(diff/60/60) + "小时";
+} else {
+    s += parseInt(diff/60/60/24) + "天";
+}
+s += ")";
+return s;]]></functionCode>
     </item>
   </g5Items>
 </page>
