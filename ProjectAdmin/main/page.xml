@@ -106,7 +106,6 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.935828877005348</heightRatio>
-      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.274971941638608</leftRatio>
       <note>主页面</note>
@@ -121,7 +120,6 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -569,25 +567,13 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
-      <onCreate><![CDATA[sender.c_photos = ee.getControl("panel587");
-sender.c_title = ee.getControl("panel589");
-sender.c_button = ee.getControl("panel592");
-sender.c_cirText = ee.getControl("panel581");
-sender.c_cir = ee.getControl("panel580");
-sender.c_p1 = ee.getControl("panel611");
-sender.c_edit = ee.getControl("panel608");
-
-sender.show = function(title) {
-    this.init(title);
-    ee.setVisible(ee.getControl("panel112"), true);
-    ee.setVisible(this, true);
-    ee.getControl("panel51").v_photos = new Array();
-    this.c_p1.resize();
-    g5.refreshPhoto(ee.getControl("panel51"));
-}
+      <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
+sender.c_title = sender.c_titleBar.c_title;
+sender.c_button = sender.c_titleBar.c_button;
+sender.c_cirText = sender.c_p1.c_progressText;
+sender.c_cir = sender.c_p1.c_progressee;
 
 sender.init = function(titleText, keepLast) {
     if (eb.isEmpty(titleText)) titleText = "";
@@ -776,6 +762,7 @@ sender.showFw = function(v_content,v_reContent,v_userInfo,v_reUserInfo) {
       <backgroundColor>FFC080</backgroundColor>
       <dockX>fill</dockX>
       <dockY>top</dockY>
+      <ee_LocalName>c_titleBar</ee_LocalName>
       <height>51</height>
       <heightRatio>0.0674603174603175</heightRatio>
       <layerVisible>false</layerVisible>
@@ -788,7 +775,7 @@ sender.style.borderTop = "";
 sender.style.borderLeft = "";
 sender.style.borderRight = "";
 sender.style.borderRightColor = "#e6ecf0";</onCreate>
-      <sizeRatio>0.085</sizeRatio>
+      <sizeRatio>0.1275</sizeRatio>
       <top>0</top>
       <width>400</width>
       <widthRatio>1</widthRatio>
@@ -817,6 +804,7 @@ g5.initButtonV3(sender,[
       <widthRatio>0.055</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel591/panel589">
+      <ee_LocalName>c_title</ee_LocalName>
       <fontBold>true</fontBold>
       <fontColor>505050</fontColor>
       <fontFamily>微软雅黑</fontFamily>
@@ -839,6 +827,7 @@ g5.initButtonV3(sender,[
       <bgColorEnabled>true</bgColorEnabled>
       <cursor>pointer</cursor>
       <dockX>right</dockX>
+      <ee_LocalName>c_button</ee_LocalName>
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontFamily>微软雅黑</fontFamily>
@@ -937,12 +926,12 @@ if (newText.length<180) {
 ]]></__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml>
       <backgroundColor>D3D3D3</backgroundColor>
       <dockX>fill</dockX>
+      <ee_LocalName>c_edit</ee_LocalName>
       <height>110</height>
       <heightRatio>0.145502645502645</heightRatio>
       <layerVisible>false</layerVisible>
       <left>30</left>
-      <leftRatio>0.05</leftRatio>
-      <note>c_edit</note>
+      <leftRatio>0.075</leftRatio>
       <onCreate><![CDATA[//public
 sender.currentText = "";
 sender.currentHtml = "";
@@ -1325,7 +1314,7 @@ sender.processUserName = function() {
 ]]></onCreate>
       <outerLeft>30</outerLeft>
       <outerRight>30</outerRight>
-      <sizeRatio>0.203703703703704</sizeRatio>
+      <sizeRatio>0.323529411764706</sizeRatio>
       <top>64</top>
       <topRatio>0.0846560846560847</topRatio>
       <userProperty>//#P:editFontFamily|多行文字录入V2|'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif|string||用户输入文字的字体样式
@@ -1341,7 +1330,7 @@ sender.processUserName = function() {
 
 </userProperty>
       <width>340</width>
-      <widthRatio>0.9</widthRatio>
+      <widthRatio>0.85</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel608/panel609">
       <dockX>fill</dockX>
@@ -1389,12 +1378,12 @@ sender.processUserName = function() {
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611">
       <dockX>fill</dockX>
+      <ee_LocalName>c_p1</ee_LocalName>
       <height>401</height>
       <heightRatio>0.53042328042328</heightRatio>
       <layerVisible>false</layerVisible>
       <left>30</left>
-      <leftRatio>0.05</leftRatio>
-      <note>c_p1</note>
+      <leftRatio>0.075</leftRatio>
       <onCreate>sender.resize = function() {
     eb.processDock();
     var ratio = 0.6185;
@@ -1407,11 +1396,11 @@ sender.processUserName = function() {
 </onCreate>
       <outerLeft>30</outerLeft>
       <outerRight>30</outerRight>
-      <sizeRatio>0.742592592592593</sizeRatio>
+      <sizeRatio>1.17941176470588</sizeRatio>
       <top>184</top>
       <topRatio>0.243386243386243</topRatio>
       <width>340</width>
-      <widthRatio>0.9</widthRatio>
+      <widthRatio>0.85</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611/panel590">
       <backgroundColor>008080</backgroundColor>
@@ -1528,11 +1517,12 @@ sender.resize = function (img) {
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611/panel580">
       <backgroundColor>EAEAF4</backgroundColor>
       <dockX>right</dockX>
+      <ee_LocalName>c_progress</ee_LocalName>
       <height>39</height>
       <heightRatio>0.0972568578553616</heightRatio>
       <layerVisible>false</layerVisible>
       <left>261</left>
-      <leftRatio>0.853703703703704</leftRatio>
+      <leftRatio>0.767647058823529</leftRatio>
       <onCreate><![CDATA[sender.innerHTML = "<svg><path fill=\"none\"></path><path fill=\"none\"></path></svg>";
 sender.v_x = parseInt(eb.getDivRect(sender).w/2);
 sender.v_y = parseInt(eb.getDivRect(sender).h/2);
@@ -1571,26 +1561,28 @@ sender.refresh = function(progress) {
       <text>圆形进度条</text>
       <top>0</top>
       <width>39</width>
-      <widthRatio>0.0722222222222222</widthRatio>
+      <widthRatio>0.114705882352941</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611/panel581">
       <backgroundColor>EAEAF4</backgroundColor>
       <dockX>right</dockX>
+      <ee_LocalName>c_progressText</ee_LocalName>
       <fontFamily>Helvetica</fontFamily>
       <height>39</height>
       <heightRatio>0.0972568578553616</heightRatio>
       <layerVisible>false</layerVisible>
       <left>261</left>
-      <leftRatio>0.853703703703704</leftRatio>
+      <leftRatio>0.767647058823529</leftRatio>
       <outerRight>40</outerRight>
       <sizeRatio>1</sizeRatio>
       <text>.</text>
       <top>0</top>
       <width>39</width>
-      <widthRatio>0.0722222222222222</widthRatio>
+      <widthRatio>0.114705882352941</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611/panel585">
       <dockX>fill</dockX>
+      <ee_LocalName>c_photoPanel</ee_LocalName>
       <height>334</height>
       <heightRatio>0.832917705735661</heightRatio>
       <layerVisible>false</layerVisible>
@@ -1602,7 +1594,7 @@ sender.style.borderStyle = "solid";
 sender.style.borderRadius = "15px";
 
 </onCreate>
-      <sizeRatio>0.618518518518518</sizeRatio>
+      <sizeRatio>0.982352941176471</sizeRatio>
       <top>49</top>
       <topRatio>0.122194513715711</topRatio>
       <width>340</width>
@@ -1631,6 +1623,7 @@ sender.style.borderRadius = "15px";
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel611/panel585/panel587">
       <dockX>fill</dockX>
       <dockY>fill</dockY>
+      <ee_LocalName>c_photo</ee_LocalName>
       <fontColor>657786</fontColor>
       <fontFamily>微软雅黑</fontFamily>
       <fontSize>12</fontSize>
@@ -1640,7 +1633,7 @@ sender.style.borderRadius = "15px";
       <left>0</left>
       <onCreate>sender.v_mode = "x";
 sender.v_photos = new Array();</onCreate>
-      <sizeRatio>0.618518518518518</sizeRatio>
+      <sizeRatio>0.982352941176471</sizeRatio>
       <top>0</top>
       <width>340</width>
       <widthRatio>1</widthRatio>
@@ -1676,6 +1669,7 @@ sender.onDective = function() {
       <height>103</height>
       <heightRatio>0.137700534759358</heightRatio>
       <layerName>题头</layerName>
+      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.274971941638608</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -1845,6 +1839,7 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.0809160305343511</heightRatio>
       <layerName>任务详细</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -1916,6 +1911,7 @@ var v_onClick = new Array();
 v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表评论","发表评论","发表评论","#808080","#000000","#000000",""));
 v_onClick.push(
     function (senderBtnC, event) {
+    
     }
 );
 v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","直接设置任务为完成","直接设置任务为完成","直接设置任务为完成","#808080","#000000","#000000",""));
