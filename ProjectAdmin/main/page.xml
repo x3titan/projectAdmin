@@ -1,5 +1,5 @@
 <page>
-  <controls count="362">
+  <controls count="365">
     <control type="DivRoot" pathname="/divRoot">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
@@ -31,6 +31,7 @@ setTimeout(function(){
 
 g5.history = false;
 getUserInfo();
+g5.root.p_bottom.p1.show();
 
 //ee.showAni(ee.getControl("panel65"));
 //g5.teamId = -1;
@@ -49,7 +50,9 @@ setInterval(function() {
 setInterval(function() {
     g5.refreshMain();
 }, 100);
-</onControlLoad>
+setInterval(function() {
+    g5.refreshScroll();
+}, 500);</onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
 
 window.addEventListener("popstate", function (a) {
@@ -106,6 +109,7 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -120,10 +124,11 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
-    if (this.currentPage == page) return;
+    //if (this.currentPage == page) return;
     if (this.currentPage) {
         if (this.currentPage.onDeactive) {
             this.currentPage.onDeactive();
@@ -170,6 +175,8 @@ sender.onActive = function() {
     if (this.v_needRefresh) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
         this.v_items = new Array();
+        this.v_satus = "";
+        this.v_pageIndex = 0;
         this.v_lastScrollTop = 0;
         this.v_needRefresh = false;
     }
@@ -178,33 +185,16 @@ sender.onActive = function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
     ee.tiledResizeV(this, 2);
-    if (this.v_items.length<=0) this.loadFromDB();
+    if (this.v_items.length<=0) {
+        this.loadFromDB();
+    } else {
+        sender.processSize();
+    }    
 }
 
 sender.onDeactive = function() {
     this.v_lastScrollTop = document.documentElement.scrollTop;
     g5.root.p_title.changePage(null);
-}
-
-
-
-
-
-
-
-sender.activePage = function() {
-    g5.pushHistory2("/" + escape(this.v_userInfo.userName) + "/following");
-    g5.pageMode = 0;
-    g5.refreshMain(true);
-    ee.setVisible(g5.p4, true);
-    g5.p4.changePage("a10");
-    ee.setVisible(this, true)
-}
-
-sender.close = function() {
-    this.v_lastScrollTop = document.documentElement.scrollTop;
-    ee.setVisible(g5.p4, false);
-    ee.setVisible(this, false)
 }
 
 sender.showByUserName = function(userName) {
@@ -278,13 +268,18 @@ sender.loadFromDB = function() {
             sender.v_status = "normal";
         }
         
-        if (sender.v_items.length>0) {
-            var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
-            ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
-        }
-        ee.tiledResizeV(sender, 3);
+        sender.processSize();
     }
     getTeamV2();
+}
+
+sender.processSize = function() {
+    var rect = eb.getDivRectSetting(g5.root.p_title);
+    if (sender.v_items.length>0) {
+        var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
+        ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
+    }
+    ee.tiledResizeV(sender, 3);
 }
 
 sender.loadRecord = function(panel, dataset, index) {
@@ -317,22 +312,34 @@ sender.v_items = new Array();
 sender.c_title = g5.root.p_title.p2.c_title;
 sender.v_needRefresh = false;
 sender.v_status = "";
+sender.v_isHis = false;
 
 sender.v_pageIndex = 0;
 
-sender.showTeamTask = function(teamId) {
-    if ((this.v_teamId != teamId) || (this.v_needRefresh)) {
+sender.showTeamTask = function(teamId, isHis) {
+    if ((this.v_teamId != teamId) || (this.v_needRefresh) || (isHis != this.v_isHis)) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
         this.v_items = new Array();
+        this.v_satus = "";
+        this.v_pageIndex = 0;
         this.v_lastScrollTop = 0;
         this.v_needRefresh = false;
     }
     this.v_teamId = teamId;
+    this.v_isHis = isHis;
     this.parentNode.changePage(this);
 }
 
 sender.onActive = function() {
-    g5.pushHistory2("/PA/task/" + escape(this.v_teamId));
+    if (this.v_isHis) {
+        g5.pushHistory2("/PA/taskOld/" + escape(this.v_teamId));
+        ee.setText(this.c_title, "任务列表(已完成)");
+        g5.root.p_title.p2.c_btnIsHis.init(1);
+    } else {
+        g5.pushHistory2("/PA/task/" + escape(this.v_teamId));
+        ee.setText(this.c_title, "任务列表");
+        g5.root.p_title.p2.c_btnIsHis.init(0);
+    }
     g5.root.p_title.changePage(g5.root.p_title.p2);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -340,7 +347,9 @@ sender.onActive = function() {
     ee.tiledResizeV(this, 2);
     if (this.v_items.length<=0) {
         this.loadFromDB();
-    }
+    } else {
+        sender.processSize();
+    }    
 }
 
 sender.onDeactive = function() {
@@ -351,7 +360,7 @@ sender.onDeactive = function() {
 sender.loadFromDB = function() {
     getTaskList.pageIndex = sender.v_pageIndex;
     getTaskList.teamId = sender.v_teamId;
-    getTaskList.isHis = "F";
+    getTaskList.isHis = this.v_isHis? "T": "F";
     getTaskList.onComplete = function(dataset) {
         var root = sender;
         var cy = 0;
@@ -378,14 +387,18 @@ sender.loadFromDB = function() {
         } else {
             sender.v_status = "normal";
         }
-        
-        if (sender.v_items.length>0) {
-            var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
-            ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
-        }
-        ee.tiledResizeV(sender, 3);
+        sender.processSize();
     }
     getTaskList();
+}
+
+sender.processSize = function() {
+    var rect = eb.getDivRectSetting(g5.root.p_title);
+    if (sender.v_items.length>0) {
+        var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
+        ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
+    }
+    ee.tiledResizeV(sender, 3);
 }
 
 sender.loadRecord = function(panel, dataset, index) {
@@ -425,6 +438,8 @@ sender.showTaskChat = function(taskId) {
     if ((this.v_taskId != taskId) || (this.v_needRefresh)) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
         this.v_items = new Array();
+        this.v_satus = "";
+        this.v_pageIndex = 0;
         this.v_lastScrollTop = 0;
         this.v_needRefresh = false;
     }
@@ -439,75 +454,16 @@ sender.onActive = function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
     }, 1); 
     ee.tiledResizeV(this, 2);
-    if (this.v_items.length<=0) this.loadFromDB();
+    if (this.v_items.length<=0) {
+        this.loadFromDB();
+    } else {
+        sender.processSize();
+    }
 }
 
 sender.onDeactive = function() {
     this.v_lastScrollTop = document.documentElement.scrollTop;
     g5.root.p_title.changePage(null);
-}
-
-
-
-
-
-
-
-sender.activePage = function() {
-    g5.pushHistory2("/" + escape(this.v_userInfo.userName) + "/following");
-    g5.pageMode = 0;
-    g5.refreshMain(true);
-    ee.setVisible(g5.p4, true);
-    g5.p4.changePage("a10");
-    ee.setVisible(this, true)
-}
-
-sender.close = function() {
-    this.v_lastScrollTop = document.documentElement.scrollTop;
-    ee.setVisible(g5.p4, false);
-    ee.setVisible(this, false)
-}
-
-sender.showByUserName = function(userName) {
-    if (userName == this.v_userInfo.userName) {
-        g5.changeP2(15);
-        setTimeout(function() {
-            document.documentElement.scrollTop = sender.v_lastScrollTop;
-        }, 1); 
-        ee.tiledResizeV(this, 2);
-        return;
-    }
-    if (getOtherUserInfo2.busy) false;
-    getOtherUserInfo2.keyType = "userName";
-    getOtherUserInfo2.userKey = userName;
-    getOtherUserInfo2.onComplete = function(v_userInfo) {
-        sender.show(v_userInfo);
-    }
-    getOtherUserInfo2();
-}
-
-sender.refresh = function() {
-    if (this.v_userInfo.id == g5.myUserInfo.id) this.v_needRefresh = true;
-}
-
-sender.show = function(v_userInfo) {
-    if (this.v_needRefresh) {
-        this.v_needRefresh = false;
-    } else if (this.v_userInfo.id == v_userInfo.id) {
-        g5.changeP2(15);
-        ee.tiledResizeV(this, 2);
-        document.documentElement.scrollTop = this.v_lastScrollTop;
-        return;
-    }
-    this.v_userInfo = v_userInfo.clone();
-    this.refreshCount();
-    document.documentElement.scrollTop = 0;
-    this.v_pageIndex = 0;
-    for (var i=0; i<sender.v_items.length; i++) ee.removeControl(sender.v_items[i]);
-    sender.v_items = new Array();
-    g5.changeP2(-1);
-    g5.changeP2(15);
-    this.loadFromDB();               
 }
 
 sender.loadFromDB = function() {
@@ -540,13 +496,18 @@ sender.loadFromDB = function() {
             sender.v_status = "normal";
         }
         
-        if (sender.v_items.length>0) {
-            var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
-            ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
-        }
-        ee.tiledResizeV(sender, 3);
+        sender.processSize();
     }
     getTaskChat();
+}
+
+sender.processSize = function() {
+    var rect = eb.getDivRectSetting(g5.root.p_title);
+    if (sender.v_items.length>0) {
+        var rect1 = eb.getDivRect(sender.v_items[sender.v_items.length-1]);
+        ee.tiledV(sender, 0, rect.h, eb.getClientSize().h - eb.getDivRect(sender.v_items[sender.v_items.length-1]).h - rect.h + 2); 
+    }
+    ee.tiledResizeV(sender, 3);
 }
 
 sender.loadRecord = function(panel, dataset, index) {
@@ -575,6 +536,7 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -2653,33 +2615,9 @@ sender.v_photos = new Array();</onCreate>
       <width>340</width>
       <widthRatio>1</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel127">
-      <dockX>fill</dockX>
-      <ee_LocalName>p3</ee_LocalName>
-      <height>74</height>
-      <heightRatio>0.105714285714286</heightRatio>
-      <layerName>底部功能区</layerName>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender.onActive = function() {
-    
-}
-
-sender.onDective = function() {
-
-
-}
-</onCreate>
-      <sizeRatio>0.185</sizeRatio>
-      <top>93</top>
-      <topRatio>0.132857142857143</topRatio>
-      <width>400</width>
-      <widthRatio>1</widthRatio>
-    </control>
     <control type="Panel" pathname="/divRoot/panel125">
       <backgroundColor>FFFFFF</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
-      <dockX>center</dockX>
       <ee_LocalName>p_title</ee_LocalName>
       <height>103</height>
       <heightRatio>0.134464751958225</heightRatio>
@@ -2899,6 +2837,40 @@ g5.initButtonV3(sender,[
       <width>33</width>
       <widthRatio>0.0825</widthRatio>
     </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel132/panel170">
+      <bindControl>panel169</bindControl>
+      <bindRight>left</bindRight>
+      <cursor>pointer</cursor>
+      <dockY>center</dockY>
+      <ee_LocalName>c_btnIsHis</ee_LocalName>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>304</left>
+      <leftRatio>0.76</leftRatio>
+      <onClick>if (sender.v_index == 0) {
+    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamId, true);
+} else {
+    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamId, false);
+}
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;fill: currentcolor;vertical-align:middle;\">"+g5.icon.trash+"</svg>";
+sender.label = null;
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","#808080","#808080","#808080",""),
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","rgb(29,161,242)","rgb(29,161,242)","rgb(29,161,242)","")
+]);
+]]></onCreate>
+      <outerRight>10</outerRight>
+      <sizeRatio>1</sizeRatio>
+      <text>+</text>
+      <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
     <control type="Panel" pathname="/divRoot/panel125/panel136">
       <backgroundColor>FFC080</backgroundColor>
       <dockX>fill</dockX>
@@ -3001,6 +2973,82 @@ g5.initButtonV3(sender,[
       <sizeRatio>1</sizeRatio>
       <text>...</text>
       <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel127">
+      <backgroundColor>FFFFFF</backgroundColor>
+      <bgColorEnabled>true</bgColorEnabled>
+      <ee_LocalName>p_bottom</ee_LocalName>
+      <height>74</height>
+      <heightRatio>0.0966057441253264</heightRatio>
+      <layerName>底部功能区</layerName>
+      <left>246</left>
+      <leftRatio>0.270627062706271</leftRatio>
+      <onCreate>sender.style.position="fixed";
+sender.style.boxSizing="border-box";
+sender.style.borderWidth = "2px";
+sender.style.borderColor = "rgb(230,236,240)";
+sender.style.borderStyle = "solid";
+sender.style.borderBottom = "";
+sender.style.borderLeft = "";
+sender.style.borderRight = "";</onCreate>
+      <sizeRatio>0.185</sizeRatio>
+      <top>218</top>
+      <topRatio>0.284595300261097</topRatio>
+      <width>400</width>
+      <widthRatio>0.44004400440044</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel127/panel171">
+      <backgroundColor>FFC080</backgroundColor>
+      <dockX>fill</dockX>
+      <ee_LocalName>p1</ee_LocalName>
+      <height>53</height>
+      <heightRatio>0.716216216216216</heightRatio>
+      <layerName>项目组列表</layerName>
+      <left>0</left>
+      <onCreate>sender.style.boxSizing="border-box";
+sender.style.borderWidth = "2px";
+sender.style.borderColor = "rgb(230,236,240)";
+sender.style.borderStyle = "solid";
+sender.style.borderTop = "";
+sender.style.borderLeft = "";
+sender.style.borderRight = "";
+
+sender.show = function() {
+    ee.setVisible(this, true);
+    ee.setVisible(this.parentNode, true);
+    ee.tiledV(this.parentNode,0,0,0);
+}
+</onCreate>
+      <sizeRatio>0.1325</sizeRatio>
+      <top>0</top>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel127/panel171/panel174">
+      <cursor>pointer</cursor>
+      <dockX>center</dockX>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>183</left>
+      <leftRatio>0.4575</leftRatio>
+      <onClick>g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.homePage+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <outerBottom>10</outerBottom>
+      <sizeRatio>1</sizeRatio>
+      <text>+</text>
+      <top>5</top>
       <topRatio>0.188679245283019</topRatio>
       <width>33</width>
       <widthRatio>0.0825</widthRatio>
@@ -10753,7 +10801,7 @@ if (taskNewV2.onComplete) taskNewV2.onComplete();</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="21">
+  <g5Items count="22">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -11288,7 +11336,7 @@ ee.setOnMouseLeave(root, function(sender,e){
 c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
-c.style.color = "#6e7f8d";
+c.style.color = "#14171a"; //"#6e7f8d";
 c.style.textOverflow = "ellipsis";
 c.style.inlineBlock = "max-width";
 c.style.whiteSpace = "nowrap";
@@ -11298,7 +11346,7 @@ c.innerHTML = root.v_taskInfo.taskName;
 //note
 if (root.v_taskInfo.note.length>0) {
     c = createPanel(root, root.id+"panel16", "", 20, cy, w - 40, 22);
-    addText(c, root.v_taskInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
+    addText(c, root.v_taskInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "6e7fad", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
     ee.setRect(c, null, null, null, rect.h);
@@ -11495,113 +11543,18 @@ if (root.v_taskChat.content.length>0) {
 } else {
     cy += 7;
 }
-/*
-//button
-c = null;
-if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
-} else if (root.v_userInfo.status == "DISABLED") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "封号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "FREEZE") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "冻结", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "Del") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "已销号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_mode.charAt(0)=="x") {
-    c = createPanel(root, root.id+"button11", "", 505, 12, 80, 40);
-    addText(c, "已屏蔽", "center", "middle", "微软雅黑", 12, "ffffff", "bold");
-    c.style.borderRadius = "20px";
-    root.v_isBlock = false;
-    root.c_button11 = c;
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","已屏蔽","已屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("#ffffff","#f3e3eb","#f1cddb","屏蔽","屏蔽","屏蔽","#e0245e","#1da1f2","#1da1f2","#e0245e")
-    ]);
-    root.changeButton = function() {
-        this.v_isBlock = !this.v_isBlock;    
-        this.c_button11.init(this.v_isBlock?0:1);
-    }
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.parentNode.v_isBlock) {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 0;
-            blockUser();    
-        } else {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 1;
-            blockUser();    
-        }
-        sender.parentNode.changeButton();
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-    eb.initMouseEvent(c);
-    root.changeButton();    
-} else {
-    c = createPanel(root, root.id+"button01", "", w-128-15, 14, 128, 28);
-    c.v_right = w-15;
-    root.button1 = c;
-    c.style.cursor="pointer";
-    addText(c, "...", "center", "top", "微软雅黑", 11, "1DA1F2", "bold");
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","取消屏蔽","取消屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","关注","关注","关注","#1da1f2","#1da1f2","#1da1f2","#1da1f2"),
-        new g5.BStyle("#1da1f2","#ca2055","#b31d4b","正在关注","取消关注","取消关注","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","编辑个人资料","编辑个人资料","编辑个人资料","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
-    ]);
-    c.style.borderRadius = parseInt(eb.getDivRectSetting(c).h/2) + "px";
-    c.refreshStatus = function(index) {
-        this.init(index);
-        var w = 100;
-        if (index == 0) {
-            w = 90;
-        } else if (index == 1) {
-            w = 55;
-        } else if (index == 2) {
-            w = 90;
-        } else if (index == 3) {
-            w = 120;
-        }
-        ee.setRect(this, this.v_right-w,null,w,null);
-    }
-    root.refreshButton = function() {
-        if (root.v_userInfo.isFollow) {
-            root.button1.refreshStatus(2);
-        } else {
-            root.button1.refreshStatus(1);
-        }
-        if (root.v_userInfo.userName == g5.myUserInfo.userName) {
-            root.button1.refreshStatus(3);
-        }
-        if (root.v_userInfo.isBlock1) {
-            root.button1.refreshStatus(0);
-        }
-    }
-    root.refreshButton();
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.v_index==0) {
-            g5.setBlock1(root.v_userInfo,null);
-        } else if (sender.v_index==1) {
-            //follow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(2);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==2) {
-            //unfollow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(1);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==3) {
-            //编辑个人资料
-            g5.p2.p17.show();
-        }
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-}
-if (c) root.c_button = c;
-*/
+
+var hint = "";
+hint += g5.getTimeStr(root.v_taskChat.regDatetime);
+c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "9pt";
+c.style.color = "#6e7f8d";
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.innerHTML = hint;
+
 
 cy+=10;
 eb.setDivRect(root,null,null,null,cy);
@@ -11661,7 +11614,9 @@ if (pn == "" || pn == "/") pn = "/PA/home";
 if (pn=="/PA/team") {
     g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
 } else if (pn.indexOf("/PA/task/")>=0) {
-    g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]));
+    g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]), false);
+} else if (pn.indexOf("/PA/taskOld/")>=0) {
+    g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]), true);
 } else if (pn.indexOf("/PA/taskBoard/")>=0) {
     g5.root.mainDiv.p1.p3.showTaskChat(unescape(pns[2]));
 } else if (pn.indexOf("/PA/composeChat/")>=0) {
@@ -11724,6 +11679,7 @@ var r = eb.getDivRectSetting(g5.root.mainDiv);
 if ((r.x != x) || (r.y != 0) || (r.w != w)) {
     ee.setRect(g5.root.mainDiv, x, 0, w, null);
     ee.setRect(g5.root.p_title, x, 0, w, null);
+    ee.setRect(g5.root.p_bottom, x, scr.h - eb.getDivRectSetting(g5.root.p_bottom).h, w, null);
     eb.processDock();
 }]]></functionCode>
     </item>
@@ -11766,6 +11722,23 @@ if (diff<60) {
 }
 s += ")";
 return s;]]></functionCode>
+    </item>
+    <item name="refreshScroll" type="20">
+      <varValue />
+      <functionParam />
+      <functionCode><![CDATA[var scr = eb.getClientSize();
+var p2h = eb.getDivRectSetting(g5.root.mainDiv.p1).h;
+if ((p2h - scr.h - document.documentElement.scrollTop) < 3000) {
+    if (g5.root.mainDiv.p1.currentPage == g5.root.mainDiv.p1.p1) {
+        g5.root.mainDiv.p1.p1.loadMore();
+    } else if (g5.root.mainDiv.p1.currentPage == g5.root.mainDiv.p1.p2) {
+        g5.root.mainDiv.p1.p2.loadMore();
+    } else if (g5.root.mainDiv.p1.currentPage == g5.root.mainDiv.p1.p3) {
+        g5.root.mainDiv.p1.p3.loadMore();
+    }
+}
+
+]]></functionCode>
     </item>
   </g5Items>
 </page>
