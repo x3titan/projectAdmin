@@ -106,7 +106,6 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
-      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -121,7 +120,6 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -577,7 +575,6 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -586,10 +583,8 @@ sender.c_button = sender.c_titleBar.c_button;
 sender.c_cirText = sender.c_p1.c_progressText;
 sender.c_cir = sender.c_p1.c_progress;
 
-sender.init = function(titleText, keepLast) {
-    if (eb.isEmpty(titleText)) titleText = "";
-    ee.setText(this.c_title, titleText);
-    if (!keepLast) this.c_edit.setEditText("");
+sender.init = function(clear) {
+    if (clear) this.c_edit.setEditText("");
     this.c_photos.v_photos = new Array();
     //g5.refreshPhoto(this.c_photos);
     this.check();
@@ -608,7 +603,7 @@ sender.onDeactive = function() {
 
 sender.check = function() {
     this.c_button.setEnabled(
-        ((this.c_edit.getEditText().trim().length>0) &amp;&amp;(this.c_edit.getEditText().trim().length<=200))
+        ((this.c_edit.getEditText().trim().length>0) &amp;&amp;(this.c_edit.getEditText().trim().length<=800))
     );    
 }
 
@@ -620,11 +615,15 @@ sender.showLast = function() {
 sender.showNew = function(taskId) {
     this.v_taskId = taskId;
     this.c_p1.resize();
-    this.init("发表动态", this.v_lastOp == "new");
+    this.init(true);
+    ee.setText(this.c_title, "发表动态");
+    this.c_button.setText("发表", 0);
+    this.c_button.setText("发表", 1);
     this.v_lastOp = "new";
     this.onComplete = function() {
         chatNewV2.taskId = sender.v_taskId;
         chatNewV2.content = sender.c_edit.getEditText();
+        chatNewV2.autoComplete = "F";
         chatNewV2.onComplete = function(taskId) {
             sender.v_lastOp = "";
             g5.root.mainDiv.p1.p2.v_needRefresh = true;
@@ -636,6 +635,28 @@ sender.showNew = function(taskId) {
     this.parentNode.changePage(this);
 }
 
+sender.showComplete = function(taskId) {
+    this.v_taskId = taskId;
+    this.c_p1.resize();
+    this.init(true);
+    ee.setText(this.c_title, "发表动态并完成任务");
+    this.c_button.setText("完成", 0);
+    this.c_button.setText("完成", 1);
+    this.v_lastOp = "new";
+    this.onComplete = function() {
+        chatNewV2.taskId = sender.v_taskId;
+        chatNewV2.content = sender.c_edit.getEditText();
+        chatNewV2.autoComplete = "T";
+        chatNewV2.onComplete = function(taskId) {
+            sender.v_lastOp = "";
+            g5.root.mainDiv.p1.p2.v_needRefresh = true;
+            g5.root.mainDiv.p1.p3.v_needRefresh = true;
+            history.go(-1);
+        }
+        chatNewV2();
+    }
+    this.parentNode.changePage(this);
+}
 ]]></onCreate>
       <sizeRatio>1.89</sizeRatio>
       <top>0</top>
@@ -2663,6 +2684,7 @@ sender.onDective = function() {
       <height>103</height>
       <heightRatio>0.134464751958225</heightRatio>
       <layerName>题头</layerName>
+      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.279427942794279</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -2884,6 +2906,7 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.514563106796117</heightRatio>
       <layerName>任务详细</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -2958,9 +2981,10 @@ v_onClick.push(
         g5.root.mainDiv.p1.p4.showNew(g5.root.mainDiv.p1.p3.v_taskId);
     }
 );
-v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","直接设置任务为完成","直接设置任务为完成","直接设置任务为完成","#808080","#000000","#000000",""));
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表动态并完成","发表动态并完成","发表动态并完成","#808080","#000000","#000000",""));
 v_onClick.push(
     function (senderBtnC, event) {
+        g5.root.mainDiv.p1.p4.showComplete(g5.root.mainDiv.p1.p3.v_taskId);
     }
 );
 g5.root.popBlank.p4.show(sender, 200, v_style, v_onClick); 
@@ -10586,13 +10610,16 @@ getTaskChat.dataset = eio.readDataSet();
 if (getTaskChat.onComplete) getTaskChat.onComplete(getTaskChat.dataset);</script3>
     </taskSetItem>
     <taskSetItem name="chatNewV2">
-      <script1>//taskId,content,onComplete
+      <script1>//taskId,content,autoComplete(T/F),onComplete
 eio.appendString8(eb.getCookie("paToken"));
 eio.appendString8(chatNewV2.taskId + "");
-eio.appendString16(chatNewV2.content);</script1>
+eio.appendString16(chatNewV2.content);
+eio.appendString8(chatNewV2.autoComplete);
+</script1>
       <script2><![CDATA[var token = eio.readString8();
 var taskId = parseInt(eio.readString8());
 var content = eio.readString16();
+var autoComplete = eio.readString8();
 var sql,sqlResult;
 
 sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
@@ -10610,18 +10637,27 @@ if (db.getString(sqlResult, "sessionId").length < 5) {
 }
 var userId = db.getString(sqlResult, "id");
 
-sql = "insert into taskChat (taskId, userId, title) values (" + 
-    taskId + "," +
+sql = "exec taskChatNew " + 
     userId + "," +
-    "'" + db.encode(content) + "')";
-sqlResult = db.executeNoneQuery("PJ", sql);
-if (!sqlResult) {
+    taskId + "," +
+    "'" + db.encode(content) + "'," +
+    "'" + db.encode(autoComplete) + "';";
+    
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
     eio.appendString8("F");
-    es.logWarning("系统繁忙请稍候再试");
+    eio.appendString8("系统繁忙请稍后再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "errorCode")!="0") {
+    eio.appendString8("F");
+    eio.appendString16(db.getString(sqlResult, "errorString"));
     return;
 }
 eio.appendString8("T");]]></script2>
       <script3>if (eio.readString8()!="T") {
+    g5.alert1("操作失败：" + eio.readString16());
     return;
 }
 if (chatNewV2.onComplete) chatNewV2.onComplete(chatNewV2.taskId);</script3>
