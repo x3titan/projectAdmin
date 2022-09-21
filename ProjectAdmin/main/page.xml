@@ -316,8 +316,13 @@ sender.v_isHis = false;
 
 sender.v_pageIndex = 0;
 
-sender.showTeamTask = function(teamId, isHis) {
-    if ((this.v_teamId != teamId) || (this.v_needRefresh) || (isHis != this.v_isHis)) {
+sender.showTeamTask = function(teamInfo, isHis) {
+    if (parseInt(teamInfo)>0) {
+        var t = new g5.TeamInfo();
+        t.id = teamInfo;
+        teamInfo = t;
+    }
+    if ((this.v_teamInfo != teamInfo) || (this.v_needRefresh) || (isHis != this.v_isHis)) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
         this.v_items = new Array();
         this.v_satus = "";
@@ -325,21 +330,23 @@ sender.showTeamTask = function(teamId, isHis) {
         this.v_lastScrollTop = 0;
         this.v_needRefresh = false;
     }
-    this.v_teamId = teamId;
+    this.v_teamInfo = teamInfo;
     this.v_isHis = isHis;
     this.parentNode.changePage(this);
 }
 
 sender.onActive = function() {
     if (this.v_isHis) {
-        g5.pushHistory2("/PA/taskOld/" + escape(this.v_teamId));
-        ee.setText(this.c_title, "任务列表(已完成)");
+        g5.pushHistory2("/PA/taskOld/" + escape(this.v_teamInfo.id));
+        ee.setText(this.c_title, "(已完成)" + this.v_teamInfo.title);
         g5.root.p_title.p2.c_btnIsHis.init(1);
     } else {
-        g5.pushHistory2("/PA/task/" + escape(this.v_teamId));
-        ee.setText(this.c_title, "任务列表");
+        g5.pushHistory2("/PA/task/" + escape(this.v_teamInfo.id));
+        ee.setText(this.c_title, this.v_teamInfo.title);
         g5.root.p_title.p2.c_btnIsHis.init(0);
     }
+    if (!this.v_teamInfo.title) ee.setText(this.c_title, "任务列表");
+
     g5.root.p_title.changePage(g5.root.p_title.p2);
     setTimeout(function() {
         document.documentElement.scrollTop = sender.v_lastScrollTop;
@@ -359,7 +366,7 @@ sender.onDeactive = function() {
 
 sender.loadFromDB = function() {
     getTaskList.pageIndex = sender.v_pageIndex;
-    getTaskList.teamId = sender.v_teamId;
+    getTaskList.teamId = sender.v_teamInfo.id;
     getTaskList.isHis = this.v_isHis? "T": "F";
     getTaskList.onComplete = function(dataset) {
         var root = sender;
@@ -2622,7 +2629,6 @@ sender.v_photos = new Array();</onCreate>
       <height>103</height>
       <heightRatio>0.134464751958225</heightRatio>
       <layerName>题头</layerName>
-      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.279427942794279</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -2753,7 +2759,6 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.514563106796117</heightRatio>
       <layerName>任务列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -2769,6 +2774,7 @@ sender.style.borderRight = "";</onCreate>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel132/panel133">
       <cursor>pointer</cursor>
+      <dockX>fill</dockX>
       <dockY>fill</dockY>
       <ee_LocalName>c_title</ee_LocalName>
       <fontBold>true</fontBold>
@@ -2781,11 +2787,13 @@ sender.style.borderRight = "";</onCreate>
       <left>51</left>
       <leftRatio>0.1275</leftRatio>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
-      <sizeRatio>0.228448275862069</sizeRatio>
+      <outerLeft>51</outerLeft>
+      <outerRight>105</outerRight>
+      <sizeRatio>0.221757322175732</sizeRatio>
       <text>任务列表</text>
       <top>0</top>
-      <width>232</width>
-      <widthRatio>0.58</widthRatio>
+      <width>244</width>
+      <widthRatio>0.5975</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel132/panel134">
       <cursor>pointer</cursor>
@@ -2820,7 +2828,7 @@ g5.initButtonV3(sender,[
       <layerVisible>false</layerVisible>
       <left>347</left>
       <leftRatio>0.8325</leftRatio>
-      <onClick>g5.root.mainDiv.p1.p5.showNewTask(g5.root.mainDiv.p1.p2.v_teamId);
+      <onClick>g5.root.mainDiv.p1.p5.showNewTask(g5.root.mainDiv.p1.p2.v_teamInfo.id);
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.new+"</svg>";
 sender.style.borderRadius = "50%";
@@ -2849,9 +2857,9 @@ g5.initButtonV3(sender,[
       <left>304</left>
       <leftRatio>0.76</leftRatio>
       <onClick>if (sender.v_index == 0) {
-    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamId, true);
+    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamInfo, true);
 } else {
-    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamId, false);
+    g5.root.mainDiv.p1.p2.showTeamTask(g5.root.mainDiv.p1.p2.v_teamInfo, false);
 }
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;fill: currentcolor;vertical-align:middle;\">"+g5.icon.trash+"</svg>";
@@ -2984,6 +2992,7 @@ g5.initButtonV3(sender,[
       <height>74</height>
       <heightRatio>0.0966057441253264</heightRatio>
       <layerName>底部功能区</layerName>
+      <layerVisible>false</layerVisible>
       <left>246</left>
       <leftRatio>0.270627062706271</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -3007,6 +3016,7 @@ sender.style.borderRight = "";</onCreate>
       <height>53</height>
       <heightRatio>0.716216216216216</heightRatio>
       <layerName>项目组列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -10543,7 +10553,7 @@ if (sqlResult == null) {
 }
 eio.appendString8("T");
 eio.appendDataSet(sqlResult,
-    "id,status,regDatetime,lastAccessTime,displayName,note," +
+    "id,status,regDatetime,lastAccessTime,displayName,note,newTaskCount," +
     "ctrId,ctrEnabled,ctrRegDatetime,ctrLastAccessTime,ctrIdName,ctrMobile,ctrNickName,ctrNote,ctrPhoto,ctrTitleBg,ctrEmail," +
     "ownId,ownEnabled,ownRegDatetime,ownLastAccessTime,ownIdName,ownMobile,ownNickName,ownNote,ownPhoto,ownTitleBg,ownEmail",
     pageIndex*pageSize, pageSize);
@@ -10892,7 +10902,7 @@ this.clone = function() {
       <functionParam />
       <functionCode>var uSize = new g5.UserInfo();
 uSize = uSize.size;
-this.size = 6 + uSize + uSize;
+this.size = 7 + uSize + uSize;
 this.loadFromDataset = function(ds, x, idx) {
     this.id = ds.getData(x,idx); x++;
     this.status = ds.getData(x,idx); x++;
@@ -10902,6 +10912,7 @@ this.loadFromDataset = function(ds, x, idx) {
     this.lastAccessTime = g5.getUtcTime(this.lastAccessTimeUTC);
     this.title = ds.getData(x,idx); x++;
     this.note = ds.getData(x,idx); x++;
+    this.newTaskCount = ds.getData(x,idx); x++;
     this.creator = new g5.UserInfo();
     this.creator.loadFromDataset(ds, x, idx); x += this.creator.size;
     this.owner = new g5.UserInfo();
@@ -10914,6 +10925,7 @@ this.setDataset = function(ds, x, idx) {
     ds.setData(x,idx,this.lastAccessTimeUTC); x++;
     ds.setData(x,idx,this.title); x++;
     ds.setData(x,idx,this.note); x++;
+    ds.setData(x,idx,this.newTaskCount); x++;
     this.creator.setDataset(ds, x, idx); x += this.creator.size;
     this.owner.setDataset(ds, x, idx); x += this.owner.size;
 }
@@ -10927,6 +10939,7 @@ this.clone = function() {
     r.lastAccessTimeUTC = this.lastAccessTimeUTC;
     r.title = this.title;
     r.note = this.note;
+    r.newTaskCount = this.newTaskCount;
     r.creator = this.creator.clone();
     r.owner = this.owner.clone();
     return r;
@@ -11160,7 +11173,7 @@ root.style.borderLeft = "";
 root.style.borderRight = "";
 root.style.cursor = "pointer";
 ee.setOnClick(root,function(sender,event) {
-    g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo.id);
+    g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo);
 });
 ee.setOnMouseEnter(root, function(sender,e){
     sender.style.backgroundColor = "rgb(245,248,250)";
@@ -11191,113 +11204,17 @@ if (root.v_teamInfo.note.length>0) {
 } else {
     cy += 7;
 }
-/*
-//button
-c = null;
-if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
-} else if (root.v_userInfo.status == "DISABLED") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "封号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "FREEZE") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "冻结", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "Del") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "已销号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_mode.charAt(0)=="x") {
-    c = createPanel(root, root.id+"button11", "", 505, 12, 80, 40);
-    addText(c, "已屏蔽", "center", "middle", "微软雅黑", 12, "ffffff", "bold");
-    c.style.borderRadius = "20px";
-    root.v_isBlock = false;
-    root.c_button11 = c;
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","已屏蔽","已屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("#ffffff","#f3e3eb","#f1cddb","屏蔽","屏蔽","屏蔽","#e0245e","#1da1f2","#1da1f2","#e0245e")
-    ]);
-    root.changeButton = function() {
-        this.v_isBlock = !this.v_isBlock;    
-        this.c_button11.init(this.v_isBlock?0:1);
-    }
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.parentNode.v_isBlock) {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 0;
-            blockUser();    
-        } else {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 1;
-            blockUser();    
-        }
-        sender.parentNode.changeButton();
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-    eb.initMouseEvent(c);
-    root.changeButton();    
-} else {
-    c = createPanel(root, root.id+"button01", "", w-128-15, 14, 128, 28);
-    c.v_right = w-15;
-    root.button1 = c;
-    c.style.cursor="pointer";
-    addText(c, "...", "center", "top", "微软雅黑", 11, "1DA1F2", "bold");
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","取消屏蔽","取消屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","关注","关注","关注","#1da1f2","#1da1f2","#1da1f2","#1da1f2"),
-        new g5.BStyle("#1da1f2","#ca2055","#b31d4b","正在关注","取消关注","取消关注","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","编辑个人资料","编辑个人资料","编辑个人资料","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
-    ]);
-    c.style.borderRadius = parseInt(eb.getDivRectSetting(c).h/2) + "px";
-    c.refreshStatus = function(index) {
-        this.init(index);
-        var w = 100;
-        if (index == 0) {
-            w = 90;
-        } else if (index == 1) {
-            w = 55;
-        } else if (index == 2) {
-            w = 90;
-        } else if (index == 3) {
-            w = 120;
-        }
-        ee.setRect(this, this.v_right-w,null,w,null);
-    }
-    root.refreshButton = function() {
-        if (root.v_userInfo.isFollow) {
-            root.button1.refreshStatus(2);
-        } else {
-            root.button1.refreshStatus(1);
-        }
-        if (root.v_userInfo.userName == g5.myUserInfo.userName) {
-            root.button1.refreshStatus(3);
-        }
-        if (root.v_userInfo.isBlock1) {
-            root.button1.refreshStatus(0);
-        }
-    }
-    root.refreshButton();
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.v_index==0) {
-            g5.setBlock1(root.v_userInfo,null);
-        } else if (sender.v_index==1) {
-            //follow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(2);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==2) {
-            //unfollow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(1);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==3) {
-            //编辑个人资料
-            g5.p2.p17.show();
-        }
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-}
-if (c) root.c_button = c;
-*/
+
+var hint = "";
+hint += "　动态:" + root.v_teamInfo.newTaskCount + "条";
+c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+c.style.fontSize = "9pt";
+c.style.color = "#6e7f8d";
+c.style.textOverflow = "ellipsis";
+c.style.inlineBlock = "max-width";
+c.style.whiteSpace = "nowrap";
+c.innerHTML = hint;
 
 cy+=10;
 eb.setDivRect(root,null,null,null,cy);
@@ -11676,10 +11593,11 @@ if (x < 2) x = 0;
 
 
 var r = eb.getDivRectSetting(g5.root.mainDiv);
+ee.setRect(g5.root.p_bottom, null, scr.h - eb.getDivRectSetting(g5.root.p_bottom).h, null, null);
 if ((r.x != x) || (r.y != 0) || (r.w != w)) {
     ee.setRect(g5.root.mainDiv, x, 0, w, null);
     ee.setRect(g5.root.p_title, x, 0, w, null);
-    ee.setRect(g5.root.p_bottom, x, scr.h - eb.getDivRectSetting(g5.root.p_bottom).h, w, null);
+    ee.setRect(g5.root.p_bottom, x, null, w, null);
     eb.processDock();
 }]]></functionCode>
     </item>
