@@ -197,28 +197,6 @@ sender.onDeactive = function() {
     g5.root.p_title.changePage(null);
 }
 
-sender.showByUserName = function(userName) {
-    if (userName == this.v_userInfo.userName) {
-        g5.changeP2(15);
-        setTimeout(function() {
-            document.documentElement.scrollTop = sender.v_lastScrollTop;
-        }, 1); 
-        ee.tiledResizeV(this, 2);
-        return;
-    }
-    if (getOtherUserInfo2.busy) false;
-    getOtherUserInfo2.keyType = "userName";
-    getOtherUserInfo2.userKey = userName;
-    getOtherUserInfo2.onComplete = function(v_userInfo) {
-        sender.show(v_userInfo);
-    }
-    getOtherUserInfo2();
-}
-
-sender.refresh = function() {
-    if (this.v_userInfo.id == g5.myUserInfo.id) this.v_needRefresh = true;
-}
-
 sender.show = function(v_userInfo) {
     if (this.v_needRefresh) {
         this.v_needRefresh = false;
@@ -240,6 +218,7 @@ sender.show = function(v_userInfo) {
 }
 
 sender.loadFromDB = function() {
+    if (getTeamV2.busy) return;
     getTeamV2.pageIndex = sender.v_pageIndex;
     getTeamV2.onComplete = function(dataset) {
         var root = sender;
@@ -313,7 +292,6 @@ sender.c_title = g5.root.p_title.p2.c_title;
 sender.v_needRefresh = false;
 sender.v_status = "";
 sender.v_isHis = false;
-
 sender.v_pageIndex = 0;
 
 sender.showTeamTask = function(teamInfo, isHis) {
@@ -365,6 +343,7 @@ sender.onDeactive = function() {
 }
 
 sender.loadFromDB = function() {
+    if (getTaskList.busy) return;
     getTaskList.pageIndex = sender.v_pageIndex;
     getTaskList.teamId = sender.v_teamInfo.id;
     getTaskList.isHis = this.v_isHis? "T": "F";
@@ -382,6 +361,7 @@ sender.loadFromDB = function() {
             cy += eb.getDivRect(item).h;
             sender.v_items.push(item);
         }
+        console.log(itemCount);
         eb.processDock();
         var rect = eb.getDivRectSetting(g5.root.p_title);
         ee.tiledV(sender, 0, rect.h, 500); 
@@ -474,6 +454,7 @@ sender.onDeactive = function() {
 }
 
 sender.loadFromDB = function() {
+    if (getTaskChat.busy) return;
     getTaskChat.pageIndex = sender.v_pageIndex;
     getTaskChat.taskId = sender.v_taskId;
     getTaskChat.onComplete = function(dataset) {
@@ -10515,9 +10496,13 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
     </taskSetItem>
     <taskSetItem name="getTeamV2">
       <script1>//获取项目组列表
-//pageIndex,onComplete()
+//busy,pageIndex,onComplete()
+getTeamV2.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
-eio.appendString8(getTeamV2.pageIndex+"");</script1>
+eio.appendString8(getTeamV2.pageIndex+"");
+console.log("getTeam" +
+    ",pageIndex=" +getTeamV2.pageIndex
+);</script1>
       <script2><![CDATA[var sql,sqlResult;
 var token = eio.readString8();
 var pageIndex = parseInt(eio.readString8());
@@ -10558,18 +10543,25 @@ eio.appendDataSet(sqlResult,
     "ownId,ownEnabled,ownRegDatetime,ownLastAccessTime,ownIdName,ownMobile,ownNickName,ownNote,ownPhoto,ownTitleBg,ownEmail",
     pageIndex*pageSize, pageSize);
 ]]></script2>
-      <script3>if (eio.readString8()!="T") {
+      <script3>getTeamV2.busy = false;
+if (eio.readString8()!="T") {
     return;
 }
 getTeamV2.dataset = eio.readDataSet();
-if (getTeamV2.onComplete) getTeamV2.onComplete(getTeamV2.dataset);</script3>
+if (getTeamV2.onComplete) getTeamV2.onComplete(getTeamV2.dataset);
+</script3>
     </taskSetItem>
     <taskSetItem name="getTaskList">
-      <script1>//pageIndex,teamId,isHis(T/F),onComplete()
+      <script1>//busy,pageIndex,teamId,isHis(T/F),onComplete()
+getTaskList.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
 eio.appendString8(getTaskList.pageIndex + "");
 eio.appendString8(getTaskList.teamId + "");
-eio.appendString8(getTaskList.isHis);</script1>
+eio.appendString8(getTaskList.isHis);
+console.log("getTaskList" +
+    ",teamId=" +getTaskList.teamId +
+    ",pageIndex=" +getTaskList.pageIndex
+);</script1>
       <script2><![CDATA[var token = eio.readString8();
 var pageIndex = parseInt(eio.readString8());
 var pageSize = 10;
@@ -10612,14 +10604,16 @@ eio.appendDataSet(sqlResult,
     "clsId,clsEnabled,clsRegDatetime,clsLastAccessTime,clsIdName,clsMobile,clsNickName,clsNote,clsPhoto,clsTitleBg,clsEmail",
     pageIndex*pageSize, pageSize);
 ]]></script2>
-      <script3>if (eio.readString8()!="T") {
+      <script3>getTaskList.busy = false;
+if (eio.readString8()!="T") {
     return;
 }
 getTaskList.dataset = eio.readDataSet();
 if (getTaskList.onComplete) getTaskList.onComplete(getTaskList.dataset);</script3>
     </taskSetItem>
     <taskSetItem name="getTaskChat">
-      <script1>//pageIndex,taskId,onComplete()
+      <script1>//busy,pageIndex,taskId,onComplete()
+getTaskChat.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
 eio.appendString8(getTaskChat.pageIndex + "");
 eio.appendString8(getTaskChat.taskId + "");</script1>
@@ -10661,7 +10655,8 @@ eio.appendDataSet(sqlResult,
     "usrId,usrEnabled,usrRegDatetime,usrLastAccessTime,usrIdName,usrMobile,usrNickName,usrNote,usrPhoto,usrTitleBg,usrEmail",
     pageIndex*pageSize, pageSize);
 ]]></script2>
-      <script3>if (eio.readString8()!="T") {
+      <script3>getTaskChat.busy = false;
+if (eio.readString8()!="T") {
     return;
 }
 getTaskChat.dataset = eio.readDataSet();
