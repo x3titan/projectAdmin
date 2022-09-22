@@ -109,7 +109,6 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
-      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -124,7 +123,6 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -361,7 +359,6 @@ sender.loadFromDB = function() {
             cy += eb.getDivRect(item).h;
             sender.v_items.push(item);
         }
-        console.log(itemCount);
         eb.processDock();
         var rect = eb.getDivRectSetting(g5.root.p_title);
         ee.tiledV(sender, 0, rect.h, 500); 
@@ -524,7 +521,6 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -599,6 +595,7 @@ sender.showComplete = function(taskId) {
         chatNewV2.autoComplete = "T";
         chatNewV2.onComplete = function(taskId) {
             sender.v_lastOp = "";
+            g5.root.mainDiv.p1.p1.v_needRefresh = true;
             g5.root.mainDiv.p1.p2.v_needRefresh = true;
             g5.root.mainDiv.p1.p3.v_needRefresh = true;
             history.go(-1);
@@ -2610,6 +2607,7 @@ sender.v_photos = new Array();</onCreate>
       <height>103</height>
       <heightRatio>0.134464751958225</heightRatio>
       <layerName>题头</layerName>
+      <layerVisible>false</layerVisible>
       <left>254</left>
       <leftRatio>0.279427942794279</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -2740,6 +2738,7 @@ g5.initButtonV3(sender,[
       <height>53</height>
       <heightRatio>0.514563106796117</heightRatio>
       <layerName>任务列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -10499,10 +10498,7 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
 //busy,pageIndex,onComplete()
 getTeamV2.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
-eio.appendString8(getTeamV2.pageIndex+"");
-console.log("getTeam" +
-    ",pageIndex=" +getTeamV2.pageIndex
-);</script1>
+eio.appendString8(getTeamV2.pageIndex+"");</script1>
       <script2><![CDATA[var sql,sqlResult;
 var token = eio.readString8();
 var pageIndex = parseInt(eio.readString8());
@@ -10557,11 +10553,7 @@ getTaskList.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
 eio.appendString8(getTaskList.pageIndex + "");
 eio.appendString8(getTaskList.teamId + "");
-eio.appendString8(getTaskList.isHis);
-console.log("getTaskList" +
-    ",teamId=" +getTaskList.teamId +
-    ",pageIndex=" +getTaskList.pageIndex
-);</script1>
+eio.appendString8(getTaskList.isHis);</script1>
       <script2><![CDATA[var token = eio.readString8();
 var pageIndex = parseInt(eio.readString8());
 var pageSize = 10;
@@ -11630,6 +11622,9 @@ if (diff<60) {
     s += parseInt(diff/60) + "分钟";
 } else if (diff<60*60*24) {
     s += parseInt(diff/60/60) + "小时";
+} else if (diff<60*60*24*4) {
+    s += parseInt(diff/60/60/24) + "天" +
+         parseInt((diff%(60*60*24))/60/60) + "小时";
 } else {
     s += parseInt(diff/60/60/24) + "天";
 }
