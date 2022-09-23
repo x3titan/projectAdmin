@@ -1,5 +1,5 @@
 <page>
-  <controls count="365">
+  <controls count="369">
     <control type="DivRoot" pathname="/divRoot">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
@@ -109,6 +109,7 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -123,6 +124,7 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -521,6 +523,7 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -2972,7 +2975,6 @@ g5.initButtonV3(sender,[
       <height>74</height>
       <heightRatio>0.0966057441253264</heightRatio>
       <layerName>底部功能区</layerName>
-      <layerVisible>false</layerVisible>
       <left>246</left>
       <leftRatio>0.270627062706271</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -2996,7 +2998,6 @@ sender.style.borderRight = "";</onCreate>
       <height>53</height>
       <heightRatio>0.716216216216216</heightRatio>
       <layerName>项目组列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -3017,15 +3018,39 @@ sender.show = function() {
       <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/panel127/panel171/panel174">
+    <control type="LayoutX" pathname="/divRoot/panel127/panel171/layoutx1">
+      <dockX>fill</dockX>
+      <dockY>fill</dockY>
+      <fieldCount>2</fieldCount>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <left>0</left>
+      <sizeRatio>0.1325</sizeRatio>
+      <top>0</top>
+      <topRatio>0.0188679245283019</topRatio>
+      <width>400</width>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="LayoutXItem" pathname="/divRoot/panel127/panel171/layoutx1/layoutxitem1">
+      <backgroundColor>f0f0f0</backgroundColor>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>0</left>
+      <sizeRatio>0.265</sizeRatio>
+      <top>0</top>
+      <width>200</width>
+      <widthRatio>0.5</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel127/panel171/layoutx1/layoutxitem1/panel174">
       <cursor>pointer</cursor>
       <dockX>center</dockX>
       <dockY>center</dockY>
       <height>33</height>
-      <heightRatio>0.622641509433962</heightRatio>
+      <heightRatio>0.33</heightRatio>
       <layerVisible>false</layerVisible>
-      <left>183</left>
-      <leftRatio>0.4575</leftRatio>
+      <left>83</left>
+      <leftRatio>0.484848484848485</leftRatio>
       <onClick>g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.homePage+"</svg>";
@@ -3039,9 +3064,63 @@ g5.initButtonV3(sender,[
       <sizeRatio>1</sizeRatio>
       <text>+</text>
       <top>5</top>
-      <topRatio>0.188679245283019</topRatio>
+      <topRatio>0.13</topRatio>
       <width>33</width>
-      <widthRatio>0.0825</widthRatio>
+      <widthRatio>1</widthRatio>
+    </control>
+    <control type="LayoutXItem" pathname="/divRoot/panel127/panel171/layoutx1/layoutxitem2">
+      <backgroundColor>d0d0d0</backgroundColor>
+      <height>53</height>
+      <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>200</left>
+      <leftRatio>0.5</leftRatio>
+      <sizeRatio>0.265</sizeRatio>
+      <top>0</top>
+      <width>200</width>
+      <widthRatio>0.5</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel127/panel171/layoutx1/layoutxitem2/panel172">
+      <cursor>pointer</cursor>
+      <dockX>center</dockX>
+      <dockY>center</dockY>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>83</left>
+      <leftRatio>0.415</leftRatio>
+      <onClick>var v_style = new Array();
+var v_onClick = new Array();
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","个人信息","个人信息","个人信息","#808080","#000000","#000000",""));
+v_onClick.push(
+    function (senderBtnC, event) {
+        //g5.root.mainDiv.p1.p4.showNew(g5.root.mainDiv.p1.p3.v_taskId);
+    }
+);
+v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","退出登录","退出登录","退出登录","#808080","#000000","#000000",""));
+v_onClick.push(
+    function (senderBtnC, event) {
+        eb.setCookie("paToken", "");
+        window.location.href = ee.getUrl("/login");
+    }
+);
+g5.root.popBlank.p4.show(sender, 200, v_style, v_onClick); 
+        
+//window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.menu+"</svg>";
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
+]);
+]]></onCreate>
+      <outerBottom>10</outerBottom>
+      <sizeRatio>1</sizeRatio>
+      <text>=</text>
+      <top>5</top>
+      <topRatio>0.0943396226415094</topRatio>
+      <width>33</width>
+      <widthRatio>0.165</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel65">
       <aniAlpha>appear:渐变出现</aniAlpha>
@@ -10822,6 +10901,7 @@ menu: "<g><path d=\"M19.98 1.775H4.02c-1.24 0-2.25 1.01-2.25 2.25v15.95c0 1.24 1
 speaker: "<g transform='translate(0.000000,300.000000) scale(0.100000,-0.12000)' stroke='none'> <path d='M1954 2476 c-37 -16 -64 -51 -64 -84 0 -51 27 -78 124 -126 222 -108 379 -295 448 -533 20 -67 23 -100 22 -238 0 -152 -2 -165 -32 -255 -78 -235 -230 -404 -463 -514 -76 -36 -99 -61 -99 -107 0 -50 49 -99 101 -99 11 0 49 14 86 30 211 96 412 295 509 505 66 144 86 233 91 410 6 184 -11 292 -66 430 -96 239 -288 445 -513 549 -96 45 -107 47 -144 32z'/> <path d='M1185 2215 l-260 -153 0 -562 0 -562 260 -154 c143 -84 270 -154 283 -154 33 0 76 25 98 57 18 27 19 61 22 797 2 752 2 770 -18 810 -21 45 -64 76 -102 75 -12 0 -140 -70 -283 -154z'/> <path d='M1812 2036 c-38 -18 -56 -57 -48 -105 7 -46 27 -65 96 -90 80 -29 151 -95 192 -179 30 -60 33 -75 33 -157 0 -82 -3 -97 -32 -156 -40 -81 -103 -141 -188 -180 -73 -33 -105 -68 -105 -115 0 -39 39 -90 75 -96 33 -7 127 26 190 66 76 49 122 93 164 155 157 235 130 520 -69 722 -111 113 -235 167 -308 135z'/> <path d='M384 1951 c-66 -40 -64 -27 -64 -444 0 -407 2 -420 53 -449 15 -9 85 -15 215 -18 l192 -5 0 468 0 467 -182 0 c-163 0 -187 -2 -214 -19z'/> </g>",
 close: "<g><path d=\"M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z\"></path></g>",
 new: "<g><path d=\"M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z\"></path></g>",
+dropDown: "<g><path d=\"M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z\"></path></g>",
 end:""
 }]]></varValue>
       <functionParam />
@@ -11179,6 +11259,32 @@ c.style.inlineBlock = "max-width";
 c.style.whiteSpace = "nowrap";
 c.style.cursor="pointer";
 c.innerHTML = root.v_teamInfo.title;
+
+//right corner button
+c = createPanel(root, root.id+"_optionBtn1", "", w-45, 6, 27, 27);
+c.style.cursor="pointer";
+c.innerHTML = "<svg viewBox=\"0 0 30 30\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:5px 0px 0px 5px;fill: currentcolor;vertical-align:middle;\"><g><path d=\"M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z\"></path></g></svg>";
+c.style.borderRadius = "50%";
+root.v_btn1 = c;
+ee.setOnClick(c,function(senderBtn,event) {
+    var v_style = new Array();
+    var v_onClick = new Array();
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","编辑","编辑","编辑","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+        }
+    );
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","删除","删除","删除","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+        }
+    );
+    g5.root.popBlank.p4.show(senderBtn, 120, v_style, v_onClick); 
+    return false;
+});
+g5.initButtonV3(c,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","rgb(101,119,134)","rgb(29,161,242)","rgb(29,161,242)","")
+]);
 
 //note
 if (root.v_teamInfo.note.length>0) {
