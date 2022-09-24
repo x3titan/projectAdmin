@@ -1,5 +1,5 @@
 <page>
-  <controls count="369">
+  <controls count="370">
     <control type="DivRoot" pathname="/divRoot">
       <backgroundColor>F0F0F0</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
@@ -170,8 +170,30 @@ sender.v_status = "";
 
 sender.v_pageIndex = 0;
 
+sender.show = function(isHis) {
+    if ((this.v_needRefresh) || (isHis != this.v_isHis)) {
+        for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
+        this.v_items = new Array();
+        this.v_satus = "";
+        this.v_pageIndex = 0;
+        this.v_lastScrollTop = 0;
+        this.v_needRefresh = false;
+    }
+    this.v_isHis = isHis;
+    this.parentNode.changePage(this);
+}
+
 sender.onActive = function() {
-    g5.pushHistory2("/PA/team");
+    if (this.v_isHis) {
+        g5.pushHistory2("/PA/teamDel");
+        ee.setText(this.c_title, "项目组列表(已删除)");
+        g5.root.p_title.p1.c_btnIsHis.init(1);
+    } else {
+        g5.pushHistory2("/PA/team");
+        ee.setText(this.c_title, "项目组列表");
+        g5.root.p_title.p1.c_btnIsHis.init(0);
+    }
+
     if (this.v_needRefresh) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
         this.v_items = new Array();
@@ -197,29 +219,10 @@ sender.onDeactive = function() {
     g5.root.p_title.changePage(null);
 }
 
-sender.show = function(v_userInfo) {
-    if (this.v_needRefresh) {
-        this.v_needRefresh = false;
-    } else if (this.v_userInfo.id == v_userInfo.id) {
-        g5.changeP2(15);
-        ee.tiledResizeV(this, 2);
-        document.documentElement.scrollTop = this.v_lastScrollTop;
-        return;
-    }
-    this.v_userInfo = v_userInfo.clone();
-    this.refreshCount();
-    document.documentElement.scrollTop = 0;
-    this.v_pageIndex = 0;
-    for (var i=0; i<sender.v_items.length; i++) ee.removeControl(sender.v_items[i]);
-    sender.v_items = new Array();
-    g5.changeP2(-1);
-    g5.changeP2(15);
-    this.loadFromDB();               
-}
-
 sender.loadFromDB = function() {
     if (getTeamV2.busy) return;
     getTeamV2.pageIndex = sender.v_pageIndex;
+    getTeamV2.isHis = this.v_isHis? "T":"F";
     getTeamV2.onComplete = function(dataset) {
         var root = sender;
         var cy = 0;
@@ -1567,6 +1570,60 @@ sender.showNewTeam = function() {
     this.parentNode.changePage(this);
 }
 
+sender.showEditTeam = function(teamInfo) {
+    this.c_p1.resize();
+    this.init(true);
+    this.v_teamInfo = teamInfo;
+    ee.setText(this.c_title, "编辑项目组");
+    this.c_button.setText("确定",0);
+    this.c_button.setText("确定",1);
+    ee.setText(this.c_editTitle, "在这里输入项目组名称");
+    ee.setText(this.c_edit.c_label, "在这里输入项目组描述");
+    ee.setEditText(sender.c_editTitle, this.v_teamInfo.title);
+    sender.c_edit.setEditText(this.v_teamInfo.note);
+    this.v_lastOp = "showEditTeam";
+    this.onComplete = function() {
+        modifyTeamInfo.teamId = sender.v_teamInfo.id;
+        modifyTeamInfo.title = ee.getEditText(sender.c_editTitle);
+        modifyTeamInfo.note = sender.c_edit.getEditText();
+        modifyTeamInfo.onComplete = function(taskId) {
+            sender.v_lastOp = "";
+            g5.root.mainDiv.p1.p1.v_needRefresh = true;
+            history.go(-1);
+        }
+        modifyTeamInfo();
+    }
+    g5.pushHistory2("/PA/editTeam");
+    this.parentNode.changePage(this);
+}
+
+sender.showEditTask = function(taskInfo) {
+    this.c_p1.resize();
+    this.init(true);
+    this.v_taskInfo = taskInfo;
+    ee.setText(this.c_title, "编辑任务");
+    this.c_button.setText("确定",0);
+    this.c_button.setText("确定",1);
+    ee.setText(this.c_editTitle, "在这里输入任务名称");
+    ee.setText(this.c_edit.c_label, "在这里输入任务描述");
+    ee.setEditText(sender.c_editTitle, this.v_taskInfo.taskName);
+    sender.c_edit.setEditText(this.v_taskInfo.note);
+    this.v_lastOp = "showEditTeam";
+    this.onComplete = function() {
+        modifyTaskInfo.taskId = sender.v_taskInfo.id;
+        modifyTaskInfo.title = ee.getEditText(sender.c_editTitle);
+        modifyTaskInfo.note = sender.c_edit.getEditText();
+        modifyTaskInfo.onComplete = function(taskId) {
+            sender.v_lastOp = "";
+            g5.root.mainDiv.p1.p1.v_needRefresh = true;
+            history.go(-1);
+        }
+        modifyTaskInfo();
+    }
+    g5.pushHistory2("/PA/editTeam");
+    this.parentNode.changePage(this);
+}
+
 sender.showNewTask = function(teamId) {
     this.v_teamId = teamId;
     this.c_p1.resize();
@@ -1970,7 +2027,7 @@ sender.f_onChange = function() {
     var oldHtml = this.currentHtml;
     this.currentText = this.getPlanText().replace(/\xA0/g, " ");
     this.currentHtml = this.c_edit.innerHTML;
-    ee.setVisible(this.c_label, (!this.c_edit.innerText) || (this.c_edit.innerText.trim().length<=0)); 
+    ee.setVisible(this.c_label, (!this.c_edit.innerHTML) || (this.c_edit.innerHTML.trim().length<=0)); 
     if (this.onInputChange(this, this.lastKey, oldText, this.currentText, oldHtml, this.currentHtml)==false) {
         this.setEditText(oldHtml, true);
         this.currentHtml = oldHtml;
@@ -2666,6 +2723,7 @@ sender.style.borderRight = "";</onCreate>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel128/panel129">
       <cursor>pointer</cursor>
+      <dockX>fill</dockX>
       <dockY>fill</dockY>
       <ee_LocalName>c_title</ee_LocalName>
       <fontBold>true</fontBold>
@@ -2678,11 +2736,13 @@ sender.style.borderRight = "";</onCreate>
       <left>51</left>
       <leftRatio>0.1275</leftRatio>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
-      <sizeRatio>0.257281553398058</sizeRatio>
+      <outerLeft>51</outerLeft>
+      <outerRight>105</outerRight>
+      <sizeRatio>0.151862464183381</sizeRatio>
       <text>项目组列表</text>
       <top>0</top>
-      <width>206</width>
-      <widthRatio>0.515</widthRatio>
+      <width>244</width>
+      <widthRatio>0.8725</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel128/panel212">
       <cursor>pointer</cursor>
@@ -2727,6 +2787,40 @@ g5.initButtonV3(sender,[
 ]);
 ]]></onCreate>
       <outerRight>20</outerRight>
+      <sizeRatio>1</sizeRatio>
+      <text>+</text>
+      <top>10</top>
+      <topRatio>0.188679245283019</topRatio>
+      <width>33</width>
+      <widthRatio>0.0825</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel125/panel128/panel173">
+      <bindControl>panel143</bindControl>
+      <bindRight>left</bindRight>
+      <cursor>pointer</cursor>
+      <dockY>center</dockY>
+      <ee_LocalName>c_btnIsHis</ee_LocalName>
+      <height>33</height>
+      <heightRatio>0.622641509433962</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>304</left>
+      <leftRatio>0.76</leftRatio>
+      <onClick>if (sender.v_index == 0) {
+    g5.root.mainDiv.p1.p1.show(true);
+} else {
+    g5.root.mainDiv.p1.p1.show(false);
+}
+window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
+      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;fill: currentcolor;vertical-align:middle;\">"+g5.icon.trash+"</svg>";
+sender.label = null;
+sender.style.borderRadius = "50%";
+
+g5.initButtonV3(sender,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","#808080","#808080","#808080",""),
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","rgb(29,161,242)","rgb(29,161,242)","rgb(29,161,242)","")
+]);
+]]></onCreate>
+      <outerRight>10</outerRight>
       <sizeRatio>1</sizeRatio>
       <text>+</text>
       <top>10</top>
@@ -3024,6 +3118,7 @@ sender.show = function() {
       <fieldCount>2</fieldCount>
       <height>53</height>
       <heightRatio>1</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <sizeRatio>0.1325</sizeRatio>
       <top>0</top>
@@ -3047,11 +3142,11 @@ sender.show = function() {
       <dockX>center</dockX>
       <dockY>center</dockY>
       <height>33</height>
-      <heightRatio>0.33</heightRatio>
+      <heightRatio>0.622641509433962</heightRatio>
       <layerVisible>false</layerVisible>
       <left>83</left>
-      <leftRatio>0.484848484848485</leftRatio>
-      <onClick>g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+      <leftRatio>0.415</leftRatio>
+      <onClick>g5.root.mainDiv.p1.p1.show(false)
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.homePage+"</svg>";
 sender.style.borderRadius = "50%";
@@ -3062,11 +3157,11 @@ g5.initButtonV3(sender,[
 ]]></onCreate>
       <outerBottom>10</outerBottom>
       <sizeRatio>1</sizeRatio>
-      <text>+</text>
+      <text>H</text>
       <top>5</top>
-      <topRatio>0.13</topRatio>
+      <topRatio>0.0943396226415094</topRatio>
       <width>33</width>
-      <widthRatio>1</widthRatio>
+      <widthRatio>0.165</widthRatio>
     </control>
     <control type="LayoutXItem" pathname="/divRoot/panel127/panel171/layoutx1/layoutxitem2">
       <backgroundColor>d0d0d0</backgroundColor>
@@ -9850,7 +9945,7 @@ g5.initButtonV3(sender,[
       <widthRatio>0.902366863905325</widthRatio>
     </control>
   </controls>
-  <taskSet count="21">
+  <taskSet count="24">
     <taskSetItem name="getUserInfo">
       <script1>eio.appendString8(eb.getCookie("paToken"));
 
@@ -10574,13 +10669,15 @@ ee.showAni(ee.getControl("panel117"),1);</script3>
     </taskSetItem>
     <taskSetItem name="getTeamV2">
       <script1>//获取项目组列表
-//busy,pageIndex,onComplete()
+//busy,pageIndex,isHis(T/F),onComplete()
 getTeamV2.busy = true;
 eio.appendString8(eb.getCookie("paToken"));
-eio.appendString8(getTeamV2.pageIndex+"");</script1>
+eio.appendString8(getTeamV2.pageIndex+"");
+eio.appendString8(getTeamV2.isHis);</script1>
       <script2><![CDATA[var sql,sqlResult;
 var token = eio.readString8();
 var pageIndex = parseInt(eio.readString8());
+var isHis = eio.readString8();
 var pageSize = 10;
 
 sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
@@ -10603,6 +10700,7 @@ var top = (pageIndex+1)*pageSize;
 sql =
     "exec VP_TeamInfo " +
     userId +
+    ",'" + db.encode(isHis) + "'" +
     "," + top +
     ";";
 sqlResult = db.executeQuery("PJ", sql);
@@ -10874,6 +10972,146 @@ eio.appendString8("T");]]></script2>
 }
 
 if (taskNewV2.onComplete) taskNewV2.onComplete();</script3>
+    </taskSetItem>
+    <taskSetItem name="modifyTeamInfo">
+      <script1>//modifyTeamInfo(teamId,title,note,onComplete())
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(modifyTeamInfo.teamId + "");
+eio.appendString8(modifyTeamInfo.title);
+eio.appendString16(modifyTeamInfo.note);
+</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var teamId = parseInt(eio.readString8());
+var title = eio.readString8();
+var note = eio.readString16();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "update teamInfo set " +
+    "displayName = '" + db.encode(title) + "'," +
+    "note = '" + db.encode(note) + "' " +
+    "where id = " + teamId;
+sqlResult = db.executeNoneQuery("PJ", sql);
+if (!sqlResult) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    g5.alert1("无法执行此操作：" + eio.readString8());
+    return;
+}
+
+if (modifyTeamInfo.onComplete) modifyTeamInfo.onComplete();</script3>
+    </taskSetItem>
+    <taskSetItem name="modifyTaskInfo">
+      <script1>//modifyTaskInfo(taskId,title,note,onComplete())
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(modifyTaskInfo.taskId + "");
+eio.appendString8(modifyTaskInfo.title);
+eio.appendString16(modifyTaskInfo.note);
+</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var taskId = parseInt(eio.readString8());
+var title = eio.readString8();
+var note = eio.readString16();
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "update taskInfo set " +
+    "taskName = '" + db.encode(title) + "'," +
+    "note = '" + db.encode(note) + "' " +
+    "where id = " + taskId;
+sqlResult = db.executeNoneQuery("PJ", sql);
+if (!sqlResult) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    g5.alert1("无法执行此操作：" + eio.readString8());
+    return;
+}
+
+if (modifyTaskInfo.onComplete) modifyTaskInfo.onComplete();</script3>
+    </taskSetItem>
+    <taskSetItem name="deleteTeam">
+      <script1>//deleteTeam(teamId,onComplete())
+eio.appendString8(eb.getCookie("paToken"));
+eio.appendString8(deleteTeam.teamId + "");
+</script1>
+      <script2><![CDATA[var token = eio.readString8();
+var teamId = parseInt(eio.readString8());
+var sql,sqlResult;
+
+sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    es.logWarning("系统繁忙请稍候再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "sessionId").length < 5) {
+    eio.appendString8("F");
+    es.logWarning("用户token失效, sql=" + sql);
+    return;
+}
+var userId = db.getString(sqlResult, "id");
+
+sql = "exec teamDelete " + 
+    userId + "," +
+    teamId + ";";
+    
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
+    eio.appendString8("F");
+    eio.appendString8("系统繁忙请稍后再试");
+    return;
+}
+db.read(sqlResult);
+if (db.getString(sqlResult, "errorCode")!="0") {
+    eio.appendString8("F");
+    eio.appendString16(db.getString(sqlResult, "errorString"));
+    return;
+}
+eio.appendString8("T");]]></script2>
+      <script3>if (eio.readString8()!="T") {
+    g5.alert1("无法执行此操作：" + eio.readString8());
+    return;
+}
+
+if (deleteTeam.onComplete) deleteTeam.onComplete();</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
@@ -11253,7 +11491,7 @@ ee.setOnMouseLeave(root, function(sender,e){
 c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
-c.style.color = "#6e7f8d";
+c.style.color = "#14171a";
 c.style.textOverflow = "ellipsis";
 c.style.inlineBlock = "max-width";
 c.style.whiteSpace = "nowrap";
@@ -11272,11 +11510,25 @@ ee.setOnClick(c,function(senderBtn,event) {
     v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","编辑","编辑","编辑","#808080","#000000","#000000",""));
     v_onClick.push(
         function (senderBtnC, event) {
+            g5.root.mainDiv.p1.p5.showEditTeam(root.v_teamInfo);
         }
     );
     v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","删除","删除","删除","#808080","#000000","#000000",""));
     v_onClick.push(
         function (senderBtnC, event) {
+            g5.root.popBlack.a6.show(
+                "删除项目组",
+                "您确定要删除（解散）项目组 " + root.v_teamInfo.title + " 吗？",
+                [new g5.BStyle("#e6ecf0","#cfd4d8","#b8bdc0","取消","取消","取消","#14171a","#14171a","#14171a","")],
+                [new g5.BStyle("#1da1f2","#1a91da","#1781c2","删除","确定删除","确定删除","#ffffff","#ffffff","#ffffff","")],
+                function() {
+                    deleteTeam.teamId = root.v_teamInfo.id;
+                    deleteTeam.onComplete = function() {
+                        window.location.reload();
+                    }
+                    deleteTeam();
+                }
+            );            
         }
     );
     g5.root.popBlank.p4.show(senderBtn, 120, v_style, v_onClick); 
@@ -11289,7 +11541,7 @@ g5.initButtonV3(c,[
 //note
 if (root.v_teamInfo.note.length>0) {
     c = createPanel(root, root.id+"panel16", "", 20, cy, w-40, 22);
-    addText(c, root.v_teamInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "14171a", "normal");
+    addText(c, root.v_teamInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "6e7fad", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
     ee.setRect(c, null, null, null, rect.h);
@@ -11353,6 +11605,33 @@ c.style.whiteSpace = "nowrap";
 c.style.cursor="pointer";
 c.innerHTML = root.v_taskInfo.taskName;
 
+//right corner button
+c = createPanel(root, root.id+"_optionBtn1", "", w-45, 6, 27, 27);
+c.style.cursor="pointer";
+c.innerHTML = "<svg viewBox=\"0 0 30 30\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:5px 0px 0px 5px;fill: currentcolor;vertical-align:middle;\"><g><path d=\"M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z\"></path></g></svg>";
+c.style.borderRadius = "50%";
+root.v_btn1 = c;
+ee.setOnClick(c,function(senderBtn,event) {
+    var v_style = new Array();
+    var v_onClick = new Array();
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","编辑","编辑","编辑","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+            g5.root.mainDiv.p1.p5.showEditTask(root.v_taskInfo);
+        }
+    );
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","删除","删除","删除","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+        }
+    );
+    g5.root.popBlank.p4.show(senderBtn, 120, v_style, v_onClick); 
+    return false;
+});
+g5.initButtonV3(c,[
+    new g5.BStyle("","#dfeffa","#cfdfea","","","","rgb(101,119,134)","rgb(29,161,242)","rgb(29,161,242)","")
+]);
+
 //note
 if (root.v_taskInfo.note.length>0) {
     c = createPanel(root, root.id+"panel16", "", 20, cy, w - 40, 22);
@@ -11388,115 +11667,6 @@ c.style.textOverflow = "ellipsis";
 c.style.inlineBlock = "max-width";
 c.style.whiteSpace = "nowrap";
 c.innerHTML = hint;
-
-
-/*
-//button
-c = null;
-if (root.v_userInfo.isBlock2 &amp;&amp; (!root.v_userInfo.isBlock1)) {
-} else if (root.v_userInfo.status == "DISABLED") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "封号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "FREEZE") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "冻结", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_userInfo.status == "Del") {
-    c = createPanel(root, root.id+"buttonR1", "", 505, 2, 75, 40);
-    addText(c, "已销号", "right", "middle", "微软雅黑", 12, "606060", "");
-} else if (root.v_mode.charAt(0)=="x") {
-    c = createPanel(root, root.id+"button11", "", 505, 12, 80, 40);
-    addText(c, "已屏蔽", "center", "middle", "微软雅黑", 12, "ffffff", "bold");
-    c.style.borderRadius = "20px";
-    root.v_isBlock = false;
-    root.c_button11 = c;
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","已屏蔽","已屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("#ffffff","#f3e3eb","#f1cddb","屏蔽","屏蔽","屏蔽","#e0245e","#1da1f2","#1da1f2","#e0245e")
-    ]);
-    root.changeButton = function() {
-        this.v_isBlock = !this.v_isBlock;    
-        this.c_button11.init(this.v_isBlock?0:1);
-    }
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.parentNode.v_isBlock) {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 0;
-            blockUser();    
-        } else {
-            blockUser.userId = sender.parentNode.v_userInfo.id;
-            blockUser.isBlock = 1;
-            blockUser();    
-        }
-        sender.parentNode.changeButton();
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-    eb.initMouseEvent(c);
-    root.changeButton();    
-} else {
-    c = createPanel(root, root.id+"button01", "", w-128-15, 14, 128, 28);
-    c.v_right = w-15;
-    root.button1 = c;
-    c.style.cursor="pointer";
-    addText(c, "...", "center", "top", "微软雅黑", 11, "1DA1F2", "bold");
-    g5.initButtonV3(c,[
-        new g5.BStyle("#e0245e","#ca2055","#b31d4b","已屏蔽","取消屏蔽","取消屏蔽","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","关注","关注","关注","#1da1f2","#1da1f2","#1da1f2","#1da1f2"),
-        new g5.BStyle("#1da1f2","#ca2055","#b31d4b","正在关注","取消关注","取消关注","#ffffff","#ffffff","#ffffff",""),
-        new g5.BStyle("","#e8f5fe","#d2ecfc","编辑个人资料","编辑个人资料","编辑个人资料","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
-    ]);
-    c.style.borderRadius = parseInt(eb.getDivRectSetting(c).h/2) + "px";
-    c.refreshStatus = function(index) {
-        this.init(index);
-        var w = 100;
-        if (index == 0) {
-            w = 90;
-        } else if (index == 1) {
-            w = 55;
-        } else if (index == 2) {
-            w = 90;
-        } else if (index == 3) {
-            w = 120;
-        }
-        ee.setRect(this, this.v_right-w,null,w,null);
-    }
-    root.refreshButton = function() {
-        if (root.v_userInfo.isFollow) {
-            root.button1.refreshStatus(2);
-        } else {
-            root.button1.refreshStatus(1);
-        }
-        if (root.v_userInfo.userName == g5.myUserInfo.userName) {
-            root.button1.refreshStatus(3);
-        }
-        if (root.v_userInfo.isBlock1) {
-            root.button1.refreshStatus(0);
-        }
-    }
-    root.refreshButton();
-    ee.setOnClick(c, function(sender, event) {
-        if (sender.v_index==0) {
-            g5.setBlock1(root.v_userInfo,null);
-        } else if (sender.v_index==1) {
-            //follow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(2);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==2) {
-            //unfollow
-            g5.setFollow(root.v_userInfo, function(v_userInfo) {
-                sender.refreshStatus(1);
-                root.v_userInfo = v_userInfo.clone();
-            });
-        } else if (sender.v_index==3) {
-            //编辑个人资料
-            g5.p2.p17.show();
-        }
-        window.event? window.event.cancelBubble = true : event.stopPropagation();    
-    });
-}
-if (c) root.c_button = c;
-*/
 
 cy+=10;
 eb.setDivRect(root,null,null,null,cy);
@@ -11622,7 +11792,9 @@ if ((window.location.href.toLowerCase() == "http://www.fistalk.com/") ||
 if (pn == "" || pn == "/") pn = "/PA/home";
 
 if (pn=="/PA/team") {
-    g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+    g5.root.mainDiv.p1.p1.show(false);
+} else if (pn=="/PA/teamDel") {
+    g5.root.mainDiv.p1.p1.show(true);
 } else if (pn.indexOf("/PA/task/")>=0) {
     g5.root.mainDiv.p1.p2.showTeamTask(unescape(pns[2]), false);
 } else if (pn.indexOf("/PA/taskOld/")>=0) {
@@ -11638,7 +11810,7 @@ if (pn=="/PA/team") {
     window.location.href = ee.getUrl("/login");
     g5.p2.p11.showByPage("c1",unescape(pns[2]));    
 } else {
-    g5.root.mainDiv.p1.changePage(g5.root.mainDiv.p1.p1);
+    g5.root.mainDiv.p1.p1.show(false);
     return;
     if (pns[1]=="following") {
         g5.p2.p16.showByUserName(unescape(pns[0]));
