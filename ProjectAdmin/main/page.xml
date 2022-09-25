@@ -1500,7 +1500,7 @@ sender.v_photos = new Array();</onCreate>
       <ee_LocalName>p5</ee_LocalName>
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
-      <layerName>新建项目或任务</layerName>
+      <layerName>项目/任务编辑器</layerName>
       <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
@@ -1515,6 +1515,7 @@ sender.c_cirTitleText = sender.c_editTitlePanel.c_progressText;
 
 
 sender.init = function(clear) {
+    document.documentElement.scrollTop = 0;
     if (clear) {
         this.c_edit.setEditText("");
         ee.setEditText(this.c_editTitle, "");
