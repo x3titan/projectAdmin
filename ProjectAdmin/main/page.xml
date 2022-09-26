@@ -104,7 +104,6 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
-      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -119,7 +118,6 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -545,6 +543,7 @@ sender.init = function(clear) {
 
 sender.onActive = function() {
     g5.pushHistory2("/PA/composeChat/" + escape(this.v_taskId));
+    document.documentElement.scrollTop = 0;
     ee.tiledResizeV(this, 2);
 }
 
@@ -1500,7 +1499,6 @@ sender.v_photos = new Array();</onCreate>
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>项目/任务编辑器</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -1514,7 +1512,6 @@ sender.c_cirTitleText = sender.c_editTitlePanel.c_progressText;
 
 
 sender.init = function(clear) {
-    document.documentElement.scrollTop = 0;
     if (clear) {
         this.c_edit.setEditText("");
         ee.setEditText(this.c_editTitle, "");
@@ -1527,6 +1524,7 @@ sender.init = function(clear) {
 }
 
 sender.onActive = function() {
+    document.documentElement.scrollTop = 0;
     ee.tiledResizeV(this, 2);
 }
 
@@ -3069,6 +3067,7 @@ g5.initButtonV3(sender,[
       <height>74</height>
       <heightRatio>0.0966057441253264</heightRatio>
       <layerName>底部功能区</layerName>
+      <layerVisible>false</layerVisible>
       <left>246</left>
       <leftRatio>0.270627062706271</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -3092,6 +3091,7 @@ sender.style.borderRight = "";</onCreate>
       <height>53</height>
       <heightRatio>0.716216216216216</heightRatio>
       <layerName>项目组列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -11620,12 +11620,42 @@ ee.setOnClick(c,function(senderBtn,event) {
             g5.root.mainDiv.p1.p5.showEditTask(root.v_taskInfo);
         }
     );
-    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","删除","删除","删除","#808080","#000000","#000000",""));
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表评论","发表评论","发表评论","#808080","#000000","#000000",""));
     v_onClick.push(
         function (senderBtnC, event) {
+            g5.root.mainDiv.p1.p4.showNew(root.v_taskInfo.id);
         }
     );
-    g5.root.popBlank.p4.show(senderBtn, 120, v_style, v_onClick); 
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","发表评论并完成","发表评论并完成","发表评论并完成","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+            g5.root.mainDiv.p1.p4.showComplete(root.v_taskInfo.id);
+        }
+    );
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","直接完成","直接完成","直接完成","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+            g5.root.popBlack.a6.show(
+                "直接完成",
+                "直接完成将自动发言“完成”，并将此任务设置为完成状态，您确定要直接完成吗？",
+                [new g5.BStyle("#e6ecf0","#cfd4d8","#b8bdc0","取消","取消","取消","#14171a","#14171a","#14171a","")],
+                [new g5.BStyle("#1da1f2","#1a91da","#1781c2","完成","确定完成","确定完成","#ffffff","#ffffff","#ffffff","")],
+                function() {
+                    chatNewV2.taskId = root.v_taskInfo.id;
+                    chatNewV2.content = "完成";
+                    chatNewV2.autoComplete = "T";
+                    chatNewV2.onComplete = function(taskId) {
+                        g5.root.mainDiv.p1.p1.v_needRefresh = true;
+                        g5.root.mainDiv.p1.p2.v_needRefresh = true;
+                        g5.root.mainDiv.p1.p3.v_needRefresh = true;
+                        g5.processUrl();
+                    }
+                    chatNewV2();
+                }
+            );            
+        }
+    );
+    g5.root.popBlank.p4.show(senderBtn, 180, v_style, v_onClick); 
     return false;
 });
 g5.initButtonV3(c,[
