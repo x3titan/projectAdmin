@@ -42,11 +42,6 @@ g5.processUrl();
 
 ee.getControl("edit7")._input.style.overflow = "auto";
 
-//20秒刷新一次任务列表
-setInterval(function() {
-    taskRefresh();
-}, 20000);
-
 setInterval(function() {
     g5.refreshMain();
 }, 100);
@@ -299,9 +294,13 @@ sender.v_pageIndex = 0;
 
 sender.showTeamTask = function(teamInfo, isHis) {
     if (parseInt(teamInfo)>0) {
-        var t = new g5.TeamInfo();
-        t.id = teamInfo;
-        teamInfo = t;
+        if ((this.v_teamInfo) &amp;&amp; (this.v_teamInfo.id == teamInfo)) {
+            teamInfo = this.v_teamInfo;
+        } else {
+            var t = new g5.TeamInfo();
+            t.id = teamInfo;
+            teamInfo = t;
+        }
     }
     if ((this.v_teamInfo != teamInfo) || (this.v_needRefresh) || (isHis != this.v_isHis)) {
         for (var i=0; i<this.v_items.length; i++) ee.removeControl(this.v_items[i]);
@@ -11479,7 +11478,7 @@ root.style.borderLeft = "";
 root.style.borderRight = "";
 root.style.cursor = "pointer";
 ee.setOnClick(root,function(sender,event) {
-    g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo);
+    g5.root.mainDiv.p1.p2.showTeamTask(root.v_teamInfo, false);
 });
 ee.setOnMouseEnter(root, function(sender,e){
     sender.style.backgroundColor = "rgb(245,248,250)";
