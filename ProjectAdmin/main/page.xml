@@ -523,7 +523,6 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -1499,6 +1498,7 @@ sender.v_photos = new Array();</onCreate>
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>项目/任务编辑器</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
