@@ -104,6 +104,7 @@ wx.onMenuShareAppMessage({
       <fontSizeAuto>35</fontSizeAuto>
       <height>700</height>
       <heightRatio>0.913838120104439</heightRatio>
+      <layerVisible>false</layerVisible>
       <left>245</left>
       <leftRatio>0.26952695269527</leftRatio>
       <note>主页面</note>
@@ -118,6 +119,7 @@ wx.onMenuShareAppMessage({
       <height>655</height>
       <heightRatio>0.935714285714286</heightRatio>
       <layerName>主列表</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.currentPage = null;
 sender.changePage = function(page) {
@@ -523,6 +525,7 @@ sender.loadMore = function() {
       <height>756</height>
       <heightRatio>1.15419847328244</heightRatio>
       <layerName>发表评论</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.c_photos = sender.c_p1.c_photoPanel.c_photo;
@@ -8183,13 +8186,12 @@ sender.renderItem = function(root) {
       <height>766</height>
       <heightRatio>1</heightRatio>
       <layerName>主界面弹窗黑色</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>if (!ee.isInternalNode(sender, event.target)) {
     return;
 }
-if (sender.a3.style.visibility != "hidden") return;
-if (sender.a7.style.visibility != "hidden") return;
+//if (sender.a3.style.visibility != "hidden") return;
+//if (sender.a7.style.visibility != "hidden") return;
 sender.close();
 </onClick>
       <onCreate><![CDATA[sender.style.position = "fixed";
@@ -9552,7 +9554,6 @@ g5.initButtonV3(sender,[
       <height>209</height>
       <heightRatio>0.272845953002611</heightRatio>
       <layerName>通用字符串输入窗口</layerName>
-      <layerVisible>false</layerVisible>
       <left>275</left>
       <leftRatio>0.302530253025303</leftRatio>
       <onAni2End>ee.setVisible(ee.getControl("panel112"), false);
@@ -9812,7 +9813,7 @@ sender.style.borderRadius = parseInt(eb.getDivRect(sender).h/2) + "px";
       <left>195</left>
       <leftRatio>0.544692737430168</leftRatio>
       <onClick>sender.parentNode.parentNode.close();
-sender.parentNode.onComplete(ee.getEditText(ee.getControl("edit1")));</onClick>
+sender.parentNode.onComplete(ee.getEditText(sender.parentNode.c_p1.c_edit));</onClick>
       <onCreate>g5.initButtonV3(sender,[
     new g5.BStyle("","#e8f5fe","#d2ecfc","","","","#1da1f2","#1da1f2","#1da1f2","#1da1f2")
 ]);
@@ -9893,7 +9894,6 @@ g5.initButtonV3(sender,[
       <layerVisible>false</layerVisible>
       <left>15</left>
       <leftRatio>0.0443786982248521</leftRatio>
-      <onChange>ee.getControl("panel231").refresh();</onChange>
       <outerLeft>15</outerLeft>
       <outerRight>15</outerRight>
       <sizeRatio>0.133116883116883</sizeRatio>
@@ -11653,6 +11653,34 @@ ee.setOnClick(c,function(senderBtn,event) {
                     chatNewV2();
                 }
             );            
+        }
+    );
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","打卡","打卡","打卡","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+            g5.root.popBlack.a10.show(
+                "打卡", "打卡备注：", "请在这里输入打卡备注", "打卡：已做",
+                [new g5.BStyle("","#e8f5fe","#d2ecfc","取消","取消","取消","#1da1f2","#1da1f2","#1da1f2","")],
+                [new g5.BStyle("#1da1f2","#1a91da","#1781c2","确定","确定","确定","#ffffff","#ffffff","#ffffff","")],
+                function(text) {
+                    if (text.length<=0) {
+                        g5.alert1("输入错误", "必须填写打卡备注");
+                        return;
+                    }
+                    chatNewV2.taskId = root.v_taskInfo.id;
+                    chatNewV2.content = text;
+                    chatNewV2.autoComplete = "F";
+                    chatNewV2.onComplete = function(taskId) {
+                        g5.root.mainDiv.p1.p1.v_needRefresh = true;
+                        g5.root.mainDiv.p1.p2.v_needRefresh = true;
+                        g5.root.mainDiv.p1.p3.v_needRefresh = true;
+                        g5.processUrl();
+                    }
+                    chatNewV2();
+                },
+                function() {
+                }
+            );
         }
     );
     g5.root.popBlank.p4.show(senderBtn, 180, v_style, v_onClick); 
