@@ -2739,11 +2739,11 @@ sender.style.borderRight = "";</onCreate>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
       <outerLeft>51</outerLeft>
       <outerRight>105</outerRight>
-      <sizeRatio>0.151862464183381</sizeRatio>
+      <sizeRatio>0.217213114754098</sizeRatio>
       <text>项目组列表</text>
       <top>0</top>
       <width>244</width>
-      <widthRatio>0.8725</widthRatio>
+      <widthRatio>0.61</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel128/panel212">
       <cursor>pointer</cursor>
@@ -2867,11 +2867,11 @@ sender.style.borderRight = "";</onCreate>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
       <outerLeft>51</outerLeft>
       <outerRight>105</outerRight>
-      <sizeRatio>0.221757322175732</sizeRatio>
+      <sizeRatio>0.217213114754098</sizeRatio>
       <text>任务列表</text>
       <top>0</top>
       <width>244</width>
-      <widthRatio>0.5975</widthRatio>
+      <widthRatio>0.61</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125/panel132/panel134">
       <cursor>pointer</cursor>
@@ -2905,7 +2905,7 @@ g5.initButtonV3(sender,[
       <heightRatio>0.622641509433962</heightRatio>
       <layerVisible>false</layerVisible>
       <left>347</left>
-      <leftRatio>0.8325</leftRatio>
+      <leftRatio>0.8675</leftRatio>
       <onClick>g5.root.mainDiv.p1.p5.showNewTask(g5.root.mainDiv.p1.p2.v_teamInfo.id);
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.new+"</svg>";
@@ -2919,7 +2919,7 @@ g5.initButtonV3(sender,[
       <sizeRatio>1</sizeRatio>
       <text>+</text>
       <top>10</top>
-      <topRatio>0.566037735849057</topRatio>
+      <topRatio>0.188679245283019</topRatio>
       <width>33</width>
       <widthRatio>0.0825</widthRatio>
     </control>
@@ -3125,7 +3125,6 @@ sender.show = function() {
       <left>0</left>
       <sizeRatio>0.1325</sizeRatio>
       <top>0</top>
-      <topRatio>0.0188679245283019</topRatio>
       <width>400</width>
       <widthRatio>1</widthRatio>
     </control>
@@ -11115,7 +11114,7 @@ if (deleteTeam.onComplete) deleteTeam.onComplete();</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="22">
+  <g5Items count="24">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -11487,8 +11486,12 @@ ee.setOnMouseLeave(root, function(sender,e){
     sender.style.backgroundColor = "#ffffff";
 });
 
+//avata
+c = createPanel(root, root.id+"p1avt", "", 18, cy, 50, 50);
+g5.generateAvtIcon(c, root.v_teamInfo.title);
+
 //title
-c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
+c = createPanel(root, root.id+"p16u", "", 82, cy+4, w-115-4, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
 c.style.color = "#14171a";
@@ -11540,7 +11543,7 @@ g5.initButtonV3(c,[
 
 //note
 if (root.v_teamInfo.note.length>0) {
-    c = createPanel(root, root.id+"panel16", "", 20, cy, w-40, 22);
+    c = createPanel(root, root.id+"panel16", "", 78, cy, w-95, 22);
     addText(c, root.v_teamInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "6e7fad", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
@@ -11551,8 +11554,8 @@ if (root.v_teamInfo.note.length>0) {
 }
 
 var hint = "";
-hint += "　动态:" + root.v_teamInfo.newTaskCount + "条";
-c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+hint += "动态:" + root.v_teamInfo.newTaskCount + "条";
+c = createPanel(root, root.id+"rCount", "", 82, cy+10, w-95, 22); cy+=28;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "9pt";
 c.style.color = "#6e7f8d";
@@ -11594,8 +11597,12 @@ ee.setOnMouseLeave(root, function(sender,e){
     sender.style.backgroundColor = "#ffffff";
 });
 
+//avata
+c = createPanel(root, root.id+"p2avt", "", 18, cy, 50, 50);
+g5.generateAvtIcon(c, root.v_taskInfo.taskName);
+
 //title
-c = createPanel(root, root.id+"p16u", "", 23, cy+4, w-60, 22); cy+=22;
+c = createPanel(root, root.id+"p16u", "", 82, cy+4, w-115-4, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "12pt";
 c.style.color = "#14171a"; //"#6e7f8d";
@@ -11692,7 +11699,7 @@ g5.initButtonV3(c,[
 
 //note
 if (root.v_taskInfo.note.length>0) {
-    c = createPanel(root, root.id+"panel16", "", 20, cy, w - 40, 22);
+    c = createPanel(root, root.id+"panel16", "", 78, cy, w - 95, 22);
     addText(c, root.v_taskInfo.note, "left", "top", "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif", 12, "6e7fad", "normal");
     eb.processDock();
     var rect = eb.getDivRect(c.label);
@@ -11705,7 +11712,7 @@ if (root.v_taskInfo.note.length>0) {
 var hint = "";
 hint += "创建:" + g5.getTimeStr(root.v_taskInfo.regDatetime);
 hint += "　　动态:" + root.v_taskInfo.chatCount + "条";
-c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+c = createPanel(root, root.id+"rCount", "", 82, cy+4, w-95, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "9pt";
 c.style.color = "#6e7f8d";
@@ -11717,7 +11724,7 @@ c.innerHTML = hint;
 hint = "";
 hint += "更新:" + g5.getTimeStr(root.v_taskInfo.updateDatetime);
 hint += "　　未读:" + root.v_taskInfo.readCount + "条";
-c = createPanel(root, root.id+"rCount", "", 23, cy+4, w-40, 22); cy+=22;
+c = createPanel(root, root.id+"rCount", "", 82, cy+4, w-95, 22); cy+=22;
 c.style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
 c.style.fontSize = "9pt";
 c.style.color = "#6e7f8d";
@@ -11983,6 +11990,60 @@ if ((p2h - scr.h - document.documentElement.scrollTop) < 3000) {
 }
 
 ]]></functionCode>
+    </item>
+    <item name="generateAvtIcon" type="20">
+      <varValue />
+      <functionParam>div,idString</functionParam>
+      <functionCode><![CDATA[var r = eb.getDivRectSetting(div);
+var s = "";
+if (idString.charCodeAt(0)>255) {
+    s = idString.charAt(0);
+} else {
+    s = idString.substr(0,2);
+}
+s = s.toUpperCase();
+ee.setText(div,s);
+div.label.rows[0].cells[0].style.fontFamily = "'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+div.label.rows[0].cells[0].style.fontSize = parseInt(r.h/3*1.8) + "px";
+
+div.style.borderRadius = "50%";
+div.style.boxSizing="content-box";
+div.style.borderWidth = "4px";
+div.style.borderStyle = "solid";
+
+var a = 0;
+for (var i = 0; i < idString.length; i++) {
+    a += idString.charCodeAt(i);
+}
+a = g5.mulberry32(a);
+var c1;
+c1 = parseInt(a()*360);
+div.style.backgroundColor = "hsl(" + c1 + ",50%,80%)";
+c1 = parseInt(a()*360);
+div.label.rows[0].cells[0].style.color = "hsl(" + c1 + ",80%,25%)";
+c1 = parseInt(a()*360);
+div.style.borderColor = "hsl(" + c1 + ",50%,40%)";
+if (s.length>1) {
+    c1 = parseInt(a()*360);
+    ee.setText(div,
+        s.charAt(0) +
+        "<font color = '" + "hsl(" + c1 + ",80%,25%)" + "'>" +
+        s.charAt(1) +
+        "</font>"
+    );
+}
+
+]]></functionCode>
+    </item>
+    <item name="mulberry32" type="20">
+      <varValue />
+      <functionParam>a</functionParam>
+      <functionCode><![CDATA[return function() {
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}]]></functionCode>
     </item>
   </g5Items>
 </page>
