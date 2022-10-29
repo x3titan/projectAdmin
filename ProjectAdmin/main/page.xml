@@ -12018,16 +12018,16 @@ for (var i = 0; i < idString.length; i++) {
 a = g5.mulberry32(a);
 var c1;
 c1 = parseInt(a()*360);
-div.style.backgroundColor = "hsl(" + c1 + ",50%,80%)";
+div.style.backgroundColor = "hsl(" + c1 + ",50%,35%)";
 c1 = parseInt(a()*360);
-div.label.rows[0].cells[0].style.color = "hsl(" + c1 + ",80%,25%)";
+div.label.rows[0].cells[0].style.color = "hsl(" + c1 + ",80%,80%)";
 c1 = parseInt(a()*360);
-div.style.borderColor = "hsl(" + c1 + ",50%,40%)";
+div.style.borderColor = "hsl(" + c1 + ",50%,35%)";
 if (s.length>1) {
     c1 = parseInt(a()*360);
     ee.setText(div,
         s.charAt(0) +
-        "<font color = '" + "hsl(" + c1 + ",80%,25%)" + "'>" +
+        "<font style='color:" + "hsl(" + c1 + ",80%,80%)" + ";'>" +
         s.charAt(1) +
         "</font>"
     );
