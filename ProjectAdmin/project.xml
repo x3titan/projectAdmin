@@ -1,6 +1,6 @@
 <EBProj>
   <projectName>项目管理系统</projectName>
-  <projectItems count="327">
+  <projectItems count="363">
     <page pathname="/login" alias="登录总入口" />
     <image pathname="/login/banner.jpg" />
     <image pathname="/login/CPY0000.jpg" />
@@ -36,12 +36,40 @@
     <page pathname="/login/resetPassword2" alias="重置密码第二步" />
     <image pathname="/login/resetPassword2/back.png" />
     <image pathname="/login/resetPassword2/com.png" />
+    <image pathname="/login/mobile@2x.png" />
+    <image pathname="/login/password@2x.png" />
     <page pathname="/main" alias="主页面" />
     <image pathname="/main/back.png" />
     <image pathname="/main/btnClose.png" />
     <image pathname="/main/dialogMask.png" />
     <image pathname="/main/quxiao.jpg" />
     <image pathname="/main/tijiao.jpg" />
+    <image pathname="/main/close.png" />
+    <image pathname="/main/CPY0000.jpg" />
+    <image pathname="/main/CPY0001.jpg" />
+    <image pathname="/main/CPY0002.jpg" />
+    <image pathname="/main/CPY0003.jpg" />
+    <image pathname="/main/dark1.png" />
+    <image pathname="/main/i087_00.png" />
+    <image pathname="/main/i087_00000.png" />
+    <image pathname="/main/i087_01.png" />
+    <image pathname="/main/i087_01000.png" />
+    <image pathname="/main/i087_01001.png" />
+    <image pathname="/main/i087_07.png" />
+    <image pathname="/main/i087_07000.png" />
+    <image pathname="/main/i087_09.png" />
+    <image pathname="/main/i087_10.png" />
+    <image pathname="/main/i087_10000.png" />
+    <image pathname="/main/i087_26.png" />
+    <image pathname="/main/i087_26000.png" />
+    <image pathname="/main/i087_31.png" />
+    <image pathname="/main/i087_31000.png" />
+    <image pathname="/main/i087_40.png" />
+    <image pathname="/main/i087_40000.png" />
+    <image pathname="/main/onebit_39.png" />
+    <image pathname="/main/qb30.png" />
+    <image pathname="/main/upload.png" />
+    <image pathname="/main/user.png" />
     <page pathname="/mainV1" alias="主页面V1版本备份" />
     <image pathname="/mainV1/back.png" />
     <image pathname="/mainV1/btnClose.png" />
@@ -190,6 +218,7 @@
     <image pathname="/samples/button2/qb36.png" />
     <image pathname="/samples/button2/qb37.png" />
     <image pathname="/samples/button2/qb38.png" />
+    <image pathname="/samples/button2/CPY0000.jpg" />
     <page pathname="/temp" alias="临时页面" />
     <page pathname="/temp/t1" alias="" />
     <image pathname="/temp/t1/dialogMask.png" />
@@ -328,6 +357,13 @@
     <image pathname="/temp/main/user.png" />
     <image pathname="/temp/main/youtubeHit.jpg" />
     <image pathname="/temp/main/youtubeHit1.jpg" />
+    <page pathname="/upload" alias="" />
+    <image pathname="/upload/close.png" />
+    <image pathname="/upload/CPY0003.jpg" />
+    <image pathname="/upload/dark1.png" />
+    <image pathname="/upload/i087_01.png" />
+    <image pathname="/upload/upload.png" />
+    <image pathname="/upload/user.png" />
   </projectItems>
   <dbConnections count="1">
     <connection name="PJ">
