@@ -3081,6 +3081,7 @@ sender.style.borderBottom = "";
 sender.style.borderLeft = "";
 sender.style.borderRight = "";
 
+
 sender.style.top = "";
 sender.style.width = "100%";
 sender.style.height = eb.getDivRectSetting(sender).h;
