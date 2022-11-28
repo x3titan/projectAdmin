@@ -727,19 +727,19 @@ sender.setEnabled(false);
       <widthRatio>0.2075</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel579/panel608">
-      <__U_editFontColor>000000</__U_editFontColor>
-      <__U_editFontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</__U_editFontFamily>
-      <__U_editFontSize>16pt</__U_editFontSize>
-      <__U_editMaxY>300px</__U_editMaxY>
-      <__U_onCurPosChange-sender-oldPos-newPos>sender.processUserName();</__U_onCurPosChange-sender-oldPos-newPos>
-      <__U_onFocusChange-sender-isFocus />
-      <__U_onHeightChange-sender-oldH-newH>var dy = newH - oldH;
+      <__U_editFontColor type="string">000000</__U_editFontColor>
+      <__U_editFontFamily type="string">'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</__U_editFontFamily>
+      <__U_editFontSize type="string">16pt</__U_editFontSize>
+      <__U_editMaxY type="string">300px</__U_editMaxY>
+      <__U_onCurPosChange-sender-oldPos-newPos type="string">sender.processUserName();</__U_onCurPosChange-sender-oldPos-newPos>
+      <__U_onFocusChange-sender-isFocus type="string" />
+      <__U_onHeightChange-sender-oldH-newH type="string">var dy = newH - oldH;
 if (dy == 0) return;
 
 var r = eb.getDivRectSetting(sender.parentNode.c_p1);
 ee.setRect(sender.parentNode.c_p1, null, r.y + dy, null,null);
 </__U_onHeightChange-sender-oldH-newH>
-      <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml><![CDATA[var text = ee.getEditText(sender.c_edit);
+      <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml type="string"><![CDATA[var text = ee.getEditText(sender.c_edit);
 
 if (newText.split("\n").length-1>20) {
     return false;
@@ -1897,19 +1897,19 @@ sender.refresh = function(progress) {
       <widthRatio>0.114705882352941</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel156">
-      <__U_editFontColor>000000</__U_editFontColor>
-      <__U_editFontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</__U_editFontFamily>
-      <__U_editFontSize>16pt</__U_editFontSize>
-      <__U_editMaxY>300px</__U_editMaxY>
-      <__U_onCurPosChange-sender-oldPos-newPos>sender.processUserName();</__U_onCurPosChange-sender-oldPos-newPos>
-      <__U_onFocusChange-sender-isFocus />
-      <__U_onHeightChange-sender-oldH-newH>var dy = newH - oldH;
+      <__U_editFontColor type="string">000000</__U_editFontColor>
+      <__U_editFontFamily type="string">'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</__U_editFontFamily>
+      <__U_editFontSize type="string">16pt</__U_editFontSize>
+      <__U_editMaxY type="string">300px</__U_editMaxY>
+      <__U_onCurPosChange-sender-oldPos-newPos type="string">sender.processUserName();</__U_onCurPosChange-sender-oldPos-newPos>
+      <__U_onFocusChange-sender-isFocus type="string" />
+      <__U_onHeightChange-sender-oldH-newH type="string">var dy = newH - oldH;
 if (dy == 0) return;
 
 var r = eb.getDivRectSetting(sender.parentNode.c_p1);
 ee.setRect(sender.parentNode.c_p1, null, r.y + dy, null,null);
 </__U_onHeightChange-sender-oldH-newH>
-      <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml><![CDATA[var text = ee.getEditText(sender.c_edit);
+      <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml type="string"><![CDATA[var text = ee.getEditText(sender.c_edit);
 
 if (newText.split("\n").length-1>20) {
     return false;
@@ -3070,7 +3070,6 @@ g5.initButtonV3(sender,[
       <height>74</height>
       <heightRatio>0.0966057441253264</heightRatio>
       <layerName>底部功能区</layerName>
-      <layerVisible>false</layerVisible>
       <left>246</left>
       <leftRatio>0.270627062706271</leftRatio>
       <onCreate>sender.style.position="fixed";
@@ -3080,7 +3079,13 @@ sender.style.borderColor = "rgb(230,236,240)";
 sender.style.borderStyle = "solid";
 sender.style.borderBottom = "";
 sender.style.borderLeft = "";
-sender.style.borderRight = "";</onCreate>
+sender.style.borderRight = "";
+
+sender.style.top = "";
+sender.style.width = "100%";
+sender.style.height = eb.getDivRectSetting(sender).h;
+sender.style.bottom = "0px";
+</onCreate>
       <sizeRatio>0.185</sizeRatio>
       <top>218</top>
       <topRatio>0.284595300261097</topRatio>
@@ -3094,7 +3099,6 @@ sender.style.borderRight = "";</onCreate>
       <height>53</height>
       <heightRatio>0.716216216216216</heightRatio>
       <layerName>项目组列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate>sender.style.boxSizing="border-box";
 sender.style.borderWidth = "2px";
@@ -8185,6 +8189,7 @@ sender.renderItem = function(root) {
       <height>766</height>
       <heightRatio>1</heightRatio>
       <layerName>主界面弹窗黑色</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onClick>if (!ee.isInternalNode(sender, event.target)) {
     return;
@@ -9553,6 +9558,7 @@ g5.initButtonV3(sender,[
       <height>209</height>
       <heightRatio>0.272845953002611</heightRatio>
       <layerName>通用字符串输入窗口</layerName>
+      <layerVisible>false</layerVisible>
       <left>275</left>
       <leftRatio>0.302530253025303</leftRatio>
       <onAni2End>ee.setVisible(ee.getControl("panel112"), false);
@@ -11923,7 +11929,7 @@ if (x < 2) x = 0;
 
 
 var r = eb.getDivRectSetting(g5.root.mainDiv);
-ee.setRect(g5.root.p_bottom, null, scr.h - eb.getDivRectSetting(g5.root.p_bottom).h, null, null);
+//ee.setRect(g5.root.p_bottom, null, scr.h - eb.getDivRectSetting(g5.root.p_bottom).h, null, null);
 if ((r.x != x) || (r.y != 0) || (r.w != w)) {
     ee.setRect(g5.root.mainDiv, x, 0, w, null);
     ee.setRect(g5.root.p_title, x, 0, w, null);
