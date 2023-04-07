@@ -1662,757 +1662,595 @@ sender.showNewTask = function(teamId) {
       <dockX>fill</dockX>
       <dockY>top</dockY>
       <ee_LocalName>c_titleBar</ee_LocalName>
-      <height>51</height>
-      <heightRatio>0.0674603174603175</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onCreate>sender.style.boxSizing="border-box";
-sender.style.borderWidth = "1px";
-sender.style.borderColor = "#ccd6dd";
-sender.style.borderStyle = "solid";
-sender.style.borderTop = "";
-sender.style.borderLeft = "";
-sender.style.borderRight = "";
-sender.style.borderRightColor = "#e6ecf0";</onCreate>
-      <sizeRatio>0.1275</sizeRatio>
-      <top>0</top>
-      <width>400</width>
-      <widthRatio>1</widthRatio>
+      <heiull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
     </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel148/panel153">
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
       <cursor>pointer</cursor>
-      <dockY>center</dockY>
-      <height>33</height>
-      <heightRatio>0.647058823529412</heightRatio>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.05</leftRatio>
-      <onClick>history.go(-1);
-window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
-      <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
 sender.style.borderRadius = "50%";
-g5.initButtonV3(sender,[
-    new g5.BStyle("","#dfeffa","#cfdfea","","","","","","","")
-]);
-]]></onCreate>
-      <sizeRatio>1</sizeRatio>
-      <text><![CDATA[<]]></text>
-      <top>9</top>
-      <topRatio>0.176470588235294</topRatio>
-      <width>33</width>
-      <widthRatio>0.0825</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel148/panel154">
-      <ee_LocalName>c_title</ee_LocalName>
-      <fontBold>true</fontBold>
-      <fontColor>505050</fontColor>
-      <fontFamily>微软雅黑</fontFamily>
-      <fontSize>14</fontSize>
-      <hAlign>left</hAlign>
-      <height>48</height>
-      <heightRatio>0.941176470588235</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>63</left>
-      <leftRatio>0.1575</leftRatio>
-      <sizeRatio>0.231884057971014</sizeRatio>
-      <text>新建</text>
-      <top>1</top>
-      <topRatio>0.0196078431372549</topRatio>
-      <width>207</width>
-      <widthRatio>0.5175</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel148/panel155">
-      <backgroundColor>8ED0F9</backgroundColor>
-      <bgColorEnabled>true</bgColorEnabled>
-      <cursor>pointer</cursor>
-      <dockX>right</dockX>
-      <ee_LocalName>c_button</ee_LocalName>
-      <fontBold>true</fontBold>
-      <fontColor>FFFFFF</fontColor>
-      <fontFamily>微软雅黑</fontFamily>
-      <fontSize>12</fontSize>
-      <height>33</height>
-      <heightRatio>0.647058823529412</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>287</left>
-      <leftRatio>0.7175</leftRatio>
-      <onClick>if (!sender.v_enabled) return;
 
-if (sender.parentNode.parentNode.onComplete) {
-    sender.parentNode.parentNode.onComplete();
-}</onClick>
-      <onCreate>g5.initButtonV3(sender,[
-    new g5.BStyle("#1da1f2","#1a91da","#1781c2","","","","","","",""),
-    new g5.BStyle("#8ed0f9","#8ed0f9","#8ed0f9","","","","","","","")
-]);
-sender.style.borderRadius = parseInt(eb.getDivRect(sender).h/2) + "px";
-
-sender.v_enabled = true;
-sender.setEnabled = function(enabled) {
-    this.v_enabled = enabled;
-    this.init(enabled?0:1);
-}
-sender.setEnabled(false);
-
-
-
-
-
-</onCreate>
-      <outerRight>30</outerRight>
-      <sizeRatio>0.397590361445783</sizeRatio>
-      <text>新建</text>
-      <top>8</top>
-      <topRatio>0.156862745098039</topRatio>
-      <width>83</width>
-      <widthRatio>0.2075</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166">
-      <backgroundColor>F5F5F5</backgroundColor>
-      <backgroundImgMode>fill</backgroundImgMode>
-      <bgColorEnabled>true</bgColorEnabled>
-      <dockX>fill</dockX>
-      <ee_LocalName>c_editTitlePanel</ee_LocalName>
-      <fontColor>808080</fontColor>
-      <fontFamily>微软雅黑</fontFamily>
-      <fontSize>12</fontSize>
-      <hAlign>left</hAlign>
-      <height>39</height>
-      <heightRatio>0.0515873015873016</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>30</left>
-      <leftRatio>0.075</leftRatio>
-      <onCreate>sender.style.boxSizing="border-box";
-//sender.style.borderRadius = "5px";
-sender.style.borderWidth = "2px";
-sender.style.borderColor = "rgb(29,161,242)";
-sender.style.borderStyle = "solid";
-sender.style.backgroundColor = "#f5f5ff";
-sender.style.borderTop = "";
-sender.style.borderRight = "";
-sender.style.borderLeft = "";
-
-</onCreate>
-      <outerLeft>30</outerLeft>
-      <outerRight>30</outerRight>
-      <sizeRatio>0.114705882352941</sizeRatio>
-      <top>67</top>
-      <topRatio>0.0886243386243386</topRatio>
-      <width>340</width>
-      <widthRatio>0.85</widthRatio>
-    </control>
-    <control type="Edit" pathname="/divRoot/panel114/panel115/panel144/panel166/edit9">
-      <backgroundSkin>empty</backgroundSkin>
-      <dockX>fill</dockX>
-      <dockY>fill</dockY>
-      <ee_LocalName>c_edit</ee_LocalName>
-      <fontColor>C0C0C0</fontColor>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>14</fontSize>
-      <hAlign>left</hAlign>
-      <height>37</height>
-      <heightRatio>0.948717948717949</heightRatio>
-      <inputFont>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</inputFont>
-      <inputFontSize>14</inputFontSize>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <onChange>sender.parentNode.parentNode.parentNode.check();</onChange>
-      <onCreate>sender._input.addEventListener("keydown", function(event) {
-    if (event.keyCode==13) {
-        ee.getControl("edit8")._input.focus();
-        event.preventDefault();
-        return false;
-    }
-});</onCreate>
-      <outerBottom>2</outerBottom>
-      <outerRight>39</outerRight>
-      <sizeRatio>0.122923588039867</sizeRatio>
-      <text>题头提示</text>
-      <top>0</top>
-      <width>301</width>
-      <widthRatio>0.885294117647059</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel167">
-      <backgroundColor>EAEAF4</backgroundColor>
-      <dockX>right</dockX>
-      <ee_LocalName>c_progress</ee_LocalName>
-      <height>39</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>301</left>
-      <leftRatio>0.885294117647059</leftRatio>
-      <onCreate><![CDATA[sender.innerHTML = "<svg><path fill=\"none\"></path><path fill=\"none\"></path></svg>";
-sender.v_x = parseInt(eb.getDivRect(sender).w/2);
-sender.v_y = parseInt(eb.getDivRect(sender).h/2);
-sender.v_r = 9;
-sender.v_color = "#29a5f2";
-sender.v_bgColor = "#ecf0f3";
-sender.v_width = "4px";
-sender.v_progress = "0.0001";
-sender.refresh = function(progress) {
-    var path = this.childNodes[0].childNodes[0];
-    path.style.stroke=sender.v_bgColor;
-    path.style.strokeWidth=sender.v_width;
-    var des = ["M",this.v_x,this.v_y-this.v_r,"A",this.v_r,this.v_r,0,1,1,this.v_x-0.0001,this.v_y-this.v_r];
-    path.setAttribute("d", des.join(" "));
-    
-    if (!eb.isEmpty(progress)) this.v_progress = progress;
-    this.v_progress = Math.min(0.9999,this.v_progress);
-    this.v_progress = Math.max(0.0001,this.v_progress);
-    path = this.childNodes[0].childNodes[1];
-    var ag = 90+360-this.v_progress*360;  
-    var ag = ag*(Math.PI/180);
-    var dx = (this.v_x+(Math.cos(ag)*this.v_r)).toFixed(2);
-    var dy = (this.v_y-(Math.sin(ag)*this.v_r)).toFixed(2);
-    var opt = window.Number(this.v_progress>0.5);
-    des = ["M",this.v_x,(this.v_y-this.v_r)+"","A",this.v_r,this.v_r,0,opt,1,dx,dy];
-    path.style.stroke=sender.v_color;
-    path.style.strokeWidth=sender.v_width;
-    path.setAttribute("d", des.join(" "));
-}
-
-
-
-]]></onCreate>
-      <sizeRatio>1</sizeRatio>
-      <text>圆形进度条</text>
-      <top>0</top>
-      <width>39</width>
-      <widthRatio>0.114705882352941</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel166/panel168">
-      <backgroundColor>EAEAF4</backgroundColor>
-      <dockX>right</dockX>
-      <ee_LocalName>c_progressText</ee_LocalName>
-      <fontFamily>Helvetica</fontFamily>
-      <height>39</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>301</left>
-      <leftRatio>0.885294117647059</leftRatio>
-      <sizeRatio>1</sizeRatio>
-      <text>.</text>
-      <top>0</top>
-      <width>39</width>
-      <widthRatio>0.114705882352941</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel156">
-      <__U_editFontColor type="string">000000</__U_editFontColor>
-      <__U_editFontFamily type="string">'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</__U_editFontFamily>
-      <__U_editFontSize type="string">16pt</__U_editFontSize>
-      <__U_editMaxY type="string">300px</__U_editMaxY>
-      <__U_onCurPosChange-sender-oldPos-newPos type="string">sender.processUserName();</__U_onCurPosChange-sender-oldPos-newPos>
-      <__U_onFocusChange-sender-isFocus type="string" />
-      <__U_onHeightChange-sender-oldH-newH type="string">var dy = newH - oldH;
-if (dy == 0) return;
-
-var r = eb.getDivRectSetting(sender.parentNode.c_p1);
-ee.setRect(sender.parentNode.c_p1, null, r.y + dy, null,null);
-</__U_onHeightChange-sender-oldH-newH>
-      <__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml type="string"><![CDATA[var text = ee.getEditText(sender.c_edit);
-
-if (newText.split("\n").length-1>20) {
-    return false;
-}
-
-var cp = sender.getCurPosAbs();
-var sTemp = sender.convertHtml(newText);
-var ptn = /@([a-zA-Z0-9_\-]{2,20})/gim;
-sTemp = sTemp.replace(ptn, "<span style='color:#1da1f2'>@$1</span>")
-sender.c_edit.innerHTML = sTemp;
-sender.setCurPosAbs(cp);
-
-sender.processUserName();
-
-sender.parentNode.check();
-var newText = newText.trim();
-var c = ee.getControl("panel580");
-if (newText.length<180) {
-    c.v_color = "#29a5f2";
-    c.v_r = "9";
-    c.refresh(newText.length/200);
-    ee.setText(ee.getControl("panel581"), "");    
-} else if (newText.length<=200) {
-    c.v_color = "#ffad1f";
-    c.v_r = "12";
-    c.refresh(newText.length/200);    
-    ee.setText(ee.getControl("panel581"), 200-newText.length);    
-    ee.setTextColor(ee.getControl("panel581"), "#ffad1f");
-} else {
-    c.v_color = "#e0245e";
-    c.v_r = "14";
-    c.refresh((newText.length-200)/100);    
-    ee.setText(ee.getControl("panel581"), 200-newText.length);
-    ee.setTextColor(ee.getControl("panel581"), "#e0245e");
-}
-]]></__U_onInputChange-sender-key-oldText-newText-oldHtml-newHtml>
-      <backgroundColor>D3D3D3</backgroundColor>
-      <dockX>fill</dockX>
-      <ee_LocalName>c_edit</ee_LocalName>
-      <height>110</height>
-      <heightRatio>0.145502645502645</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>30</left>
-      <leftRatio>0.075</leftRatio>
-      <onCreate><![CDATA[//public
-sender.currentText = "";
-sender.currentHtml = "";
-sender.currentCurPos = 0;
-sender.getEditText = function() {
-    return this.getPlanText().replace(/\xA0/g, " ");
-}
-sender.setEditText = function(text, inOnChange) {
-    this.c_edit.innerHTML = this.convertHtml(text);
-    if (!inOnChange) this.f_onChange();
-}
-
-sender.setEditHtm = function(htmlText, inOnChange) {
-    this.c_edit.innerHTML = text;
-    if (!inOnChange) this.f_onChange();
-}
-
-sender.convertHtml = function(text) {
-    var textS = text.replace(/ /g, "\xA0").split("\n");
-    text = "";
-    for (var i=0; i<textS.length; i++) {
-        if (textS[i].length<=0) {
-            text += "<div><br\></div>";
-        } else {
-            text += "<div>" + textS[i] + "</div>";
-        }
-    }
-    return text;
-}
-
-
-//private
-var e = sender.c_edit;
-e.contentEditable = true;
-e.style.border = "none";
-e.style.outline = "none";
-e.style.height = "";
-e.style.minHeight = (eb.getDivRectSetting(sender).h - e.outerTop - e.outerBottom) + "px";
-e.style.maxHeight = sender.editMaxY;
-e.style.overflowY = "auto";
-e.style.fontFamily = sender.editFontFamily;
-e.style.fontSize = sender.editFontSize;
-e.style.color = "#" + sender.editFontColor;
-e.style.wordBreak = "break-all";
-e.style.wordWrap = "break-word";
-e.style.whiteSpace = "normal";
-e.innerHTML = "";
-eb.setDivRect(e, e.outerLeft, e.outerTop, eb.getDivRectSetting(sender).w - e.outerLeft - e.outerRight, null);
-sender.v_lastH = eb.getDivRectSetting(sender).h;
-
-sender.refreshH = function() {
-    if (this.v_lastH!=eb.getDivRect(sender.c_edit).h+e.outerTop+e.outerBottom) {
-        var lastH = this.v_lastH;
-        this.v_lastH = eb.getDivRect(sender.c_edit).h+e.outerTop+e.outerBottom;
-        ee.setRect(this,null,null,null,this.v_lastH);
-        sender.onHeightChange(this, lastH, this.v_lastH);
-    }
-}
-
-sender.onSizeChange = function(sender, rectOld, rectNew) {
-    eb.setDivRect(sender.c_edit, sender.c_edit.outerLeft, sender.c_edit.outerTop,
-        rectNew.w - sender.c_edit.outerLeft - sender.c_edit.outerRight, null);
-}
-
-sender.f_onChange = function() {
-    if (sender.v_isIme) {
-        ee.setVisible(this.c_label, this.getPlanText().length<=0); 
-        return;
-    }
-    this.refreshH();
-    var oldText = this.currentText;
-    var oldHtml = this.currentHtml;
-    this.currentText = this.getPlanText().replace(/\xA0/g, " ");
-    this.currentHtml = this.c_edit.innerHTML;
-    ee.setVisible(this.c_label, (!this.c_edit.innerHTML) || (this.c_edit.innerHTML.trim().length<=0)); 
-    if (this.onInputChange(this, this.lastKey, oldText, this.currentText, oldHtml, this.currentHtml)==false) {
-        this.setEditText(oldHtml, true);
-        this.currentHtml = oldHtml;
-        this.currentText = oldText;
-        this.setCurPosAbs(this.currentCurPos);
-    }
-}
-
-sender.CurPos = function() {
-    this.elmIndex = new Array();
-    this.curPos = 0;
-}
-   
-sender.getCurPos = function() {
-    var curPos = new this.CurPos();
-    var sel, range;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            var node = range.commonAncestorContainer;
-            while (node.parentNode) {
-                var i;
-                for (i=0; i<node.parentNode.childNodes.length; i++) {
-                    if (node.parentNode.childNodes[i] == node) {
-                        curPos.elmIndex.push(i);
-                        break;
-                    }
-                }
-                node = node.parentNode;
-                if (node == this.c_edit) break;
-            }
-            curPos.curPos = range.endOffset;
-        }
-    } else if (document.selection &amp;&amp; document.selection.createRange) {
-        console.log("not perform");
-        range = document.selection.createRange();
-        if (range.parentElement() == this.c_edit) {
-            var tempEl = document.createElement("span");
-            this.c_edit.insertBefore(tempEl, this.c_edit.firstChild);
-            var tempRange = range.duplicate();
-            tempRange.moveToElementText(tempEl);
-            tempRange.setEndPoint("EndToEnd", range);
-            caretPos = tempRange.text.length;
-        }
-    }
-    return curPos;
-}
-
-sender.setCurPos = function(curPos) {
-    var range = document.createRange()
-    var sel = window.getSelection()
-    var node = this.c_edit;
-    for (var i=curPos.elmIndex.length-1; i>=0; i--) {
-        if (!node.childNodes[curPos.elmIndex[i]]) break;
-        node = node.childNodes[curPos.elmIndex[i]];
-    }
-    range.setStart(node, curPos.curPos);
-    range.collapse(true)
-    sel.removeAllRanges()
-    sel.addRange(range)
-}
-
-sender.getCurPosAbs = function() {
-    var curPos = this.getCurPos();
-    var nodeSel = this.c_edit;
-    for (var i=curPos.elmIndex.length-1; i>=0; i--) {
-        if (!nodeSel.childNodes[curPos.elmIndex[i]]) break;
-        nodeSel = nodeSel.childNodes[curPos.elmIndex[i]];
-    }
-    var pos = 0;
-    var addPos = function(node) {
-        for (var i=0; i<node.childNodes.length; i++) {
-            if (node.childNodes[i] == nodeSel) {
-                if (nodeSel.nodeName.toUpperCase() =="DIV") pos++;
-                pos += curPos.curPos;
-                return true;
-            }
-            if (node.childNodes[i].nodeName.toUpperCase() == "DIV") {
-                if (i>0) pos++;
-                if (addPos(node.childNodes[i])) return true;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "BR") {
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "SPAN") {
-                if (addPos(node.childNodes[i])) return true;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "#TEXT") {
-                pos += node.childNodes[i].textContent.length;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "A") {
-                pos += node.childNodes[i].textContent.length;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "H1") {
-                pos += node.childNodes[i].textContent.length;
-            }
-        }
-        return false;
-    }
-    addPos(this.c_edit);
-    return pos;
-}
-
-sender.setCurPosAbs = function(absPos) {
-    var pos = 0;
-    var setNode, setPos;
-    var addPos = function(node) {
-        for (var i=0; i<node.childNodes.length; i++) {
-            if (node.childNodes[i].nodeName.toUpperCase() == "DIV") {
-                if (i>0) pos++;
-                if (pos>=absPos) {
-                    if (node.childNodes[i].childNodes.length>0) {
-                        setNode = node.childNodes[i].childNodes[0];
-                    } else {
-                        setNode = node.childNodes[i];
-                    }
-                    setPos = 0;
-                    return true;
-                }
-                if (addPos(node.childNodes[i])) return true;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "BR") {
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "SPAN") {
-                if (addPos(node.childNodes[i])) return true;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "#TEXT") {
-                if (pos+node.childNodes[i].textContent.length>=absPos) {
-                    setNode = node.childNodes[i];
-                    setPos = absPos - pos;
-                    return true;
-                }
-                pos += node.childNodes[i].textContent.length;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "A") {
-                if (pos+node.childNodes[i].textContent.length>=absPos) {
-                    setNode = node.childNodes[i];
-                    setPos = absPos - pos;
-                    return true;
-                }
-                pos += node.childNodes[i].textContent.length;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "H1") {
-                if (pos+node.childNodes[i].textContent.length>=absPos) {
-                    setNode = node.childNodes[i];
-                    setPos = absPos - pos;
-                    return true;
-                }
-                pos += node.childNodes[i].textContent.length;
-            }
-        }
-        return false;
-    }
-    addPos(this.c_edit);
-    var range = document.createRange()
-    var sel = window.getSelection()
-    range.setStart(setNode, setPos);
-    range.collapse(true)
-    sel.removeAllRanges()
-    sel.addRange(range)
-}
-
-sender.getPlanText = function() {
-    var text = "";
-    var addPos = function(node) {
-        for (var i=0; i<node.childNodes.length; i++) {
-            if (node.childNodes[i].nodeName.toUpperCase() == "DIV") {
-                if (i>0) text += "\n";
-                addPos(node.childNodes[i]);
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "BR") {
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "SPAN") {
-                text += node.childNodes[i].textContent;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "#TEXT") {
-                text += node.childNodes[i].textContent;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "A") {
-                text += node.childNodes[i].textContent;
-            } else if (node.childNodes[i].nodeName.toUpperCase() == "H1") {
-                text += node.childNodes[i].textContent;
-            } else {
-                console.log("undefined node name: " + node.childNodes[i].nodeName);
-            }
-        }
-        return false;
-    }
-    addPos(this.c_edit);
-    return text;
-}
-
-e.onkeydown = function(event) {
-    sender.lastCurPos = sender.getCurPos();
-    sender.lastKey = {};
-    sender.lastKey.key = event.key;
-    sender.lastKey.keyCode = event.keyCode;
-    sender.lastKey.shiftKey = event.shiftKey;
-    sender.lastKey.ctrlKey = event.ctrlKey;
-    sender.lastKey.altKey = event.altKey;
-}
-
-e.oninput = function(event) {
-    sender.f_onChange();
-}
-
-e.onpaste = function() {
-    //sender.f_onChange();
-}
-
-e.onfocus = function() {
-    document.addEventListener("selectionchange", sender.f_onSelectionChange, false);
-}
-
-e.onblur = function() {
-    document.removeEventListener("selectionchange", sender.f_onSelectionChange, false);
-}
-
-sender.f_onSelectionChange = function(event) {
-    var oldPos = sender.currentCurPos;
-    sender.currentCurPos = sender.getCurPosAbs();
-    if (oldPos!=sender.currentCurPos) {
-        if (sender.onCurPosChange) {
-            sender.onCurPosChange(sender,oldPos,sender.currentCurPos);
-        }
-    }
-}
-
-sender.c_edit.addEventListener("compositionstart", function(event) {
-    sender.v_isIme = true;
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
 });
 
-sender.c_edit.addEventListener("compositionupdate", function(event) {
-    //console.log("ime update");
-});
 
-sender.c_edit.addEventListener("compositionend", function(event) {
-    sender.v_isIme = false;
-    sender.f_onChange();
-});
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
 
-sender.c_edit.addEventListener("touchstart", function(event) {
-    window.event? window.event.cancelBubble = true : event.stopPropagation();
-    return;
-});
-
-//user
-sender.getUsername = function() {
-    var newText = this.getEditText();
-    var cp = this.getCurPosAbs();
-    var i;
-    for (i=cp-1; i>=0; i--) {
-        if (newText.charAt(i)=="@") break;
-    }
-    if (i<0) return "";
-    var pos = i;
-    var userName = "";
-    for (i=pos+1; i<=newText.length; i++) {
-        var ch = newText.charAt(i);
-        if ((ch>="a" &amp;&amp; ch<="z") ||
-            (ch>="A" &amp;&amp; ch<="Z") ||
-            (ch>="0" &amp;&amp; ch<="9") ||
-            (ch=="_") || (ch=="-")) {
-            userName += ch;
-        } else break;
-    }
-    if (userName.length<2) return "";
-    if (i<=cp-1) return "";
-    userName = userName.substr(0,20);
-    return userName;
-}
-
-sender.setUsername = function(username) {
-    var cp = sender.getCurPosAbs();
-    var newText = sender.getEditText();
-    var i;
-    for (i=cp-1; i>=0; i--) {
-        if (newText.charAt(i)=="@") break;
-    }
-    if (i<0) return;
-    var pos = i+1;
-    for (i=pos; i<=newText.length; i++) {
-        var ch = newText.charAt(i);
-        if ((ch>="a" &amp;&amp; ch<="z") ||
-            (ch>="A" &amp;&amp; ch<="Z") ||
-            (ch>="0" &amp;&amp; ch<="9") ||
-            (ch=="_") || (ch=="-")) {
-        } else break;
-    }
-    if (i-pos<2) return;
-    if (i<=cp-1) return;
-    if (i-pos>20) i=20-pos;
-    var s = newText.substr(0, pos);
-    s += username;
-    if (i>=newText.length) {
-        s += " ";
-    } else if (newText.charAt(i)=="\n") {
-        s += " " + newText.substr(i);
-    } else {
-        s += newText.substr(i);
-    }
-    
-    var sTemp = sender.convertHtml(s);
-    var ptn = /@([a-zA-Z0-9_\-]{2,20})/gim;
-    sTemp = sTemp.replace(ptn, "<span style='color:#1da1f2'>@$1</span>")
-    sender.c_edit.innerHTML = sTemp;
-    sender.setCurPosAbs(i+1);
-}
-
-sender.processUserName = function() {
-    var userName = this.getUsername();
-    return;
-    if (userName.length>0) {
-        g5.p2.p34.show(sender, userName, function(username) {
-            sender.setUsername(username);
-            sender.c_edit.blur();
-        });
-    } else g5.p2.p34.close();
-}
-]]></onCreate>
-      <outerLeft>30</outerLeft>
-      <outerRight>30</outerRight>
-      <sizeRatio>0.323529411764706</sizeRatio>
-      <top>112</top>
-      <topRatio>0.148148148148148</topRatio>
-      <userProperty>//#P:editFontFamily|多行文字录入V2|'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif|string||用户输入文字的字体样式
-//#P:editFontColor|多行文字录入V2|404040|color||用户输入文字的字体颜色
-//#P:editFontSize|多行文字录入V2|12pt|string||用户输入文字的大小
-//#P:editMaxY|多行文字录入V2|300px|string||编辑框最大高度
-//#P:onHeightChange(sender,oldH,newH)|多行文字录入V2||jsMix||由于用户的输入导致编辑框产生的高度变化。sender:触发事件的控件，oldH:旧的高度，newH:新的高度
-//#P:onInputChange(sender,key,oldText,newText,oldHtml,newHtml)|多行文字录入V2||jsMix||由于用户的输入导致内容改变，返回false表示取消本次修改。sender:触发事件的控件，key:用户按键，oldText:旧的内容，newText:新的内容，oldHtml:旧内容html形式，newHtml:新内容html形式
-//#P:onFocusChange(sender,isFocus)|多行文字录入V2||jsMix||焦点发生变化。sender:触发事件的控件，isFocus:是否触发了焦点
-//#P:onCurPosChange(sender,oldPos,newPos)|多行文字录入V2||jsMix||光标位置发生变化。sender:触发事件的控件，oldPos:原来的光标位置；newPos:新的光标位置；
-
-
-
-</userProperty>
-      <width>340</width>
-      <widthRatio>0.85</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel156/panel157">
-      <dockX>fill</dockX>
-      <dockY>fill</dockY>
-      <ee_LocalName>c_label</ee_LocalName>
-      <fontColor>9197A3</fontColor>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>16</fontSize>
-      <hAlign>left</hAlign>
-      <height>110</height>
-      <heightRatio>1</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>0</left>
-      <sizeRatio>0.323529411764706</sizeRatio>
-      <text>在这里输入您的发言内容</text>
-      <top>0</top>
-      <vAlign>top</vAlign>
-      <width>340</width>
-      <widthRatio>1</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel156/panel158">
-      <backgroundColor>FFFFFF</backgroundColor>
-      <ee_LocalName>c_edit</ee_LocalName>
-      <fontColor>404040</fontColor>
-      <fontFamily>'Segoe UI', Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif</fontFamily>
-      <fontSize>12</fontSize>
-      <hAlign>left</hAlign>
-      <height>26</height>
-      <heightRatio>0.236363636363636</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>16</left>
-      <leftRatio>0.0470588235294118</leftRatio>
-      <outerBottom>2</outerBottom>
-      <outerLeft>5</outerLeft>
-      <outerRight>2</outerRight>
-      <outerTop>2</outerTop>
-      <sizeRatio>0.257425742574257</sizeRatio>
-      <top>15</top>
-      <topRatio>0.136363636363636</topRatio>
-      <v_color1>FFC0C0</v_color1>
-      <v_Str>as223</v_Str>
-      <vAlign>top</vAlign>
-      <width>101</width>
-      <widthRatio>0.297058823529412</widthRatio>
-    </control>
-    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159">
-      <dockX>fill</dockX>
-      <ee_LocalName>c_p1</ee_LocalName>
-      <height>401</height>
-      <heightRatio>0.53042328042328</heightRatio>
-      <layerVisible>false</layerVisible>
-      <left>30</left>
-      <leftRatio>0.075</leftRatio>
-      <onCreate>sender.resize = function() {
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
     eb.processDock();
-    var ratio = 0.6185;
-    var r = eb.getDivRectSetting(ee.getControl("panel585"));
-    var h = parseInt(r.w *ratio);
-    ee.setRect(ee.getControl("panel585"), null,null,null,h);
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
+    ee.setRect(this, null, null, null, r.y + r.h + 100);
+    eb.processDock();
+}
+</onCreate>
+      <outerLeft>30</outerLeft>
+      <outerRight>30</outerRight>
+      <sizeRatio>1.17941176470588</sizeRatio>
+      <top>233</top>
+      <topRatio>0.308201058201058</topRatio>
+      <width>340</width>
+      <widthRatio>0.85</widthRatio>
+    </control>
+    <control type="Panel" pathname="/divRoot/panel114/panel115/panel144/panel159/panel160">
+      <backgroundColor>008080</backgroundColor>
+      <cursor>pointer</cursor>
+      <height>36</height>
+      <heightRatio>0.0897755610972569</heightRatio>
+      <layerVisible>false</layerVisible>
+      <left>20</left>
+      <leftRatio>0.0588235294117647</leftRatio>
+      <onClick>if (event.target.tagName.toUpperCase() == "INPUT") return;
+var photoRoot = sender.parentNode.parentNode.c_photos;
+g5.uploadPhotoCheck(photoRoot,true,function() {
+    sender.c_file.blur();
+    sender.c_file.click();
+});
+</onClick>
+      <onCreate><![CDATA[sender.maxSqr = 700*700;
+sender.compressRatio = 0.85;
+
+sender.innerHTML = "<svg viewBox=\"0 0 24 24\" style=\"font-size: 13px;height:1.5em;width:1.5em;margin:8px 8px 8px 8px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\"><g><path d=\"M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z\"></path><circle cx=\"8.868\" cy=\"8.309\" r=\"1.542\"></circle></g></svg>";
+sender.style.borderRadius = "50%";
+
+ee.setOnMouseEnter(sender, function(sender,event) {
+    sender.style.backgroundColor = "#dfeffa";
+});    
+ee.setOnMouseLeave(sender, function(sender,event) {
+    sender.style.backgroundColor = "";
+});
+
+
+//implementation
+var c = document.createElement("input");
+c.setAttribute("type", "file");
+c.setAttribute("accept", "image/*");
+c.setAttribute("style", "position:absolute;width:1px;height:1px;left:-200px;top:-200px;");
+sender.insertBefore(c, sender.childNodes[0]);
+sender.c_file = c;
+
+c.addEventListener("change", function() {
+    if (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob) { 
+        var file = sender.c_file.files[0];
+        var pos = file.name.lastIndexOf(".");
+        var fileExt = pos<0 ? "" : file.name.substring(pos);
+        
+        //onUserSelectedFile(file.name,fileExt)
+        fileExt = fileExt.toLowerCase();
+        if ((fileExt != ".bmp") &amp;&amp;
+            (fileExt != ".jpg") &amp;&amp;
+            (fileExt != ".jpeg") &amp;&amp;
+            (fileExt != ".png") &amp;&amp;
+            (fileExt != ".tif") &amp;&amp;
+            (fileExt != ".tiff")) return;
+        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) {
+            g5.alert1("提示", "对不起，您最多只能上传4张图片。");
+            return;
+        }         
+        
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var blob = new Blob([event.target.result]); 
+            window.URL = window.URL || window.webkitURL;
+            var blobURL = window.URL.createObjectURL(blob); 
+            var image = new Image();
+            image.src = blobURL;
+            image.onload = function() {
+                sender.v_data = sender.resize(image);
+                if (sender.v_data) {
+                    //upload immediately
+                    uploadImage.data = sender.v_data;
+                    uploadImage.controlName = sender.id;
+                    uploadImage.onComplete = function() {
+                        if (sender.parentNode.parentNode.c_photos.v_photos.length>=4) return;
+                        sender.parentNode.parentNull,null,null,h);
     ee.setRect(this, null, null, null, r.y + r.h + 100);
     eb.processDock();
 }
