@@ -3508,16 +3508,15 @@ sender.show = function() {
     this.parentNode.changePage(this);
 }
 
-sender.activePage = function() {
-    g5.pushHistory2("/settings/password");
+sender.onActive = function() {
+    g5.pushHistory2("/PA/settings/account/password");
     g5.pageMode = 0;
     g5.refreshMain(true);
     ee.setVisible(this, true);
     ee.tiledResizeV(this, 2);
 }
 
-sender.close = function() {
-    ee.setVisible(this, false);
+sender.onDeactive = function() {
 }
 
                                 
@@ -13164,6 +13163,8 @@ if (pn=="/PA/team") {
     g5.root.mainDiv.p1.p5.showNewTeam();
 } else if (pn=="/PA/settings/account") {
     g5.root.mainDiv.p1.p6.show();
+} else if (pn=="/PA/settings/account/password") {
+    g5.root.mainDiv.p1.p7.show();
 } else if (pn=="/login") {
     eb.delCookie("paToken");
     window.location.href = ee.getUrl("/login");
