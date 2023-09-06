@@ -2671,6 +2671,7 @@ sender.v_photos = new Array();</onCreate>
       <height>780</height>
       <heightRatio>1.19083969465649</heightRatio>
       <layerName>设置-账号</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate><![CDATA[sender.show = function() {
     document.documentElement.scrollTop = 0;
@@ -3490,21 +3491,26 @@ sender.setEnabled(true);
       <height>702</height>
       <heightRatio>1.07175572519084</heightRatio>
       <layerName>设置-账号-修改密码</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
-      <onCreate><![CDATA[sender.refresh = function() {
-    ee.getControl("panel248").setEnabled(
-        (ee.getEditText(ee.getControl("edit8")).length>0) &amp;&amp;
-        (ee.getEditText(ee.getControl("edit9")).length>0) &amp;&amp;
-        (ee.getEditText(ee.getControl("edit10")).length>0)
+      <onCreate><![CDATA[sender.c_edit1 = sender.pBody.p1.e1;
+sender.c_edit2 = sender.pBody.p2.e1;
+sender.c_edit3 = sender.pBody.p3.e1;
+sender.c_button1 = sender.pBody.c_button1;
+
+
+sender.refresh = function() {
+    sender.c_button1.setEnabled(
+        (ee.getEditText(sender.c_edit1).length>0) &amp;&amp;
+        (ee.getEditText(sender.c_edit2).length>0) &amp;&amp;
+        (ee.getEditText(sender.c_edit3).length>0)
     );
 }
 
 sender.show = function() {
-    ee.setEditText(ee.getControl("edit8"),"");
-    ee.setEditText(ee.getControl("edit9"),"");
-    ee.setEditText(ee.getControl("edit10"),"");
-    ee.getControl("panel248").setEnabled(false);
+    ee.setEditText(sender.c_edit1,"");
+    ee.setEditText(sender.c_edit2,"");
+    ee.setEditText(sender.c_edit3,"");
+    sender.c_button1.setEnabled(false);
     this.parentNode.changePage(this);
 }
 
@@ -3594,6 +3600,7 @@ g5.initButtonV3(sender,[
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236">
       <bindTop>bottom</bindTop>
       <dockX>fill</dockX>
+      <ee_LocalName>pBody</ee_LocalName>
       <height>399</height>
       <heightRatio>0.568376068376068</heightRatio>
       <layerVisible>false</layerVisible>
@@ -3605,7 +3612,7 @@ sender.style.borderStyle = "solid";
 sender.style.borderTop = "";
 sender.style.borderLeft = "";</onCreate>
       <outerTop>53</outerTop>
-      <sizeRatio>0.665</sizeRatio>
+      <sizeRatio>0.9975</sizeRatio>
       <top>53</top>
       <topRatio>0.0754985754985755</topRatio>
       <width>400</width>
@@ -3615,21 +3622,22 @@ sender.style.borderLeft = "";</onCreate>
       <backgroundColor>F5F8FA</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
+      <ee_LocalName>p1</ee_LocalName>
       <height>66</height>
       <heightRatio>0.165413533834586</heightRatio>
       <layerVisible>false</layerVisible>
       <left>10</left>
-      <leftRatio>0.0166666666666667</leftRatio>
+      <leftRatio>0.025</leftRatio>
       <onCreate>sender.style.borderRadius = "4px";
 </onCreate>
       <outerLeft>10</outerLeft>
       <outerRight>10</outerRight>
       <outerTop>10</outerTop>
-      <sizeRatio>0.113793103448276</sizeRatio>
+      <sizeRatio>0.173684210526316</sizeRatio>
       <top>10</top>
       <topRatio>0.025062656641604</topRatio>
       <width>380</width>
-      <widthRatio>0.966666666666667</widthRatio>
+      <widthRatio>0.95</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel237/panel238">
       <backgroundImgMode>fill</backgroundImgMode>
@@ -3652,6 +3660,7 @@ sender.style.borderLeft = "";</onCreate>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel237/edit11">
       <backgroundSkin>empty</backgroundSkin>
       <dockX>fill</dockX>
+      <ee_LocalName>e1</ee_LocalName>
       <fontFamily>微软雅黑</fontFamily>
       <fontSize>14</fontSize>
       <height>41</height>
@@ -3661,16 +3670,16 @@ sender.style.borderLeft = "";</onCreate>
       <inputPassword>true</inputPassword>
       <layerVisible>false</layerVisible>
       <left>15</left>
-      <leftRatio>0.0258620689655172</leftRatio>
+      <leftRatio>0.0394736842105263</leftRatio>
       <onChange>ee.getControl("panel231").refresh();
 </onChange>
       <outerLeft>15</outerLeft>
       <outerRight>15</outerRight>
-      <sizeRatio>0.0745454545454545</sizeRatio>
+      <sizeRatio>0.117142857142857</sizeRatio>
       <top>25</top>
       <topRatio>0.378787878787879</topRatio>
       <width>350</width>
-      <widthRatio>0.948275862068966</widthRatio>
+      <widthRatio>0.921052631578947</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel237/panel239">
       <backgroundColor>657786</backgroundColor>
@@ -3696,21 +3705,22 @@ sender.style.borderLeft = "";</onCreate>
       <backgroundColor>F5F8FA</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
+      <ee_LocalName>p2</ee_LocalName>
       <height>66</height>
       <heightRatio>0.165413533834586</heightRatio>
       <layerVisible>false</layerVisible>
       <left>10</left>
-      <leftRatio>0.0166666666666667</leftRatio>
+      <leftRatio>0.025</leftRatio>
       <onCreate>sender.style.borderRadius = "4px";
 </onCreate>
       <outerLeft>10</outerLeft>
       <outerRight>10</outerRight>
       <outerTop>10</outerTop>
-      <sizeRatio>0.113793103448276</sizeRatio>
+      <sizeRatio>0.173684210526316</sizeRatio>
       <top>123</top>
       <topRatio>0.308270676691729</topRatio>
       <width>380</width>
-      <widthRatio>0.966666666666667</widthRatio>
+      <widthRatio>0.95</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel240/panel241">
       <backgroundImgMode>fill</backgroundImgMode>
@@ -3733,6 +3743,7 @@ sender.style.borderLeft = "";</onCreate>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel240/edit13">
       <backgroundSkin>empty</backgroundSkin>
       <dockX>fill</dockX>
+      <ee_LocalName>e1</ee_LocalName>
       <fontFamily>微软雅黑</fontFamily>
       <fontSize>14</fontSize>
       <height>41</height>
@@ -3742,15 +3753,15 @@ sender.style.borderLeft = "";</onCreate>
       <inputPassword>true</inputPassword>
       <layerVisible>false</layerVisible>
       <left>15</left>
-      <leftRatio>0.0258620689655172</leftRatio>
+      <leftRatio>0.0394736842105263</leftRatio>
       <onChange>ee.getControl("panel231").refresh();</onChange>
       <outerLeft>15</outerLeft>
       <outerRight>15</outerRight>
-      <sizeRatio>0.0745454545454545</sizeRatio>
+      <sizeRatio>0.117142857142857</sizeRatio>
       <top>25</top>
       <topRatio>0.378787878787879</topRatio>
       <width>350</width>
-      <widthRatio>0.948275862068966</widthRatio>
+      <widthRatio>0.921052631578947</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel240/panel249">
       <backgroundColor>657786</backgroundColor>
@@ -3776,21 +3787,22 @@ sender.style.borderLeft = "";</onCreate>
       <backgroundColor>F5F8FA</backgroundColor>
       <bgColorEnabled>true</bgColorEnabled>
       <dockX>fill</dockX>
+      <ee_LocalName>p3</ee_LocalName>
       <height>66</height>
       <heightRatio>0.165413533834586</heightRatio>
       <layerVisible>false</layerVisible>
       <left>10</left>
-      <leftRatio>0.0166666666666667</leftRatio>
+      <leftRatio>0.025</leftRatio>
       <onCreate>sender.style.borderRadius = "4px";
 </onCreate>
       <outerLeft>10</outerLeft>
       <outerRight>10</outerRight>
       <outerTop>10</outerTop>
-      <sizeRatio>0.113793103448276</sizeRatio>
+      <sizeRatio>0.173684210526316</sizeRatio>
       <top>210</top>
       <topRatio>0.526315789473684</topRatio>
       <width>380</width>
-      <widthRatio>0.966666666666667</widthRatio>
+      <widthRatio>0.95</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel243/panel244">
       <backgroundImgMode>fill</backgroundImgMode>
@@ -3813,6 +3825,7 @@ sender.style.borderLeft = "";</onCreate>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel243/edit10">
       <backgroundSkin>empty</backgroundSkin>
       <dockX>fill</dockX>
+      <ee_LocalName>e1</ee_LocalName>
       <fontFamily>微软雅黑</fontFamily>
       <fontSize>14</fontSize>
       <height>41</height>
@@ -3822,15 +3835,15 @@ sender.style.borderLeft = "";</onCreate>
       <inputPassword>true</inputPassword>
       <layerVisible>false</layerVisible>
       <left>15</left>
-      <leftRatio>0.0258620689655172</leftRatio>
+      <leftRatio>0.0394736842105263</leftRatio>
       <onChange>ee.getControl("panel231").refresh();</onChange>
       <outerLeft>15</outerLeft>
       <outerRight>15</outerRight>
-      <sizeRatio>0.0745454545454545</sizeRatio>
+      <sizeRatio>0.117142857142857</sizeRatio>
       <top>25</top>
       <topRatio>0.378787878787879</topRatio>
       <width>350</width>
-      <widthRatio>0.948275862068966</widthRatio>
+      <widthRatio>0.921052631578947</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236/panel243/panel250">
       <backgroundColor>657786</backgroundColor>
@@ -3885,6 +3898,7 @@ sender.style.borderLeft = "";</onCreate>
       <bgColorEnabled>true</bgColorEnabled>
       <cursor>pointer</cursor>
       <dockX>right</dockX>
+      <ee_LocalName>c_button1</ee_LocalName>
       <fontBold>true</fontBold>
       <fontColor>FFFFFF</fontColor>
       <fontFamily>微软雅黑</fontFamily>
@@ -3893,7 +3907,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.100250626566416</heightRatio>
       <layerVisible>false</layerVisible>
       <left>302</left>
-      <leftRatio>0.836666666666667</leftRatio>
+      <leftRatio>0.755</leftRatio>
       <onClick>if (!sender.v_enabled) return;
 var p1 = ee.getEditText(ee.getControl("edit8"));
 var p2 = ee.getEditText(ee.getControl("edit9"));
@@ -3941,7 +3955,7 @@ sender.setEnabled(true);
       <top>323</top>
       <topRatio>0.80952380952381</topRatio>
       <width>83</width>
-      <widthRatio>0.138333333333333</widthRatio>
+      <widthRatio>0.2075</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel125">
       <backgroundColor>FFFFFF</backgroundColor>
