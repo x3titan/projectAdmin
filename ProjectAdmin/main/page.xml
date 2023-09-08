@@ -3908,7 +3908,7 @@ sender.style.borderLeft = "";</onCreate>
       <layerVisible>false</layerVisible>
       <left>302</left>
       <leftRatio>0.755</leftRatio>
-      <onClick>if (!sender.v_enabled) return;
+      <onClick><![CDATA[if (!sender.v_enabled) return;
 var p1 = ee.getEditText(sender.c_root.c_edit1);
 var p2 = ee.getEditText(sender.c_root.c_edit2);
 var p3 = ee.getEditText(sender.c_root.c_edit3);
@@ -3916,15 +3916,19 @@ if (p2!=p3) {
     g5.alert1("提示", "新密码两次输入的不一致，请重新输入");
     return;
 }
+if (p2.length<=0) {
+    alert("密码不能为空");
+    return;
+}
 
-changePassword.old = p1;
-changePassword.new = p2;
-changePassword.onComplete = function(参数) {
+modifyPassword.old = p1;
+modifyPassword.new = p2;
+modifyPassword.onComplete = function(参数) {
     g5.alert1("提示", "密码修改完成，请牢记您的新密码");
     history.go(-1); 
 }
-changePassword();
-</onClick>
+modifyPassword();
+]]></onClick>
       <onCreate>sender.c_root = sender.parentNode.parentNode;
 ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));
 g5.initButtonV3(sender,[
@@ -11612,22 +11616,17 @@ eio.appendString8("T");]]></script2>
 taskDetail();</script3>
     </taskSetItem>
     <taskSetItem name="modifyPassword">
-      <script1><![CDATA[g5.modifyPassword1 = ee.getEditText(ee.getControl("edit3"));
-g5.modifyPassword2 = ee.getEditText(ee.getControl("edit4"));
-if (g5.modifyPassword1.length<=0) {
-    alert("密码不能为空");
-    return;
-}
-if (g5.modifyPassword1 != g5.modifyPassword2) {
-    alert("您两次输入的密码不一致");
-    return;
-}
+      <script1>//old,new,onComplete
 eio.appendString8(eb.getCookie("paToken"));
-eio.appendString8(g5.modifyPassword1);
+eio.appendString8(modifyPassword.old);
+eio.appendString8(modifyPassword.new);
 
-]]></script1>
+</script1>
       <script2><![CDATA[var sql,sqlResult;
 var token = eio.readString8();
+var pw1 = eio.readString8();
+var pw2 = eio.readString8();
+
 sql = "exec getUserInfoBySession '" + db.encode(token) + "'";
 sqlResult = db.executeQuery("PJ", sql);
 if (sqlResult == null) {
@@ -11643,23 +11642,39 @@ if (db.getString(sqlResult, "sessionId").length < 5) {
 }
 var userId = db.getString(sqlResult, "id");
 
-var password = eio.readString8();
-password = es.getMd5(password);
-sql = "update userInfo set [password] = '" + password + "' where id = " + userId;
-sqlResult = db.executeNoneQuery("PJ", sql);
-if (!sqlResult) {
+sql = "select * from userInfo where id = '"+ userId + "' and [password] = '"+ es.getMd5(pw1) + "'";
+sqlResult = db.executeQuery("PJ", sql);
+if (sqlResult == null) {
     eio.appendString8("F");
-    es.logWarning("系统繁忙请稍候再试");
+    eio.appendString8("系统繁忙请稍后再试");
     return;
 }
-eio.appendString8("T");]]></script2>
+if (!db.read(sqlResult)) {
+    eio.appendString8("F");
+    eio.appendString8("对不起，您输入的原密码不正确，密码修改失败");
+    es.logCommon("用户修改密码失败,passwordWrong=" + pw1);
+    return;
+} 
+
+sql = "update userInfo set password = '" + es.getMd5(pw2) + "'" +
+    " where id = '" + db.encode(userId) + "'";
+if (!db.executeNoneQuery("PJ", sql)) {
+    eio.appendString8("F");
+    eio.appendString8("系统繁忙请稍后再试");
+} else {
+    eio.appendString8("T");
+}    
+]]></script2>
       <script3>if (eio.readString8()!="T") {
-    alert("无法修改密码：" + eio.readString8());
+    g5.alert1("提示", "无法修改密码：" + eio.readString8());
     return;
 }
 
-alert("修改密码成功");
-ee.setVisible(ee.getControl("panel45"),false);</script3>
+if (!eb.isEmpty(modifyPassword.onComplete)) {
+    modifyPassword.onComplete();
+    modifyPassword.onComplete = null;
+}
+</script3>
     </taskSetItem>
     <taskSetItem name="addUser">
       <script1><![CDATA[var m = ee.getEditText(ee.getControl("edit5"));
