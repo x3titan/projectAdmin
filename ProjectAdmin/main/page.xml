@@ -3921,6 +3921,7 @@ if (p2.length<=0) {
     return;
 }
 
+
 modifyPassword.old = p1;
 modifyPassword.new = p2;
 modifyPassword.onComplete = function(参数) {
