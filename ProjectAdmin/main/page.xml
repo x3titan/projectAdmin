@@ -3909,9 +3909,9 @@ sender.style.borderLeft = "";</onCreate>
       <left>302</left>
       <leftRatio>0.755</leftRatio>
       <onClick>if (!sender.v_enabled) return;
-var p1 = ee.getEditText(ee.getControl("edit8"));
-var p2 = ee.getEditText(ee.getControl("edit9"));
-var p3 = ee.getEditText(ee.getControl("edit10"));
+var p1 = ee.getEditText(sender.c_root.c_edit1);
+var p2 = ee.getEditText(sender.c_root.c_edit2);
+var p3 = ee.getEditText(sender.c_root.c_edit3);
 if (p2!=p3) {
     g5.alert1("提示", "新密码两次输入的不一致，请重新输入");
     return;
@@ -3925,7 +3925,7 @@ changePassword.onComplete = function(参数) {
 }
 changePassword();
 </onClick>
-      <onCreate>
+      <onCreate>sender.c_root = sender.parentNode.parentNode;
 ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));
 g5.initButtonV3(sender,[
     new g5.BStyle("#1da1f2","#1a91da","#1781c2","","","","","","",""),
