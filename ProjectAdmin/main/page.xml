@@ -3366,7 +3366,7 @@ sender.style.borderTop = "";
 sender.style.borderLeft = "";
 sender.style.borderRightColor = "#e6ecf0";
 </onCreate>
-      <sizeRatio>0.085</sizeRatio>
+      <sizeRatio>0.1275</sizeRatio>
       <top>0</top>
       <width>400</width>
       <widthRatio>1</widthRatio>
@@ -3383,14 +3383,14 @@ sender.style.borderRightColor = "#e6ecf0";
       <heightRatio>1</heightRatio>
       <layerVisible>false</layerVisible>
       <left>60</left>
-      <leftRatio>0.1</leftRatio>
+      <leftRatio>0.15</leftRatio>
       <onClick>g5.mainDiv.scrollTop = 0;</onClick>
       <onCreate>ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));</onCreate>
       <sizeRatio>0.172297297297297</sizeRatio>
       <text>修改密码</text>
       <top>0</top>
       <width>296</width>
-      <widthRatio>0.493333333333333</widthRatio>
+      <widthRatio>0.74</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel234/panel228">
       <cursor>pointer</cursor>
@@ -3399,7 +3399,7 @@ sender.style.borderRightColor = "#e6ecf0";
       <heightRatio>0.647058823529412</heightRatio>
       <layerVisible>false</layerVisible>
       <left>20</left>
-      <leftRatio>0.0333333333333333</leftRatio>
+      <leftRatio>0.05</leftRatio>
       <onClick>history.go(-1);
 window.event? window.event.cancelBubble = true : event.stopPropagation();</onClick>
       <onCreate><![CDATA[sender.innerHTML = "<svg viewBox=\"0 0 26 26\" style=\"font-size: 13px;height:2.0em;width:2.0em;margin:5px 0px 0px 4px;color:rgb(29,161,242);fill: currentcolor;vertical-align:middle;\">"+g5.icon.back+"</svg>";
@@ -3413,7 +3413,7 @@ g5.initButtonV3(sender,[
       <top>9</top>
       <topRatio>0.176470588235294</topRatio>
       <width>33</width>
-      <widthRatio>0.055</widthRatio>
+      <widthRatio>0.0825</widthRatio>
     </control>
     <control type="Panel" pathname="/divRoot/panel114/panel115/panel231/panel236">
       <bindTop>bottom</bindTop>
@@ -3467,13 +3467,13 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.424242424242424</heightRatio>
       <layerVisible>false</layerVisible>
       <left>9</left>
-      <leftRatio>0.0155172413793103</leftRatio>
+      <leftRatio>0.0236842105263158</leftRatio>
       <onCreate>ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));</onCreate>
       <sizeRatio>0.0972222222222222</sizeRatio>
       <text>当前密码</text>
       <top>0</top>
       <width>288</width>
-      <widthRatio>0.496551724137931</widthRatio>
+      <widthRatio>0.757894736842105</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel237/edit11">
       <backgroundSkin>empty</backgroundSkin>
@@ -3513,7 +3513,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.0303030303030303</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00344827586206897</sizeRatio>
+      <sizeRatio>0.00526315789473684</sizeRatio>
       <top>64</top>
       <topRatio>0.96969696969697</topRatio>
       <width>380</width>
@@ -3550,13 +3550,13 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.424242424242424</heightRatio>
       <layerVisible>false</layerVisible>
       <left>9</left>
-      <leftRatio>0.0155172413793103</leftRatio>
+      <leftRatio>0.0236842105263158</leftRatio>
       <onCreate>ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));</onCreate>
       <sizeRatio>0.0972222222222222</sizeRatio>
       <text>新密码</text>
       <top>0</top>
       <width>288</width>
-      <widthRatio>0.496551724137931</widthRatio>
+      <widthRatio>0.757894736842105</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel240/edit13">
       <backgroundSkin>empty</backgroundSkin>
@@ -3595,7 +3595,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.0303030303030303</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00344827586206897</sizeRatio>
+      <sizeRatio>0.00526315789473684</sizeRatio>
       <top>64</top>
       <topRatio>0.96969696969697</topRatio>
       <width>380</width>
@@ -3632,13 +3632,13 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.424242424242424</heightRatio>
       <layerVisible>false</layerVisible>
       <left>9</left>
-      <leftRatio>0.0155172413793103</leftRatio>
+      <leftRatio>0.0236842105263158</leftRatio>
       <onCreate>ee.setText(sender, g5.lang.getByCn(ee.getText(sender)));</onCreate>
       <sizeRatio>0.0972222222222222</sizeRatio>
       <text>确认密码</text>
       <top>0</top>
       <width>288</width>
-      <widthRatio>0.496551724137931</widthRatio>
+      <widthRatio>0.757894736842105</widthRatio>
     </control>
     <control type="Edit" pathname="/divRoot/panel114/panel115/panel231/panel236/panel243/edit10">
       <backgroundSkin>empty</backgroundSkin>
@@ -3677,7 +3677,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.0303030303030303</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.00344827586206897</sizeRatio>
+      <sizeRatio>0.00526315789473684</sizeRatio>
       <top>64</top>
       <topRatio>0.96969696969697</topRatio>
       <width>380</width>
@@ -3691,7 +3691,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.025062656641604</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0166666666666667</sizeRatio>
+      <sizeRatio>0.025</sizeRatio>
       <top>95</top>
       <topRatio>0.238095238095238</topRatio>
       <width>400</width>
@@ -3705,7 +3705,7 @@ sender.style.borderLeft = "";</onCreate>
       <heightRatio>0.050125313283208</heightRatio>
       <layerVisible>false</layerVisible>
       <left>0</left>
-      <sizeRatio>0.0333333333333333</sizeRatio>
+      <sizeRatio>0.05</sizeRatio>
       <top>291</top>
       <topRatio>0.729323308270677</topRatio>
       <width>400</width>
@@ -13152,7 +13152,7 @@ div.label.rows[0].cells[0].style.fontSize = parseInt(r.h/3*1.8) + "px";
 
 div.style.borderRadius = "50%";
 div.style.boxSizing="content-box";
-div.style.borderWidth = "4px";
+div.style.borderWidth = "2px";
 div.style.borderStyle = "solid";
 
 var a = 0;
@@ -13162,16 +13162,16 @@ for (var i = 0; i < idString.length; i++) {
 a = g5.mulberry32(a);
 var c1;
 c1 = parseInt(a()*360);
-div.style.backgroundColor = "hsl(" + c1 + ",50%,35%)";
+div.style.backgroundColor = "hsl(" + c1 + ",50%,80%)";
 c1 = parseInt(a()*360);
-div.label.rows[0].cells[0].style.color = "hsl(" + c1 + ",80%,80%)";
+div.label.rows[0].cells[0].style.color = "hsl(" + c1 + ",70%,30%)";
 c1 = parseInt(a()*360);
-div.style.borderColor = "hsl(" + c1 + ",50%,35%)";
+div.style.borderColor = "hsl(" + c1 + ",50%,40%)";
 if (s.length>1) {
     c1 = parseInt(a()*360);
     ee.setText(div,
         s.charAt(0) +
-        "<font style='color:" + "hsl(" + c1 + ",80%,80%)" + ";'>" +
+        "<font style='color:" + "hsl(" + c1 + ",70%,30%)" + ";'>" +
         s.charAt(1) +
         "</font>"
     );
