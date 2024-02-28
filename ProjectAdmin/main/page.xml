@@ -12730,6 +12730,8 @@ root.style.borderLeft = "";
 root.style.borderRight = "";
 root.style.cursor = "pointer";
 ee.setOnClick(root,function(sender,event) {
+    var text = window.getSelection().toString();
+    if (text.length > 0) return;
     g5.root.mainDiv.p1.p3.showTaskChat(root.v_taskInfo.id);
 });
 ee.setOnMouseEnter(root, function(sender,e){
