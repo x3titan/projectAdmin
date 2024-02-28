@@ -45,9 +45,11 @@ ee.getControl("edit7")._input.style.overflow = "auto";
 setInterval(function() {
     g5.refreshMain();
 }, 100);
+g5.refreshMain();
 setInterval(function() {
     g5.refreshScroll();
-}, 500);</onControlLoad>
+}, 500);
+</onControlLoad>
       <onPageCreate><![CDATA[//{script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">{/script> 
 
 window.addEventListener("popstate", function (a) {
@@ -279,7 +281,6 @@ sender.loadMore = function() {
       <height>586</height>
       <heightRatio>0.894656488549618</heightRatio>
       <layerName>任务列表</layerName>
-      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate><![CDATA[sender.v_fitInner = true;
 sender.v_lastScrollTop = 0;
@@ -2671,6 +2672,7 @@ sender.v_photos = new Array();</onCreate>
       <height>780</height>
       <heightRatio>1.19083969465649</heightRatio>
       <layerName>设置-账号</layerName>
+      <layerVisible>false</layerVisible>
       <left>0</left>
       <onCreate><![CDATA[sender.show = function() {
     document.documentElement.scrollTop = 0;
