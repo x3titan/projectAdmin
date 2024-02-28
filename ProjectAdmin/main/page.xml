@@ -12256,7 +12256,7 @@ if (deleteTeam.onComplete) deleteTeam.onComplete();</script3>
     </taskSetItem>
   </taskSet>
   <gridLines count="0" />
-  <g5Items count="26">
+  <g5Items count="27">
     <item name="pages" type="10">
       <varValue>ee.getControl("layoutyitem2");</varValue>
       <functionParam />
@@ -12830,6 +12830,14 @@ ee.setOnClick(c,function(senderBtn,event) {
                 function() {
                 }
             );
+        }
+    );
+    v_style.push(new g5.BStyle("","#e8f5fe","#d2ecfc","复制内容","复制内容","复制内容","#808080","#000000","#000000",""));
+    v_onClick.push(
+        function (senderBtnC, event) {
+            if (root.v_taskInfo.note.length>0) {
+                g5.copyClipboard(root.v_taskInfo.note);
+            }
         }
     );
     g5.root.popBlank.p4.show(senderBtn, 180, v_style, v_onClick); 
@@ -13767,6 +13775,26 @@ data: [
 }]]></varValue>
       <functionParam />
       <functionCode />
+    </item>
+    <item name="copyClipboard" type="20">
+      <varValue />
+      <functionParam>value,onSucc,onFail</functionParam>
+      <functionCode>var textarea = document.createElement("textarea");
+textarea.value = value;
+textarea.style.position = "fixed";
+textarea.style.opacity = 0;
+document.body.appendChild(textarea);
+textarea.select();
+var r = document.execCommand("copy");
+document.body.removeChild(textarea);
+if (r) {
+    if (onSucc) onSucc();
+} else {
+    if (onFail) onFail();
+}
+
+
+</functionCode>
     </item>
   </g5Items>
 </page>
